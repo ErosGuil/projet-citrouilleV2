@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTOCOLES DE SÉLECTION - TERMINAL D'ATELIER</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            color: #0f0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .intro-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #000;
+            z-index: 1000;
+        }
+        
+        .intro-screen.hidden {
+            display: none;
+        }
+        
+        .intro-box {
+            max-width: 700px;
+            background: rgba(0, 0, 0, 0.95);
+            border: 3px solid #ff6600;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(255, 102, 0, 0.5);
+        }
+        
+        .intro-box h1 {
+            color: #ff6600;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #ff6600;
+            border-bottom: 2px solid #ff6600;
+            padding-bottom: 15px;
+        }
+        
+        .intro-message {
+            color: #0f0;
+            line-height: 1.8;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        
+        .signature {
+            text-align: right;
+            color: #ff6600;
+            margin-top: 30px;
+            font-style: italic;
+        }
+        
+        .warning-box {
+            background: rgba(255, 102, 0, 0.2);
+            border: 2px solid #ff6600;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            color: #ff6600;
+            font-weight: bold;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid #ff6600;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
+        }
+        
+        .header h1 {
+            color: #ff6600;
+            font-size: 32px;
+            text-shadow: 0 0 20px #ff6600;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #0f0;
+            font-size: 14px;
+        }
+        
+        .progress-bar {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px auto;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #0f0;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .test-step {
+            text-align: center;
+            padding: 15px;
+            border-radius: 5px;
+            min-width: 150px;
+        }
+        
+        .test-step.pending {
+            background: rgba(255, 102, 0, 0.2);
+            border: 2px solid #ff6600;
+            color: #ff6600;
+        }
+        
+        .test-step.completed {
+            background: rgba(0, 255, 0, 0.2);
+            border: 2px solid #0f0;
+            color: #0f0;
+        }
+        
+        .test-step .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .games-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .game-card {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #0f0;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .game-card.completed {
+            border-color: #0f0;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+        }
+        
+        .game-card:hover {
+            border-color: #ff6600;
+            box-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
+            transform: translateY(-5px);
+        }
+        
+        .game-card h2 {
+            color: #ff6600;
+            margin-bottom: 15px;
+            font-size: 20px;
+            text-align: center;
+            border-bottom: 2px solid #ff6600;
+            padding-bottom: 10px;
+        }
+        
+        .game-area {
+            margin: 20px 0;
+            min-height: 300px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff6600;
+            color: #000;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        button:hover:not(:disabled) {
+            background: #ff8800;
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.8);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        #repairGame {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: #000;
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+        
+        .mechanical-part {
+            position: absolute;
+            font-size: 50px;
+            cursor: pointer;
+            animation: float-part 3s ease-in-out infinite;
+            user-select: none;
+            filter: drop-shadow(0 0 10px rgba(255, 102, 0, 0.5));
+        }
+        
+        @keyframes float-part {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+        
+        .spark {
+            position: absolute;
+            font-size: 40px;
+            animation: explode 0.6s ease-out forwards;
+            pointer-events: none;
+        }
+        
+        @keyframes explode {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+        }
+        
+        .score-display {
+            text-align: center;
+            font-size: 20px;
+            color: #ff6600;
+            margin: 10px 0;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .memory-card {
+            aspect-ratio: 1;
+            background: rgba(255, 102, 0, 0.3);
+            border: 2px solid #ff6600;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
+        }
+        
+        .memory-card:hover:not(.flipped):not(.matched) {
+            background: rgba(255, 102, 0, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .memory-card.flipped {
+            background: rgba(0, 255, 0, 0.3);
+            border-color: #0f0;
+        }
+        
+        .memory-card.matched {
+            background: rgba(0, 255, 0, 0.5);
+            border-color: #0f0;
+            opacity: 0.7;
+        }
+        
+        .memory-card .back {
+            display: block;
+            color: #666;
+        }
+        
+        .memory-card .front {
+            display: none;
+        }
+        
+        .memory-card.flipped .back {
+            display: none;
+        }
+        
+        .memory-card.flipped .front {
+            display: block;
+        }
+        
+        #typingGame {
+            text-align: center;
+        }
+        
+        .typing-target {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #0f0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-size: 20px;
+            color: #ff6600;
+            letter-spacing: 3px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        #typingInput {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #0f0;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 5px;
+            letter-spacing: 2px;
+        }
+        
+        #typingInput:focus {
+            outline: none;
+            border-color: #ff6600;
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
+        }
+        
+        .timer {
+            font-size: 28px;
+            color: #f00;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .stat-box {
+            background: rgba(255, 102, 0, 0.2);
+            border: 2px solid #ff6600;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .stat-label {
+            color: #0f0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            color: #ff6600;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .message {
+            text-align: center;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .message.success {
+            background: rgba(0, 255, 0, 0.2);
+            border: 2px solid #0f0;
+            color: #0f0;
+        }
+        
+        .message.error {
+            background: rgba(255, 0, 0, 0.2);
+            border: 2px solid #f00;
+            color: #f00;
+        }
+        
+        .final-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .final-screen.active {
+            display: flex;
+        }
+        
+        .final-box {
+            max-width: 700px;
+            background: rgba(0, 0, 0, 0.95);
+            border: 3px solid #0f0;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.8);
+            animation: finalAppear 0.5s;
+        }
+        
+        @keyframes finalAppear {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .final-box h1 {
+            color: #0f0;
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #0f0;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .shake {
+            animation: shake 0.3s;
+        }
+        
+        .glitch {
+            animation: glitch 0.3s infinite;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="intro-screen" id="introScreen">
+        <div class="intro-box">
+            <h1>╔════════════════════════════════════════╗<br>
+                ║  PROTOCOLES DE SÉLECTION ACTIVÉS       ║<br>
+                ╚════════════════════════════════════════╝</h1>
+            
+            <div class="intro-message">
+                <p style="margin-bottom: 20px;">
+                    "Avant que mes assistants ne disparaissent un à un, je les testais. 
+                    Seuls les plus compétents pouvaient accéder à mon atelier secret 
+                    et découvrir la véritable nature de mon projet.
+                </p>
+                
+                <p style="margin-bottom: 20px;">
+                    Vous avez trouvé le code <span style="color: #ff6600; font-weight: bold;">CYLINDRE</span>.
+                    Vous avez déchiffré mes messages.
+                </p>
+                
+                <p style="margin-bottom: 20px;">
+                    Maintenant, prouvez-moi que vous méritez d'accéder aux documents finaux.
+                    Prouvez que vous auriez pu survivre à mes côtés..."
+                </p>
+            </div>
+            
+            <div class="signature">
+                - Le Mécanicien
+            </div>
+            
+            <div class="warning-box">
+                ⚠️ 3 TESTS À RÉUSSIR ⚠️
+            </div>
+            
+            <button onclick="startTests()" style="font-size: 18px; padding: 15px;">
+                COMMENCER LES TESTS
+            </button>
+        </div>
+    </div>
+    
+    <div id="mainContent" style="display: none;">
+        <div class="header">
+            <h1>⚙️ TERMINAL D'ATELIER ⚙️</h1>
+            <p>SYSTÈME DE SÉLECTION DU PERSONNEL</p>
+            <p style="color: #f00; margin-top: 5px;">Dernière connexion: Il y a 3 jours</p>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="test-step pending" id="step1">
+                <div class="icon">🔧</div>
+                <div>TEST 1</div>
+                <div style="font-size: 12px;">Réparation</div>
+            </div>
+            <div class="test-step pending" id="step2">
+                <div class="icon">🧪</div>
+                <div>TEST 2</div>
+                <div style="font-size: 12px;">Formule</div>
+            </div>
+            <div class="test-step pending" id="step3">
+                <div class="icon">📝</div>
+                <div>TEST 3</div>
+                <div style="font-size: 12px;">Transcription</div>
+            </div>
+        </div>
+        
+        <div class="games-container">
+            <div class="game-card" id="repairCard">
+                <h2>🔧 TEST DE RÉPARATION MÉCANIQUE</h2>
+                <p style="color: #0f0; text-align: center; margin-bottom: 15px; font-size: 14px;">
+                    "Réparez les pièces défectueuses avant qu'elles n'explosent"
+                </p>
+                <div class="score-display">
+                    Score: <span id="repairScore">0</span> | Temps: <span id="repairTime">30</span>s
+                </div>
+                <div id="repairGame"></div>
+                <button onclick="startRepair()">DÉMARRER LE TEST</button>
+            </div>
+            
+            <div class="game-card" id="memoryCard">
+                <h2>🧪 TEST DE FORMULE CHIMIQUE</h2>
+                <p style="color: #0f0; text-align: center; margin-bottom: 15px; font-size: 14px;">
+                    "Reconstituez les formules secrètes du scientifique"
+                </p>
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Tentatives</div>
+                        <div class="stat-value" id="memoryMoves">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Paires</div>
+                        <div class="stat-value" id="memoryPairs">0/8</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Temps</div>
+                        <div class="stat-value" id="memoryTime">0s</div>
+                    </div>
+                </div>
+                <div class="memory-grid" id="memoryGrid"></div>
+                <button onclick="startMemory()">DÉMARRER LE TEST</button>
+            </div>
+            
+            <div class="game-card" id="typingCard">
+                <h2>📝 TEST DE TRANSCRIPTION RAPIDE</h2>
+                <p style="color: #0f0; text-align: center; margin-bottom: 15px; font-size: 14px;">
+                    "Déchiffrez les notes avant qu'elles ne s'effacent"
+                </p>
+                <div class="timer">Temps: <span id="typingTimer">60</span>s</div>
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Phrases</div>
+                        <div class="stat-value" id="typingScore">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Précision</div>
+                        <div class="stat-value" id="typingAccuracy">100%</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Vitesse</div>
+                        <div class="stat-value" id="typingWPM">0</div>
+                    </div>
+                </div>
+                <div id="typingGame">
+                    <div class="typing-target" id="typingTarget">Cliquez sur DÉMARRER</div>
+                    <input type="text" id="typingInput" placeholder="Tapez ici..." disabled>
+                    <div id="typingMessage"></div>
+                </div>
+                <button onclick="startTyping()">DÉMARRER LE TEST</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="final-screen" id="finalScreen">
+        <div class="final-box">
+            <h1>✓ TESTS COMPLÉTÉS AVEC SUCCÈS ✓</h1>
+            
+            <div class="intro-message">
+                <p style="margin-bottom: 20px;">
+                    "Impressionnant. Vous auriez fait un excellent assistant. 
+                    Vos compétences sont... remarquables.
+                </p>
+                
+                <p style="margin-bottom: 20px; color: #ff6600;">
+                    Malheureusement, il est trop tard maintenant. 
+                    Mes autres assistants n'ont pas eu votre chance...
+                </p>
+                
+                <p style="margin-bottom: 20px;">
+                    Les documents sont déverrouillés. 
+                    Vous y trouverez ce que vous cherchez.
+                </p>
+                
+                <p style="margin-bottom: 20px; color: #ff6600; font-weight: bold;">
+                    Trouvez la <span class="glitch">BOÎTE</span>.<br>
+                    Trouvez les <span class="glitch">LAMPES UV</span>.<br>
+                    Découvrez la <span class="glitch">VÉRITÉ</span>.
+                </p>
+            </div>
+            
+            <div class="warning-box" style="border-color: #0f0; color: #0f0;">
+                ✓ ACCÈS DOSSIER ACCORDÉ ✓
+            </div>
+            
+            <button onclick="unlockFiles()" style="background: #0f0; font-size: 18px; padding: 15px;">
+                ACCÉDER AUX DOCUMENTS FINAUX
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        let testsCompleted = {
+            repair: false,
+            memory: false,
+            typing: false
+        };
+        
+        function startTests() {
+            document.getElementById('introScreen').classList.add('hidden');
+            document.getElementById('mainContent').style.display = 'block';
+        }
+        
+        function checkAllTests() {
+            if (testsCompleted.repair && testsCompleted.memory && testsCompleted.typing) {
+                setTimeout(() => {
+                    document.getElementById('finalScreen').classList.add('active');
+                }, 1000);
+            }
+        }
+        
+        function unlockFiles() {
+            window.opener.postMessage('TESTS_COMPLETED', '*');
+            alert('Retournez au terminal principal pour accéder aux dossiers !');
+            window.close();
+        }
+        
+        // ==================== TEST RÉPARATION ====================
+        const mechanicalParts = ['⚙️', '🔩', '🔧', '🛠️', '⚡', '🔥'];
+        let repairActive = false;
+        let repairScore = 0;
+        let repairTimeLeft = 30;
+        let repairInterval;
+        let partInterval;
+        
+        function startRepair() {
+            if (repairActive) return;
+            
+            repairActive = true;
+            repairScore = 0;
+            repairTimeLeft = 30;
+            document.getElementById('repairScore').textContent = repairScore;
+            document.getElementById('repairTime').textContent = repairTimeLeft;
+            
+            const game = document.getElementById('repairGame');
+            game.innerHTML = '';
+            
+            repairInterval = setInterval(() => {
+                repairTimeLeft--;
+                document.getElementById('repairTime').textContent = repairTimeLeft;
+                
+                if (repairTimeLeft <= 0) {
+                    endRepair();
+                }
+            }, 1000);
+            
+            partInterval = setInterval(spawnPart, 700);
+        }
+        
+        function spawnPart() {
+            if (!repairActive) return;
+            
+            const game = document.getElementById('repairGame');
+            const part = document.createElement('div');
+            part.className = 'mechanical-part';
+            part.textContent = mechanicalParts[Math.floor(Math.random() * mechanicalParts.length)];
+            part.style.left = Math.random() * (game.offsetWidth - 60) + 'px';
+            part.style.top = Math.random() * (game.offsetHeight - 60) + 'px';
+            
+            part.onclick = () => {
+                if (!repairActive) return;
+                repairScore++;
+                document.getElementById('repairScore').textContent = repairScore;
+                
+                const spark = document.createElement('div');
+                spark.className = 'spark';
+                spark.textContent = '⚡';
+                spark.style.left = part.style.left;
+                spark.style.top = part.style.top;
+                game.appendChild(spark);
+                
+                part.remove();
+                setTimeout(() => spark.remove(), 600);
+            };
+            
+            game.appendChild(part);
+            
+            setTimeout(() => {
+                if (part.parentElement) {
+                    part.remove();
+                }
+            }, 2000);
+        }
+        
+        function endRepair() {
+            repairActive = false;
+            clearInterval(repairInterval);
+            clearInterval(partInterval);
+            
+            const game = document.getElementById('repairGame');
+            
+            if (repairScore >= 20) {
+                testsCompleted.repair = true;
+                document.getElementById('step1').classList.remove('pending');
+                document.getElementById('step1').classList.add('completed');
+                document.getElementById('repairCard').classList.add('completed');
+                
+                game.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column; color: #0f0;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">✓</div>
+                    <div style="font-size: 24px;">TEST RÉUSSI !</div>
+                    <div style="font-size: 20px; margin-top: 10px;">Score: ${repairScore}</div>
+                    <div style="font-size: 14px; margin-top: 15px; color: #ff6600;">Vous auriez pu être son assistant...</div>
+                </div>`;
+                
+                checkAllTests();
+            } else {
+                game.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column; color: #f00;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">✗</div>
+                    <div style="font-size: 24px;">TEST ÉCHOUÉ</div>
+                    <div style="font-size: 20px; margin-top: 10px;">Score: ${repairScore} / 20 minimum</div>
+                    <div style="font-size: 14px; margin-top: 15px; color: #ff6600;">Réessayez...</div>
+                </div>`;
+            }
+        }
+        
+        // ==================== TEST FORMULE ====================
+        const formulaSymbols = ['⚙️', '🔩', '🧪', '⚗️', '🔬', '💉', '🧬', '⚡'];
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let memoryMoves = 0;
+        let memoryStartTime = 0;
+        let memoryTimerInterval;
+        
+        function startMemory() {
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            flippedCards = [];
+            matchedPairs = 0;
+            memoryMoves = 0;
+            memoryStartTime = Date.now();
+            
+            document.getElementById('memoryMoves').textContent = '0';
+            document.getElementById('memoryPairs').textContent = '0/8';
+            document.getElementById('memoryTime').textContent = '0s';
+            
+            memoryCards = [...formulaSymbols, ...formulaSymbols]
+                .sort(() => Math.random() - 0.5)
+                .map((symbol, index) => ({
+                    id: index,
+                    symbol: symbol,
+                    flipped: false,
+                    matched: false
+                }));
+            
+            memoryCards.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'memory-card';
+                cardElement.innerHTML = `
+                    <span class="back">❓</span>
+                    <span class="front">${card.symbol}</span>
+                `;
+                cardElement.onclick = () => flipCard(index, cardElement);
+                grid.appendChild(cardElement);
+            });
+            
+            clearInterval(memoryTimerInterval);
+            memoryTimerInterval = setInterval(updateMemoryTimer, 1000);
+        }
+        
+        function updateMemoryTimer() {
+            const elapsed = Math.floor((Date.now() - memoryStartTime) / 1000);
+            document.getElementById('memoryTime').textContent = elapsed + 's';
+        }
+        
+        function flipCard(index, element) {
+            if (flippedCards.length >= 2) return;
+            if (memoryCards[index].flipped || memoryCards[index].matched) return;
+            
+            memoryCards[index].flipped = true;
+            element.classList.add('flipped');
+            flippedCards.push({ index, element });
+            
+            if (flippedCards.length === 2) {
+                memoryMoves++;
+                document.getElementById('memoryMoves').textContent = memoryMoves;
+                
+                setTimeout(checkMatch, 600);
+            }
+        }
+        
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            
+            if (memoryCards[card1.index].symbol === memoryCards[card2.index].symbol) {
+                memoryCards[card1.index].matched = true;
+                memoryCards[card2.index].matched = true;
+                card1.element.classList.add('matched');
+                card2.element.classList.add('matched');
+                
+                matchedPairs++;
+                document.getElementById('memoryPairs').textContent = matchedPairs + '/8';
+                
+                if (matchedPairs === 8) {
+                    clearInterval(memoryTimerInterval);
+                    testsCompleted.memory = true;
+                    document.getElementById('step2').classList.remove('pending');
+                    document.getElementById('step2').classList.add('completed');
+                    document.getElementById('memoryCard').classList.add('completed');
+                    
+                    setTimeout(() => {
+                        alert('✓ TEST RÉUSSI ! Formule reconstituée. Accès autorisé.');
+                        checkAllTests();
+                    }, 500);
+                }
+            } else {
+                memoryCards[card1.index].flipped = false;
+                memoryCards[card2.index].flipped = false;
+                card1.element.classList.remove('flipped');
+                card2.element.classList.remove('flipped');
+                card1.element.classList.add('shake');
+                card2.element.classList.add('shake');
+                setTimeout(() => {
+                    card1.element.classList.remove('shake');
+                    card2.element.classList.remove('shake');
+                }, 300);
+            }
+            
+            flippedCards = [];
+        }
+        
+        // ==================== TEST TRANSCRIPTION ====================
+        const mechanicPhrases = [
+            "LE CYLINDRE EST LA CLE",
+            "ILS NE DOIVENT PAS SAVOIR",
+            "PROJET PRESQUE TERMINE",
+            "MES ASSISTANTS ONT DISPARU",
+            "LA BOITE CONTIENT TOUT",
+            "DERNIER TEST EN COURS",
+            "ATELIER VERROUILLE",
+            "FORMULE PRESQUE PRETE",
+            "PERSONNE NE PEUT SAVOIR",
+            "LES MURS PARLENT LA NUIT",
+            "CHERCHEZ LA LUMIERE",
+            "CODE GRAVE PARTOUT",
+            "ILS ME CHERCHENT",
+            "TROP TARD MAINTENANT",
+            "LA VERITE VOUS ATTEND"
+        ];
+        
+        let typingActive = false;
+        let typingTimeLeft = 60;
+        let typingScore = 0;
+        let typingCorrect = 0;
+        let typingTotal = 0;
+        let typingInterval;
+        let typingStartTime;
+        
+        function startTyping() {
+            if (typingActive) return;
+            
+            typingActive = true;
+            typingTimeLeft = 60;
+            typingScore = 0;
+            typingCorrect = 0;
+            typingTotal = 0;
+            typingStartTime = Date.now();
+            
+            document.getElementById('typingInput').disabled = false;
+            document.getElementById('typingInput').value = '';
+            document.getElementById('typingInput').focus();
+            document.getElementById('typingMessage').innerHTML = '';
+            
+            updateTypingStats();
+            nextTypingPhrase();
+            
+            typingInterval = setInterval(() => {
+                typingTimeLeft--;
+                document.getElementById('typingTimer').textContent = typingTimeLeft;
+                
+                if (typingTimeLeft <= 0) {
+                    endTyping();
+                }
+            }, 1000);
+        }
+        
+        function nextTypingPhrase() {
+            if (!typingActive) return;
+            
+            const phrase = mechanicPhrases[Math.floor(Math.random() * mechanicPhrases.length)];
+            document.getElementById('typingTarget').textContent = phrase;
+            document.getElementById('typingInput').value = '';
+        }
+        
+        document.getElementById('typingInput').addEventListener('input', (e) => {
+            if (!typingActive) return;
+            
+            const target = document.getElementById('typingTarget').textContent;
+            const input = e.target.value.toUpperCase();
+            
+            if (input === target) {
+                typingScore++;
+                typingCorrect++;
+                typingTotal++;
+                
+                const msg = document.getElementById('typingMessage');
+                msg.innerHTML = '<div class="message success">✓ NOTE SAUVEGARDÉE</div>';
+                setTimeout(() => msg.innerHTML = '', 500);
+                
+                nextTypingPhrase();
+                updateTypingStats();
+            } else if (input.length > target.length) {
+                e.target.value = input.slice(0, target.length);
+                typingTotal++;
+                updateTypingStats();
+            }
+        });
+        
+        function updateTypingStats() {
+            document.getElementById('typingScore').textContent = typingScore;
+            
+            const accuracy = typingTotal > 0 ? Math.round((typingCorrect / typingTotal) * 100) : 100;
+            document.getElementById('typingAccuracy').textContent = accuracy + '%';
+            
+            const timeElapsed = (Date.now() - typingStartTime) / 1000 / 60;
+            const wpm = timeElapsed > 0 ? Math.round(typingScore / timeElapsed) : 0;
+            document.getElementById('typingWPM').textContent = wpm;
+        }
+        
+        function endTyping() {
+            typingActive = false;
+            clearInterval(typingInterval);
+            document.getElementById('typingInput').disabled = true;
+            
+            const msg = document.getElementById('typingMessage');
+            
+            if (typingScore >= 8) {
+                testsCompleted.typing = true;
+                document.getElementById('step3').classList.remove('pending');
+                document.getElementById('step3').classList.add('completed');
+                document.getElementById('typingCard').classList.add('completed');
+                
+                msg.innerHTML = `<div class="message success">
+                    ✓ TEST RÉUSSI !<br>
+                    ${typingScore} notes sauvegardées<br>
+                    Précision: ${document.getElementById('typingAccuracy').textContent}<br>
+                    Documents déverrouillés.
+                </div>`;
+                
+                document.getElementById('typingTarget').textContent = 'Notes récupérées avec succès !';
+                
+                checkAllTests();
+            } else {
+                msg.innerHTML = `<div class="message error">
+                    ✗ TEST ÉCHOUÉ<br>
+                    ${typingScore} / 8 notes minimum<br>
+                    Réessayez...
+                </div>`;
+                
+                document.getElementById('typingTarget').textContent = 'Insuffisant. Recommencez.';
+            }
+        }
+    </script>
+</body>
+</html>
