@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJET CITROUILLE - ACCÈS RESTREINT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #0f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.3;
+            animation: float 15s infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .blood-drip {
+            position: fixed;
+            top: 0;
+            width: 2px;
+            height: 0;
+            background: linear-gradient(to bottom, transparent, #8B0000, #FF0000);
+            animation: drip 3s ease-in infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        @keyframes drip {
+            0% { height: 0; top: 0; }
+            50% { height: 100px; }
+            100% { height: 100px; top: 100vh; opacity: 0; }
+        }
+        
+        .login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a0a00 0%, #0a0a0a 100%);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .pumpkin-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 300px;
+            opacity: 0.1;
+            z-index: 0;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.2; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        
+        .login-box {
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid #ff6600;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(255, 102, 0, 0.5);
+            z-index: 1;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .login-box h1 {
+            color: #ff6600;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-shadow: 0 0 20px #ff6600;
+        }
+        
+        .login-box .subtitle {
+            color: #f00;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+        
+        .warning {
+            background: rgba(255, 0, 0, 0.2);
+            border-left: 4px solid #f00;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #f00;
+            font-size: 13px;
+        }
+        
+        input[type="password"], input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff6600;
+            color: #ff6600;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            text-align: center;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        input::placeholder {
+            color: rgba(255, 102, 0, 0.4);
+            letter-spacing: normal;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #ff6600;
+            color: #000;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        button:hover:not(:disabled) {
+            background: #ff8800;
+            box-shadow: 0 0 30px rgba(255, 102, 0, 0.8);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .error-msg, .success-msg {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        
+        .error-msg {
+            color: #f00;
+        }
+        
+        .success-msg {
+            color: #0f0;
+        }
+        
+        .activation-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .activation-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #0f0;
+        }
+        
+        .pumpkin-flash {
+            font-size: 200px;
+            animation: flash 0.5s infinite;
+            margin: 20px;
+        }
+        
+        @keyframes flash {
+            0%, 100% { opacity: 1; color: #ff6600; }
+            50% { opacity: 0.3; color: #ff0000; }
+        }
+        
+        .activation-text {
+            font-size: 32px;
+            margin: 20px;
+            text-shadow: 0 0 10px #0f0;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0; }
+        }
+        
+        .progress-bar {
+            width: 80%;
+            height: 30px;
+            border: 2px solid #0f0;
+            margin: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0f0, #ff6600);
+            width: 0%;
+            animation: progressAnim 3s forwards;
+        }
+        
+        @keyframes progressAnim {
+            to { width: 100%; }
+        }
+        
+        .terminal-screen {
+            display: none;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .terminal-header {
+            background: linear-gradient(135deg, #1a0a00, #0a0a0a);
+            border: 2px solid #ff6600;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 30px rgba(255, 102, 0, 0.3);
+        }
+        
+        .terminal-header h1 {
+            color: #ff6600;
+            text-shadow: 0 0 10px #ff6600;
+            margin-bottom: 5px;
+        }
+        
+        .terminal-header .status {
+            color: #0f0;
+            font-size: 14px;
+        }
+        
+        .progress-tracker {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            flex-wrap: wrap;
+        }
+        
+        .progress-step {
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            min-width: 100px;
+            margin: 5px;
+        }
+        
+        .progress-step.locked {
+            opacity: 0.3;
+            color: #666;
+        }
+        
+        .progress-step.active {
+            background: rgba(255, 102, 0, 0.3);
+            border: 2px solid #ff6600;
+            color: #ff6600;
+        }
+        
+        .progress-step.completed {
+            background: rgba(0, 255, 0, 0.2);
+            border: 2px solid #0f0;
+            color: #0f0;
+        }
+        
+        .terminal-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .terminal-module {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .terminal-module.locked {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        
+        .terminal-module.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 60px;
+            opacity: 0.5;
+        }
+        
+        .terminal-module:hover:not(.locked) {
+            border-color: #ff6600;
+            box-shadow: 0 0 30px rgba(255, 102, 0, 0.4);
+        }
+        
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #0f0;
+        }
+        
+        .module-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .module-title {
+            color: #ff6600;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .module-content {
+            color: #0f0;
+        }
+        
+        .file-list {
+            list-style: none;
+        }
+        
+        .file-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(0, 255, 0, 0.1);
+            border-left: 3px solid #0f0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-item:hover {
+            background: rgba(255, 102, 0, 0.2);
+            border-left-color: #ff6600;
+            padding-left: 15px;
+        }
+        
+        .audio-player {
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .lock-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .lock-wheel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid #ff6600;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
+        }
+        
+        .wheel-numbers {
+            width: 60px;
+            height: 80px;
+            overflow: hidden;
+            position: relative;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #0f0;
+            text-align: center;
+            line-height: 80px;
+            width: 100%;
+            opacity: 0.3;
+            transition: all 0.3s;
+        }
+        
+        .number.active {
+            opacity: 1;
+            color: #ff6600;
+            text-shadow: 0 0 10px #ff6600;
+            font-size: 42px;
+        }
+        
+        .wheel-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .wheel-btn {
+            width: 60px;
+            padding: 8px;
+            background: #0f0;
+            color: #000;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .wheel-btn:hover {
+            background: #ff6600;
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.8);
+        }
+        
+        .wheel-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .simon-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .simon-button {
+            aspect-ratio: 1;
+            background: rgba(0, 255, 0, 0.2);
+            border: 3px solid #0f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .simon-button:hover {
+            background: rgba(255, 102, 0, 0.3);
+            border-color: #ff6600;
+            transform: scale(1.05);
+        }
+        
+        .simon-icon {
+            font-size: 60px;
+        }
+        
+        .simon-button.active {
+            background: rgba(255, 255, 0, 0.5);
+            border-color: #ff0;
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 255, 0, 0.8);
+        }
+        
+        .simon-button.correct {
+            background: rgba(0, 255, 0, 0.5);
+            border-color: #0f0;
+            animation: successPulse 0.5s;
+        }
+        
+        .simon-button.wrong {
+            background: rgba(255, 0, 0, 0.5);
+            border-color: #f00;
+            animation: shake 0.5s;
+        }
+        
+        .puzzle-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            margin: 20px auto;
+            max-width: 300px;
+        }
+        
+        .puzzle-piece {
+            aspect-ratio: 1;
+            background: rgba(255, 102, 0, 0.3);
+            border: 2px solid #ff6600;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #0f0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .puzzle-piece:hover {
+            background: rgba(255, 102, 0, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .puzzle-piece.selected {
+            background: rgba(0, 255, 0, 0.3);
+            border-color: #0f0;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+        }
+        
+        #mazeCanvas {
+            image-rendering: pixelated;
+        }
+        
+        .enigma-box {
+            background: rgba(255, 102, 0, 0.1);
+            border: 2px solid #ff6600;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .enigma-box h3 {
+            color: #ff6600;
+            margin-bottom: 15px;
+        }
+        
+        .enigma-box p {
+            color: #0f0;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        
+        .quiz-option {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #0f0;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 5px;
+        }
+        
+        .quiz-option:hover {
+            background: rgba(255, 102, 0, 0.2);
+            border-color: #ff6600;
+            transform: translateX(5px);
+        }
+        
+        .quiz-option.correct {
+            background: rgba(0, 255, 0, 0.3);
+            border-color: #0f0;
+            animation: successPulse 0.5s;
+        }
+        
+        .quiz-option.wrong {
+            background: rgba(255, 0, 0, 0.3);
+            border-color: #f00;
+            animation: shake 0.5s;
+        }
+        
+        @keyframes successPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: #000;
+            border: 3px solid #ff6600;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 0 50px rgba(255, 102, 0, 0.5);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #f00;
+            color: #fff;
+            border: none;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 50%;
+        }
+        
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border: 2px solid #0f0;
+            margin: 10px 0;
+        }
+        
+        .glitch {
+            animation: glitch 0.3s infinite;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        
+        .jumpscare {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .jumpscare.active {
+            display: flex;
+            animation: flashScreen 0.1s 5;
+        }
+        
+        @keyframes flashScreen {
+            0%, 100% { background: #000; }
+            50% { background: #f00; }
+        }
+        
+        .jumpscare-img {
+            font-size: 300px;
+            animation: scream 0.5s;
+        }
+        
+        @keyframes scream {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(400px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div id="bloodDrips"></div>
+    <div class="jumpscare" id="jumpscare">
+        <div class="jumpscare-img">💀</div>
+    </div>
+    
+    <div class="login-screen" id="loginScreen">
+        <div class="pumpkin-bg">🎃</div>
+        <div class="login-box">
+            <h1>🎃 PROJET CITROUILLE 🎃</h1>
+            <p class="subtitle">SYSTÈME DE SÉCURITÉ NIVEAU 5</p>
+            
+            <div class="warning">
+                ⚠️ AVERTISSEMENT : Accès restreint au personnel autorisé uniquement.
+            </div>
+            
+            <input type="password" id="passwordInput" placeholder="CODE D'ACCÈS" maxlength="8" autocomplete="off">
+            <button onclick="checkPassword()">ACTIVER LE PROTOCOLE</button>
+            
+            <div class="error-msg" id="errorMsg"></div>
+        </div>
+    </div>
+    
+    <div class="activation-screen" id="activationScreen">
+        <canvas class="matrix-bg" id="matrixCanvas"></canvas>
+        <div class="activation-content">
+            <div class="pumpkin-flash">🎃</div>
+            <div class="activation-text">PROTOCOLE ACTIVÉ</div>
+            <div class="activation-text" style="font-size: 20px;">Initialisation du système...</div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="terminal-screen" id="terminalScreen">
+        <div class="terminal-header">
+            <h1>🎃 PROJET CITROUILLE - TERMINAL DE CONTRÔLE 🎃</h1>
+            <p class="status">STATUS: ✓ SYSTÈME OPÉRATIONNEL | DATE: 31/10/2025 | NIVEAU D'ALERTE: ÉLEVÉ</p>
+        </div>
+        
+        <div class="progress-tracker">
+            <div class="progress-step active" id="step1">
+                <div style="font-size: 30px;">🔊</div>
+                <div>ÉTAPE 1</div>
+                <div style="font-size: 12px;">Cadenas</div>
+            </div>
+            <div class="progress-step locked" id="step2">
+                <div style="font-size: 30px;">🧩</div>
+                <div>ÉTAPE 2</div>
+                <div style="font-size: 12px;">Quiz</div>
+            </div>
+            <div class="progress-step locked" id="step3">
+                <div style="font-size: 30px;">🎮</div>
+                <div>ÉTAPE 3</div>
+                <div style="font-size: 12px;">Mini-jeux</div>
+            </div>
+            <div class="progress-step locked" id="step4">
+                <div style="font-size: 30px;">📁</div>
+                <div>ÉTAPE 4</div>
+                <div style="font-size: 12px;">Dossiers</div>
+            </div>
+        </div>
+        
+        <div class="terminal-content">
+            <div class="terminal-module" id="audioModule">
+                <div class="module-header">
+                    <span class="module-icon">🔊</span>
+                    <span class="module-title">ENREGISTREMENT VOCAL</span>
+                </div>
+                <div class="module-content">
+                    <p style="color: #ff6600; margin-bottom: 10px;">⚠️ MESSAGE DU DR. HALLOWEEN</p>
+                    <audio class="audio-player" controls id="mainAudio">
+                        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                    </audio>
+                    <p style="font-size: 12px; margin-top: 15px; color: #0f0; line-height: 1.6;">
+                        📝 Instructions : Écoutez attentivement le message et comptez les éléments mentionnés dans l'ordre.
+                    </p>
+                    <p style="font-size: 12px; margin-top: 10px; color: #f00;">
+                        🎃 Enregistré le 31/10/2025 à 23:47
+                    </p>
+                </div>
+            </div>
+            
+            <div class="terminal-module" id="lockModule">
+                <div class="module-header">
+                    <span class="module-icon">🔒</span>
+                    <span class="module-title">CADENAS DE SÉCURITÉ</span>
+                </div>
+                <div class="module-content">
+                    <p style="color: #ff6600; margin-bottom: 20px; text-align: center;">
+                        Entrez le code à 4 chiffres pour débloquer l'étape suivante
+                    </p>
+                    
+                    <div class="lock-container">
+                        <div class="lock-wheel" id="wheel0">
+                            <div class="wheel-numbers">
+                                <div class="number">9</div>
+                                <div class="number active">0</div>
+                                <div class="number">1</div>
+                            </div>
+                            <div class="wheel-buttons">
+                                <button class="wheel-btn up" onclick="rotateWheel(0, -1)">▲</button>
+                                <button class="wheel-btn down" onclick="rotateWheel(0, 1)">▼</button>
+                            </div>
+                        </div>
+                        
+                        <div class="lock-wheel" id="wheel1">
+                            <div class="wheel-numbers">
+                                <div class="number">9</div>
+                                <div class="number active">0</div>
+                                <div class="number">1</div>
+                            </div>
+                            <div class="wheel-buttons">
+                                <button class="wheel-btn up" onclick="rotateWheel(1, -1)">▲</button>
+                                <button class="wheel-btn down" onclick="rotateWheel(1, 1)">▼</button>
+                            </div>
+                        </div>
+                        
+                        <div class="lock-wheel" id="wheel2">
+                            <div class="wheel-numbers">
+                                <div class="number">9</div>
+                                <div class="number active">0</div>
+                                <div class="number">1</div>
+                            </div>
+                            <div class="wheel-buttons">
+                                <button class="wheel-btn up" onclick="rotateWheel(2, -1)">▲</button>
+                                <button class="wheel-btn down" onclick="rotateWheel(2, 1)">▼</button>
+                            </div>
+                        </div>
+                        
+                        <div class="lock-wheel" id="wheel3">
+                            <div class="wheel-numbers">
+                                <div class="number">9</div>
+                                <div class="number active">0</div>
+                                <div class="number">1</div>
+                            </div>
+                            <div class="wheel-buttons">
+                                <button class="wheel-btn up" onclick="rotateWheel(3, -1)">▲</button>
+                                <button class="wheel-btn down" onclick="rotateWheel(3, 1)">▼</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="checkLockCode()" style="margin-top: 30px; width: 100%;">
+                        🔓 DÉVERROUILLER
+                    </button>
+                    
+                    <div id="lockResult" style="text-align: center; margin-top: 15px;"></div>
+                    
+                    <p style="font-size: 12px; margin-top: 20px; color: #ff6600; text-align: center;">
+                        💡 Indice : Comptez ce que le Dr. Halloween vous demande de compter dans l'audio
+                    </p>
+                </div>
+            </div>
+            
+            <div class="terminal-module locked" id="enigmaModule">
+                <div class="module-header">
+                    <span class="module-icon">🧩</span>
+                    <span class="module-title">ÉNIGME DU LABORATOIRE</span>
+                </div>
+                <div class="module-content">
+                    <div class="enigma-box">
+                        <h3>Question du Dr. Halloween :</h3>
+                        <p>"Dans mon laboratoire, j'ai créé 3 citrouilles le premier jour. Chaque jour suivant, chaque citrouille se duplique. Combien de citrouilles ai-je après 5 jours ?"</p>
+                        
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">
+                            A) 15 citrouilles
+                        </div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">
+                            B) 48 citrouilles
+                        </div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">
+                            C) 96 citrouilles
+                        </div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">
+                            D) 128 citrouilles
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="terminal-module locked" id="codeModule">
+                <div class="module-header">
+                    <span class="module-icon">🔐</span>
+                    <span class="module-title">CODE DE SÉCURITÉ</span>
+                </div>
+                <div class="module-content">
+                    <div class="enigma-box">
+                        <h3>Déchiffrez le code :</h3>
+                        <p style="color: #ff6600; font-size: 18px; text-align: center; margin: 20px 0;">
+                            C=3 | I=9 | T=20 | R=18 | O=15 | U=21 | L=12 | E=5
+                        </p>
+                        <p>Additionnez toutes les lettres du mot "CITROUILLE"</p>
+                        
+                        <input type="text" id="codeInput" placeholder="Entrez le code" style="margin-top: 15px;">
+                        <button onclick="checkCode()">VALIDER</button>
+                        <div id="codeResult"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="terminal-module locked" id="simonModule">
+                <div class="module-header">
+                    <span class="module-icon">🎮</span>
+                    <span class="module-title">SÉQUENCE DE RECONNAISSANCE</span>
+                </div>
+                <div class="module-content">
+                    <div class="enigma-box">
+                        <h3>Simon Says - Version Halloween</h3>
+                        <p>Mémorisez et répétez la séquence de symboles !</p>
+                        <p style="color: #ff6600; margin: 10px 0;">Niveau: <span id="simonLevel">1</span></p>
+                        
+                        <div class="simon-grid">
+                            <div class="simon-button" data-icon="0" onclick="simonClick(0)">
+                                <span class="simon-icon">🎃</span>
+                            </div>
+                            <div class="simon-button" data-icon="1" onclick="simonClick(1)">
+                                <span class="simon-icon">👻</span>
+                            </div>
+                            <div class="simon-button" data-icon="2" onclick="simonClick(2)">
+                                <span class="simon-icon">💀</span>
+                            </div>
+                            <div class="simon-button" data-icon="3" onclick="simonClick(3)">
+                                <span class="simon-icon">🦇</span>
+                            </div>
+                        </div>
+                        
+                        <button onclick="startSimon()" id="simonStartBtn" style="margin-top: 15px; width: 100%;">
+                            DÉMARRER NIVEAU 1
+                        </button>
+                        <div id="simonResult" style="text-align: center; margin-top: 10px;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="terminal-module locked" id="puzzleModule">
+                <div class="module-header">
+                    <span class="module-icon">🧩</span>
+                    <span class="module-title">RECONSTRUCTION D'IMAGE</span>
+                </div>
+                <div class="module-content">
+                    <div class="enigma-box">
+                        <h3>Puzzle du Laboratoire</h3>
+                        <p>Glissez les pièces pour reconstituer l'image</p>
+                        
+                        <div class="puzzle-container" id="puzzleContainer">
+                            <!-- Généré dynamiquement -->
+                        </div>
+                        
+                        <button onclick="shufflePuzzle()" style="margin-top: 15px; width: 100%;">
+                            🔀 MÉLANGER
+                        </button>
+                        <div id="puzzleResult" style="text-align: center; margin-top: 10px;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="terminal-module locked" id="mazeModule">
+                <div class="module-header">
+                    <span class="module-icon">🗺️</span>
+                    <span class="module-title">LABYRINTHE D'ÉVACUATION</span>
+                </div>
+                <div class="module-content">
+                    <div class="enigma-box">
+                        <h3>Trouvez la sortie</h3>
+                        <p>Utilisez les flèches du clavier : ↑ ↓ ← →</p>
+                        
+                        <canvas id="mazeCanvas" width="300" height="300" style="border: 2px solid #0f0; background: #000; display: block; margin: 15px auto;"></canvas>
+                        
+                        <div style="text-align: center; margin-top: 10px; color: #ff6600;">
+                            Position: <span id="mazePos">Début</span>
+                        </div>
+                        <div id="mazeResult" style="text-align: center; margin-top: 10px;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="terminal-module locked" id="caesarModule">
+                <div class="module-header">
+                    <span class="module-icon">🔐</span>
+                    <span class="module-title">MESSAGE CRYPTÉ</span>
+                </div>
+                <div class="module-content">
+                    <div class="enigma-box">
+                        <h3>Déchiffrement César</h3>
+                        <p style="color: #ff6600; font-size: 18px; text-align: center; margin: 20px 0; letter-spacing: 2px;">
+                            IXLHC GHV FLWURXLOOHV
+                        </p>
+                        <p>Message encodé avec un décalage. Trouvez la clé !</p>
+                        
+                        <div style="margin: 20px 0;">
+                            <label style="color: #0f0;">Décalage (1-25): </label>
+                            <input type="range" id="caesarShift" min="1" max="25" value="1" 
+                                   oninput="updateCaesarDecrypt()" 
+                                   style="width: 100%; margin: 10px 0;">
+                            <div style="text-align: center; color: #ff6600; font-size: 20px;">
+                                Décalage: <span id="caesarShiftValue">1</span>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(0,255,0,0.1); padding: 15px; border: 2px solid #0f0; border-radius: 5px; margin-top: 15px;">
+                            <p style="color: #0f0; text-align: center; font-size: 18px; letter-spacing: 2px;" id="caesarDecrypted">
+                                HXKGB FGU EKVTQWKNNGУ
+                            </p>
+                        </div>
+                        
+                        <button onclick="checkCaesar()" style="margin-top: 15px; width: 100%;">
+                            VALIDER LE DÉCHIFFREMENT
+                        </button>
+                        <div id="caesarResult" style="text-align: center; margin-top: 10px;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="terminal-module locked" id="filesModule">
+                <div class="module-header">
+                    <span class="module-icon">📁</span>
+                    <span class="module-title">DOSSIERS CLASSIFIÉS</span>
+                </div>
+                <div class="module-content">
+                    <ul class="file-list">
+                        <li class="file-item" onclick="openFile('specimen')">
+                            🧪 DOSSIER_SPECIMEN_001.img
+                        </li>
+                        <li class="file-item" onclick="openFile('lab')">
+                            🔬 LABORATOIRE_PHOTOS.img
+                        </li>
+                        <li class="file-item" onclick="openFile('warning')">
+                            ⚠️ AVERTISSEMENT_FINAL.img
+                        </li>
+                        <li class="file-item" onclick="openFile('secret')">
+                            🎃 PROJET_CITROUILLE_PLAN.img
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="terminal-module">
+                <div class="module-header">
+                    <span class="module-icon">📝</span>
+                    <span class="module-title">NOTES DU LABORATOIRE</span>
+                </div>
+                <div class="module-content">
+                    <p style="color: #ff6600;">JOURNAL DU DR. HALLOWEEN</p>
+                    <p style="margin: 10px 0; line-height: 1.6;">
+                        Jour 31 : L'expérience a dépassé toutes nos attentes... 
+                        Les citrouilles ont développé une conscience. 
+                        <span class="glitch" style="color: #f00;">ELLES ATTENDENT.</span>
+                    </p>
+                </div>
+            </div>
+			
+<div class="terminal-module" style="border-color: #ff6600; box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);">
+    <div class="module-header">
+        <span class="module-icon">🎮</span>
+        <span class="module-title">ZONE DE DÉTENTE</span>
+    </div>
+    <div class="module-content">
+        <p style="color: #ff6600; font-weight: bold; text-align: center; font-size: 18px; margin-bottom: 10px;">
+            🎃 MINI-JEUX BONUS 🎃
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; text-align: center;">
+            <div style="background: rgba(255, 102, 0, 0.2); padding: 10px; border: 1px solid #ff6600; border-radius: 5px;">
+                <div style="font-size: 24px;">🎯</div>
+                <div style="font-size: 12px; color: #0f0;">Tir aux citrouilles</div>
+            </div>
+            <div style="background: rgba(255, 102, 0, 0.2); padding: 10px; border: 1px solid #ff6600; border-radius: 5px;">
+                <div style="font-size: 24px;">🧠</div>
+                <div style="font-size: 12px; color: #0f0;">Memory</div>
+            </div>
+            <div style="background: rgba(255, 102, 0, 0.2); padding: 10px; border: 1px solid #ff6600; border-radius: 5px;">
+                <div style="font-size: 24px;">⌨️</div>
+                <div style="font-size: 12px; color: #0f0;">Typing</div>
+            </div>
+        </div>
+        <a href="minijeux.html" target="_blank" style="display: block; padding: 15px; background: #ff6600; color: #000; text-align: center; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; transition: all 0.3s; font-size: 16px;">
+            🎮 JOUER MAINTENANT
+        </a>
+    </div>
+</div>
+            
+            <div class="terminal-module" style="border-color: #f00;">
+                <div class="module-header">
+                    <span class="module-icon">⚠️</span>
+                    <span class="module-title" style="color: #f00;">ALERTE CRITIQUE</span>
+                </div>
+                <div class="module-content" style="color: #f00;">
+                    <p class="glitch" style="font-weight: bold;">
+                        🎃 CONFINEMENT COMPROMIS 🎃
+                    </p>
+                    <p style="line-height: 1.6; margin-top: 10px;">
+                        PROTOCOLE D'ÉVACUATION ACTIVÉ<br>
+                        NIVEAU DE DANGER: MAXIMUM
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            <h2 style="color: #ff6600; margin-bottom: 20px;" id="modalTitle"></h2>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+    
+    <script>
+        const PASSWORD = "CYLINDRE";
+        let quizAnswered = false;
+        window.attemptCount = 0;
+        window.filesOpened = new Set();
+        window.errorCount = 0;
+        
+        let wheelValues = [0, 0, 0, 0];
+        const CORRECT_CODE = [3, 2, 1, 7];
+        
+        let simonSequence = [];
+        let simonPlayerSequence = [];
+        let simonRound = 0;
+        const simonIcons = ['🎃', '👻', '💀', '🦇'];
+        
+        let puzzlePieces = [];
+        let puzzleSolved = false;
+        
+        let caesarSolved = false;
+        
+        function triggerJumpscare() {
+            window.errorCount++;
+            const jumpscare = document.getElementById('jumpscare');
+            const img = jumpscare.querySelector('.jumpscare-img');
+            
+            const scares = [
+                { emoji: '💀', duration: 800 },
+                { emoji: '👻', duration: 1000 },
+                { emoji: '🎃', duration: 1200 },
+                { emoji: '🔪', duration: 1500 },
+                { emoji: '😱', duration: 2000 }
+            ];
+            
+            const level = Math.min(window.errorCount - 1, scares.length - 1);
+            const scare = scares[level];
+            
+            img.textContent = scare.emoji;
+            img.style.fontSize = (200 + level * 50) + 'px';
+            
+            jumpscare.classList.add('active');
+            jumpscare.style.animationDuration = '0.05s';
+            jumpscare.style.animationIterationCount = 5 + level * 3;
+            
+            setTimeout(() => {
+                jumpscare.classList.remove('active');
+                jumpscare.style.animationDuration = '0.1s';
+                jumpscare.style.animationIterationCount = '5';
+            }, scare.duration);
+        }
+        
+        function rotateWheel(wheelIndex, direction) {
+            wheelValues[wheelIndex] = (wheelValues[wheelIndex] + direction + 10) % 10;
+            updateWheelDisplay(wheelIndex);
+        }
+        
+        function updateWheelDisplay(wheelIndex) {
+            const wheel = document.getElementById('wheel' + wheelIndex);
+            const numbers = wheel.querySelectorAll('.number');
+            const currentValue = wheelValues[wheelIndex];
+            
+            numbers[0].textContent = (currentValue - 1 + 10) % 10;
+            numbers[1].textContent = currentValue;
+            numbers[2].textContent = (currentValue + 1) % 10;
+            
+            numbers.forEach(num => num.classList.remove('active'));
+            numbers[1].classList.add('active');
+        }
+        
+        function checkLockCode() {
+            const result = document.getElementById('lockResult');
+            
+            if (JSON.stringify(wheelValues) === JSON.stringify(CORRECT_CODE)) {
+                result.innerHTML = '<p style="color: #0f0; font-weight: bold; font-size: 18px;">✓ CADENAS DÉVERROUILLÉ !</p>';
+                
+                setTimeout(() => {
+                    document.getElementById('step1').classList.remove('active');
+                    document.getElementById('step1').classList.add('completed');
+                    document.getElementById('step2').classList.remove('locked');
+                    document.getElementById('step2').classList.add('active');
+                    document.getElementById('enigmaModule').classList.remove('locked');
+                    showNotification('✓ ÉTAPE 1 COMPLÉTÉE - Énigme débloquée !', '#0f0');
+                    
+                    document.querySelectorAll('.lock-wheel').forEach(wheel => {
+                        wheel.style.borderColor = '#0f0';
+                        wheel.style.boxShadow = '0 0 30px rgba(0, 255, 0, 0.5)';
+                    });
+                }, 500);
+            } else {
+                result.innerHTML = '<p style="color: #f00; font-weight: bold;">✗ CODE INCORRECT</p>';
+                
+                document.querySelectorAll('.lock-wheel').forEach(wheel => {
+                    wheel.style.animation = 'shake 0.5s';
+                });
+                
+                triggerJumpscare();
+                
+                setTimeout(() => {
+                    result.innerHTML = '';
+                    document.querySelectorAll('.lock-wheel').forEach(wheel => {
+                        wheel.style.animation = '';
+                    });
+                }, 2000);
+            }
+        }
+        
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            const emojis = ['🎃', '🍂', '🍁', '💀', '🦇', '🕷️'];
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                particles.appendChild(particle);
+            }
+        }
+        
+        function createBloodDrips() {
+            const container = document.getElementById('bloodDrips');
+            
+            setInterval(() => {
+                const drip = document.createElement('div');
+                drip.className = 'blood-drip';
+                drip.style.left = Math.random() * 100 + '%';
+                container.appendChild(drip);
+                setTimeout(() => drip.remove(), 3000);
+            }, 2000);
+        }
+        
+        function triggerJumpscare() {
+            const jumpscare = document.getElementById('jumpscare');
+            jumpscare.classList.add('active');
+            setTimeout(() => jumpscare.classList.remove('active'), 1000);
+        }
+        
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value.toUpperCase();
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (input === PASSWORD) {
+                errorMsg.className = 'success-msg';
+                errorMsg.textContent = '✓ ACCÈS AUTORISÉ';
+                setTimeout(startActivation, 500);
+            } else {
+                errorMsg.className = 'error-msg';
+                errorMsg.textContent = '✗ CODE INCORRECT';
+                document.getElementById('passwordInput').value = '';
+                window.attemptCount++;
+                if (window.attemptCount === 3) {
+                    triggerJumpscare();
+                    window.attemptCount = 0;
+                }
+                setTimeout(() => errorMsg.textContent = '', 2000);
+            }
+        }
+        
+        document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPassword();
+        });
+        
+        function startActivation() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('activationScreen').style.display = 'block';
+            
+            const canvas = document.getElementById('matrixCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const columns = Math.floor(canvas.width / 20);
+            const drops = Array(columns).fill(1);
+            
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#0f0';
+                ctx.font = '15px monospace';
+                
+                for (let i = 0; i < drops.length; i++) {
+                    const text = Math.random() > 0.5 ? '1' : '0';
+                    ctx.fillText(text, i * 20, drops[i] * 20);
+                    if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+            
+            const matrixInterval = setInterval(drawMatrix, 50);
+            
+            setTimeout(() => {
+                clearInterval(matrixInterval);
+                document.getElementById('activationScreen').style.display = 'none';
+                document.getElementById('terminalScreen').style.display = 'block';
+                createParticles();
+                createBloodDrips();
+            }, 3000);
+        }
+        
+        function unlockStep2() {
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step1').classList.add('completed');
+            document.getElementById('step2').classList.remove('locked');
+            document.getElementById('step2').classList.add('active');
+            document.getElementById('enigmaModule').classList.remove('locked');
+            showNotification('✓ ÉTAPE 1 COMPLÉTÉE - Énigme débloquée !', '#0f0');
+        }
+        
+        function checkQuiz(element, isCorrect) {
+            if (quizAnswered) return;
+            
+            if (isCorrect) {
+                element.classList.add('correct');
+                quizAnswered = true;
+                
+                setTimeout(() => {
+                    document.getElementById('step2').classList.remove('active');
+                    document.getElementById('step2').classList.add('completed');
+                    document.getElementById('step3').classList.remove('locked');
+                    document.getElementById('step3').classList.add('active');
+                    document.getElementById('codeModule').classList.remove('locked');
+                    showNotification('✓ ÉTAPE 2 COMPLÉTÉE - Code de sécurité débloqué !', '#0f0');
+                }, 1000);
+            } else {
+                element.classList.add('wrong');
+                triggerJumpscare();
+                setTimeout(() => element.classList.remove('wrong'), 500);
+            }
+        }
+       
+        
+        let simonPlaying = false;
+        let simonWaitingForInput = false;
+        let simonNeedNewLevel = true;
+        
+        function startSimon() {
+            if (simonPlaying) return;
+            
+            const btnText = document.getElementById('simonStartBtn').textContent;
+            
+            if (btnText === 'NIVEAU SUIVANT' || simonNeedNewLevel) {
+                simonRound++;
+                simonSequence.push(Math.floor(Math.random() * 4));
+                document.getElementById('simonLevel').textContent = simonRound;
+                simonNeedNewLevel = false;
+            }
+            
+            simonPlayerSequence = [];
+            simonWaitingForInput = false;
+            simonPlaying = true;
+            document.getElementById('simonStartBtn').disabled = true;
+            document.getElementById('simonStartBtn').textContent = 'REGARDEZ LA SÉQUENCE...';
+            playSimonSequence();
+        }
+        
+        function playSimonSequence() {
+            let index = 0;
+            const interval = setInterval(() => {
+                if (index < simonSequence.length) {
+                    const btn = document.querySelector(`.simon-button[data-icon="${simonSequence[index]}"]`);
+                    btn.classList.add('active');
+                    setTimeout(() => btn.classList.remove('active'), 400);
+                    index++;
+                } else {
+                    clearInterval(interval);
+                    simonPlaying = false;
+                    simonWaitingForInput = true;
+                    document.getElementById('simonStartBtn').disabled = false;
+                    document.getElementById('simonStartBtn').textContent = 'REJOUER LA SÉQUENCE';
+                }
+            }, 600);
+        }
+        
+        function simonClick(icon) {
+            if (simonPlaying || !simonWaitingForInput) return;
+            
+            simonPlayerSequence.push(icon);
+            const btn = document.querySelector(`.simon-button[data-icon="${icon}"]`);
+            btn.classList.add('active');
+            setTimeout(() => btn.classList.remove('active'), 200);
+            
+            const currentIndex = simonPlayerSequence.length - 1;
+            
+            if (simonPlayerSequence[currentIndex] !== simonSequence[currentIndex]) {
+                document.getElementById('simonResult').innerHTML = '<p style="color: #f00; font-weight: bold;">✗ ERREUR ! Recommencez ce niveau</p>';
+                simonPlayerSequence = [];
+                simonWaitingForInput = false;
+                document.getElementById('simonStartBtn').textContent = 'REJOUER LA SÉQUENCE';
+                triggerJumpscare();
+                setTimeout(() => document.getElementById('simonResult').innerHTML = '', 2000);
+            } else if (simonPlayerSequence.length === simonSequence.length) {
+                simonWaitingForInput = false;
+                if (simonRound >= 8) {
+                    document.getElementById('simonResult').innerHTML = '<p style="color: #0f0; font-weight: bold;">🎉 SÉQUENCE COMPLÉTÉE - 8 NIVEAUX RÉUSSIS !</p>';
+                    document.getElementById('simonModule').style.borderColor = '#0f0';
+                    document.getElementById('puzzleModule').classList.remove('locked');
+                    document.getElementById('simonStartBtn').disabled = true;
+                    document.getElementById('simonStartBtn').textContent = '✓ TERMINÉ';
+                    showNotification('✓ Simon Says réussi - Puzzle débloqué !', '#0f0');
+                    initPuzzle();
+                } else {
+                    document.getElementById('simonResult').innerHTML = '<p style="color: #0f0;">✓ Niveau ' + simonRound + ' réussi !</p>';
+                    simonPlayerSequence = [];
+                    simonNeedNewLevel = true;
+                    document.getElementById('simonStartBtn').textContent = 'NIVEAU SUIVANT';
+                    setTimeout(() => {
+                        document.getElementById('simonResult').innerHTML = '';
+                    }, 1000);
+                }
+            }
+        }
+        
+        function initPuzzle() {
+            puzzlePieces = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+            shufflePuzzle();
+        }
+        
+        function shufflePuzzle() {
+            do {
+                for (let i = puzzlePieces.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [puzzlePieces[i], puzzlePieces[j]] = [puzzlePieces[j], puzzlePieces[i]];
+                }
+            } while (!isSolvable() || isSolved());
+            
+            puzzleSolved = false;
+            renderPuzzle();
+        }
+        
+        function isSolvable() {
+            let inversions = 0;
+            for (let i = 0; i < puzzlePieces.length - 1; i++) {
+                for (let j = i + 1; j < puzzlePieces.length; j++) {
+                    if (puzzlePieces[i] && puzzlePieces[j] && puzzlePieces[i] > puzzlePieces[j]) {
+                        inversions++;
+                    }
+                }
+            }
+            return inversions % 2 === 0;
+        }
+        
+        function isSolved() {
+            for (let i = 0; i < puzzlePieces.length - 1; i++) {
+                if (puzzlePieces[i] !== i + 1) return false;
+            }
+            return puzzlePieces[puzzlePieces.length - 1] === 0;
+        }
+        
+        function renderPuzzle() {
+            const container = document.getElementById('puzzleContainer');
+            container.innerHTML = '';
+            
+            puzzlePieces.forEach((piece, index) => {
+                const div = document.createElement('div');
+                div.className = 'puzzle-piece';
+                div.textContent = piece === 0 ? '' : piece;
+                div.onclick = () => movePuzzlePiece(index);
+                if (piece === 0) {
+                    div.style.background = 'rgba(0,0,0,0.5)';
+                    div.style.border = '2px dashed #666';
+                }
+                container.appendChild(div);
+            });
+        }
+        
+        function movePuzzlePiece(index) {
+            const emptyIndex = puzzlePieces.indexOf(0);
+            const validMoves = [
+                emptyIndex - 1, emptyIndex + 1,
+                emptyIndex - 3, emptyIndex + 3
+            ].filter(i => {
+                if (i < 0 || i > 8) return false;
+                if (emptyIndex % 3 === 0 && i === emptyIndex - 1) return false;
+                if (emptyIndex % 3 === 2 && i === emptyIndex + 1) return false;
+                return true;
+            });
+            
+            if (validMoves.includes(index)) {
+                [puzzlePieces[index], puzzlePieces[emptyIndex]] = [puzzlePieces[emptyIndex], puzzlePieces[index]];
+                renderPuzzle();
+                checkPuzzle();
+            }
+        }
+        
+        function checkPuzzle() {
+            if (isSolved() && !puzzleSolved) {
+                puzzleSolved = true;
+                document.getElementById('puzzleResult').innerHTML = '<p style="color: #0f0; font-weight: bold;">✓ PUZZLE RÉSOLU !</p>';
+                document.getElementById('puzzleModule').style.borderColor = '#0f0';
+                document.getElementById('mazeModule').classList.remove('locked');
+                showNotification('✓ Puzzle complété - Labyrinthe débloqué !', '#0f0');
+                
+                const pieces = document.querySelectorAll('.puzzle-piece');
+                pieces.forEach(piece => {
+                    piece.style.borderColor = '#0f0';
+                    piece.style.boxShadow = '0 0 20px rgba(0, 255, 0, 0.5)';
+                });
+                
+                initMaze();
+            }
+        }
+        
+        let mazePlayer = {x: 0, y: 0};
+        const mazeSize = 10;
+        const cellSize = 30;
+        let maze = [];
+        
+        function initMaze() {
+            maze = [];
+            for (let y = 0; y < mazeSize; y++) {
+                maze[y] = [];
+                for (let x = 0; x < mazeSize; x++) {
+                    maze[y][x] = Math.random() > 0.3 ? 0 : 1;
+                }
+            }
+            maze[0][0] = 0;
+            maze[mazeSize-1][mazeSize-1] = 2;
+            mazePlayer = {x: 0, y: 0};
+            drawMaze();
+            
+            document.addEventListener('keydown', handleMazeMove);
+        }
+        
+        function drawMaze() {
+            const canvas = document.getElementById('mazeCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let y = 0; y < mazeSize; y++) {
+                for (let x = 0; x < mazeSize; x++) {
+                    if (maze[y][x] === 1) {
+                        ctx.fillStyle = '#333';
+                        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                    } else if (maze[y][x] === 2) {
+                        ctx.fillStyle = '#0f0';
+                        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                    }
+                    ctx.strokeStyle = '#0f0';
+                    ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                }
+            }
+            
+            ctx.fillStyle = '#ff6600';
+            ctx.beginPath();
+            ctx.arc(mazePlayer.x * cellSize + cellSize/2, mazePlayer.y * cellSize + cellSize/2, cellSize/3, 0, Math.PI * 2);
+            ctx.fill();
+            
+            document.getElementById('mazePos').textContent = `(${mazePlayer.x}, ${mazePlayer.y})`;
+        }
+        
+        function handleMazeMove(e) {
+            let newX = mazePlayer.x;
+            let newY = mazePlayer.y;
+            
+            if (e.key === 'ArrowUp') newY--;
+            if (e.key === 'ArrowDown') newY++;
+            if (e.key === 'ArrowLeft') newX--;
+            if (e.key === 'ArrowRight') newX++;
+            
+            if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && maze[newY][newX] !== 1) {
+                mazePlayer.x = newX;
+                mazePlayer.y = newY;
+                drawMaze();
+                
+                if (maze[newY][newX] === 2) {
+                    document.getElementById('mazeResult').innerHTML = '<p style="color: #0f0;">✓ SORTIE TROUVÉE !</p>';
+                    document.getElementById('mazeModule').style.borderColor = '#0f0';
+                    document.getElementById('caesarModule').classList.remove('locked');
+                    showNotification('✓ Labyrinthe terminé !', '#0f0');
+                    document.removeEventListener('keydown', handleMazeMove);
+                }
+            }
+        }
+        
+        function updateCaesarDecrypt() {
+            const shift = parseInt(document.getElementById('caesarShift').value);
+            document.getElementById('caesarShiftValue').textContent = shift;
+            
+            const encrypted = "IXLHC GHV FLWURXLOOHV";
+            let decrypted = "";
+            
+            for (let char of encrypted) {
+                if (char === ' ') {
+                    decrypted += ' ';
+                } else {
+                    let code = char.charCodeAt(0) - shift;
+                    if (code < 65) code += 26;
+                    decrypted += String.fromCharCode(code);
+                }
+            }
+            
+            document.getElementById('caesarDecrypted').textContent = decrypted;
+        }
+        
+        function checkCaesar() {
+            const shift = parseInt(document.getElementById('caesarShift').value);
+            const result = document.getElementById('caesarResult');
+            
+            // CHANGEZ ICI : Remplacez 5 par la valeur souhaitée
+            if (shift === 3) {
+                result.innerHTML = '<p style="color: #0f0; font-weight: bold;">✓ MESSAGE DÉCHIFFRÉ: "FUYEZ DES CITROUILLES"</p>';
+                document.getElementById('caesarModule').style.borderColor = '#0f0';
+                caesarSolved = true;
+                
+                setTimeout(() => {
+                    document.getElementById('step3').classList.remove('active');
+                    document.getElementById('step3').classList.add('completed');
+                    document.getElementById('step4').classList.remove('locked');
+                    document.getElementById('step4').classList.add('active');
+                    document.getElementById('filesModule').classList.remove('locked');
+                    showNotification('✓ ÉTAPE 3 COMPLÉTÉE - Dossiers débloqués !', '#0f0');
+                    triggerJumpscare();
+                }, 1000);
+            } else {
+                result.innerHTML = '<p style="color: #f00;">✗ DÉCALAGE INCORRECT</p>';
+                triggerJumpscare();
+                setTimeout(() => result.innerHTML = '', 2000);
+            }
+        }
+        
+        function checkCode() {
+            const input = document.getElementById('codeInput').value;
+            const result = document.getElementById('codeResult');
+            
+            if (input === '124') {
+                result.innerHTML = '<p style="color: #0f0; margin-top: 10px;">✓ CODE CORRECT !</p>';
+                
+                setTimeout(() => {
+                    document.getElementById('codeModule').style.borderColor = '#0f0';
+                    document.getElementById('simonModule').classList.remove('locked');
+                    showNotification('✓ Code validé - Simon Says débloqué !', '#0f0');
+                }, 1000);
+            } else {
+                result.innerHTML = '<p style="color: #f00; margin-top: 10px;">✗ INCORRECT</p>';
+                triggerJumpscare();
+                setTimeout(() => result.innerHTML = '', 2000);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const codeInput = document.getElementById('codeInput');
+            if (codeInput) {
+                codeInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') checkCode();
+                });
+            }
+        });
+        
+        function showNotification(message, color) {
+            const notif = document.createElement('div');
+            notif.style.cssText = 'position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.9); border: 2px solid ' + color + '; color: ' + color + '; padding: 20px; border-radius: 5px; z-index: 10000; font-family: Courier New, monospace; box-shadow: 0 0 30px ' + color + '; animation: slideIn 0.5s;';
+            notif.textContent = message;
+            document.body.appendChild(notif);
+            
+            setTimeout(() => {
+                notif.style.animation = 'slideOut 0.5s';
+                setTimeout(() => notif.remove(), 500);
+            }, 3000);
+        }
+        
+        function openFile(type) {
+            const modal = document.getElementById('imageModal');
+            const title = document.getElementById('modalTitle');
+            const content = document.getElementById('modalContent');
+            
+            const files = {
+                specimen: {
+                    title: '🧪 DOSSIER SPECIMEN 001',
+                    content: '<p style="color: #0f0;">Classification: TOP SECRET</p><img src="https://via.placeholder.com/600x400/000000/ff6600?text=SPECIMEN+CITROUILLE" alt="Specimen"><p style="color: #ff6600; margin-top: 15px;">Sujet: Citrouille génétiquement modifiée</p><p style="color: #f00;">Statut: CONFINEMENT ROMPU</p>'
+                },
+                lab: {
+                    title: '🔬 LABORATOIRE - DERNIÈRES PHOTOS',
+                    content: '<p style="color: #0f0;">Horodatage: 31/10/2025 23:42</p><img src="https://via.placeholder.com/600x400/000000/00ff00?text=LABORATOIRE+VIDE" alt="Lab"><p style="color: #f00; margin-top: 15px;">⚠️ Aucun personnel détecté</p>'
+                },
+                warning: {
+                    title: '⚠️ AVERTISSEMENT FINAL',
+                    content: '<div style="background: rgba(255,0,0,0.2); padding: 20px; border: 2px solid #f00;"><p style="color: #f00; font-size: 20px; font-weight: bold;">ÉVACUEZ IMMÉDIATEMENT</p><img src="https://via.placeholder.com/600x300/000000/ff0000?text=DANGER" alt="Warning"><p style="color: #ff6600; margin-top: 15px;">Les citrouilles ont pris le contrôle.</p><p style="color: #f00;">IL EST TROP TARD.</p></div>'
+                },
+                secret: {
+                    title: '🎃 PROJET CITROUILLE - PLANS',
+                    content: '<p style="color: #0f0;">Document confidentiel - Dr. Halloween</p><img src="https://via.placeholder.com/600x500/000000/ff6600?text=PLANS+SECRETS" alt="Plans"><p style="color: #ff6600; margin-top: 15px;">Phase 1: Création ✓</p><p style="color: #ff6600;">Phase 2: Évolution ✓</p><p style="color: #f00;">Phase 3: LIBÉRATION ✓</p><p style="color: #0f0; margin-top: 15px;">Code d\'arrêt: <span style="color: #ff6600;">HALLOWEEN-666</span></p>'
+                }
+            };
+            
+            title.textContent = files[type].title;
+            content.innerHTML = files[type].content;
+            modal.style.display = 'flex';
+            
+            window.filesOpened.add(type);
+            
+            if (window.filesOpened.size === 4) {
+                setTimeout(() => {
+                    document.getElementById('step4').classList.remove('active');
+                    document.getElementById('step4').classList.add('completed');
+                    showNotification('🎉 MISSION COMPLÉTÉE !', '#ff6600');
+                    triggerJumpscare();
+                }, 1000);
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        document.getElementById('imageModal').addEventListener('click', (e) => {
+            if (e.target.id === 'imageModal') closeModal();
+        });
+    </script>
+</body>
+</html>
