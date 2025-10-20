@@ -724,6 +724,80 @@
             font-size: 300px;
             animation: scream 0.5s;
         }
+
+.intro-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #1a0a00 0%, #0a0a0a 100%);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.intro-box {
+    background: rgba(0, 0, 0, 0.95);
+    border: 3px solid #ff6600;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(255, 102, 0, 0.5);
+    max-width: 800px;
+    width: 90%;
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.intro-box h1 {
+    color: #0f0;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 30px;
+    line-height: 1.8;
+    text-shadow: 0 0 10px #0f0;
+}
+
+.intro-message {
+    color: #0f0;
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.signature {
+    color: #ff6600;
+    font-size: 18px;
+    text-align: right;
+    margin: 20px 0;
+    font-style: italic;
+}
+
+/* NE PAS réutiliser @keyframes pulse ici */
+@keyframes warnPulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.5; box-shadow: 0 0 20px rgba(255,0,0,0.35); }
+}
+
+
+.warning-box {
+  background: rgba(255, 0, 0, 0.2);
+  border: 2px solid #f00;
+  padding: 15px;
+  text-align: center;
+  color: #f00;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px;      /* pour « mordre » le padding de .intro-box */
+  box-sizing: border-box;
+  animation: warnPulse 2s infinite; /* <-- nouvelle anim, plus de translate */
+}
         
         @keyframes scream {
             0% { transform: scale(0); opacity: 0; }
@@ -766,6 +840,44 @@
         </div>
     </div>
     
+<div class="intro-screen" id="introScreen">
+    <div class="intro-box">
+        <h1>╔════════════════════════════════════════╗<br>
+            ║  PROTOCOLES DE SÉLECTION ACTIVÉS       ║<br>
+            ╚════════════════════════════════════════╝</h1>
+        
+        <div class="intro-message">
+            <p style="margin-bottom: 20px;">
+                "Avant que mes assistants ne disparaissent un à un, je les testais. 
+                Seuls les plus compétents pouvaient accéder à mon atelier secret 
+                et découvrir la véritable nature de mon projet.
+            </p>
+            
+            <p style="margin-bottom: 20px;">
+                Vous avez trouvé le code <span style="color: #ff6600; font-weight: bold;">CYLINDRE</span>.
+                Vous avez déchiffré mes messages.
+            </p>
+            
+            <p style="margin-bottom: 20px;">
+                Maintenant, prouvez-moi que vous méritez d'accéder aux documents finaux.
+                Prouvez que vous auriez pu survivre à mes côtés..."
+            </p>
+        </div>
+        
+        <div class="signature">
+            - Le Mécanicien
+        </div>
+        
+        <div class="warning-box">
+            ⚠️ 7 TESTS À RÉUSSIR ⚠️
+        </div>
+        
+        <button onclick="startTests()" style="font-size: 18px; padding: 15px;">
+            COMMENCER LES TESTS
+        </button>
+    </div>
+</div>
+
     <div class="activation-screen" id="activationScreen">
         <canvas class="matrix-bg" id="matrixCanvas"></canvas>
         <div class="activation-content">
@@ -816,7 +928,7 @@
                 <div class="module-content">
                     <p style="color: #ff6600; margin-bottom: 10px;">⚠️ MESSAGE DU DR. HALLOWEEN</p>
                     <audio class="audio-player" controls id="mainAudio">
-                        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                        <source src="EnregistrementVocal.mp3" type="audio/mpeg">
                     </audio>
                     <p style="font-size: 12px; margin-top: 15px; color: #0f0; line-height: 1.6;">
                         📝 Instructions : Écoutez attentivement le message et comptez les éléments mentionnés dans l'ordre.
@@ -1344,15 +1456,18 @@
             
             const matrixInterval = setInterval(drawMatrix, 50);
             
-            setTimeout(() => {
-                clearInterval(matrixInterval);
-                document.getElementById('activationScreen').style.display = 'none';
-                document.getElementById('terminalScreen').style.display = 'block';
-                createParticles();
-                createBloodDrips();
-            }, 3000);
+setTimeout(() => {
+    clearInterval(matrixInterval);
+    document.getElementById('activationScreen').style.display = 'none';
+    document.getElementById('introScreen').style.display = 'flex';
+    createParticles();
+    createBloodDrips();
+}, 3000);
         }
-        
+        function startTests() {
+    document.getElementById('introScreen').style.display = 'none';
+    document.getElementById('terminalScreen').style.display = 'block';
+}
         function unlockStep2() {
             document.getElementById('step1').classList.remove('active');
             document.getElementById('step1').classList.add('completed');
