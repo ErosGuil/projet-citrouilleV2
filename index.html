@@ -737,6 +737,7 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
+    overflow-y: auto;
 }
 
 .intro-box {
@@ -745,9 +746,11 @@
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 0 50px rgba(255, 102, 0, 0.5);
-    max-width: 800px;
-    width: 90%;
+    max-width: 900px;
+    width: 100%;
     animation: fadeIn 1s;
+    margin: auto;
+    box-sizing: border-box;
 }
 
 @keyframes fadeIn {
@@ -757,26 +760,72 @@
 
 .intro-box h1 {
     color: #0f0;
-    font-size: 16px;
+    font-size: 18px;
     text-align: center;
     margin-bottom: 30px;
-    line-height: 1.8;
+    padding: 20px;
+    border: 3px solid #0f0;
+    border-radius: 5px;
     text-shadow: 0 0 10px #0f0;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    background: rgba(0, 255, 0, 0.05);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
 }
 
 .intro-message {
     color: #0f0;
-    font-size: 16px;
-    line-height: 1.8;
-    margin-bottom: 30px;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
 }
 
 .signature {
     color: #ff6600;
-    font-size: 18px;
+    font-size: 16px;
     text-align: right;
-    margin: 20px 0;
+    margin: 15px 0;
     font-style: italic;
+}
+
+/* Responsive mobile */
+@media (max-width: 768px) {
+  .intro-screen { padding: 10px; }
+  .intro-box { padding: 20px; width: 95%; }
+  .intro-box h1 { font-size: 14px; padding: 15px; margin-bottom: 20px; letter-spacing: 1px; }
+    
+.intro-box h1 {
+    font-size: 14px;
+    padding: 15px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+    
+    .intro-message {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+    
+    .intro-message p {
+        margin-bottom: 15px !important;
+    }
+    
+    .signature {
+        font-size: 14px;
+        margin: 10px 0;
+    }
+    
+  .warning-box {
+    margin: 15px 0;
+    padding: 15px;
+    font-size: 16px;
+  }
+    
+    .intro-box button {
+        font-size: 14px !important;
+        padding: 12px !important;
+    }
 }
 
 /* NE PAS réutiliser @keyframes pulse ici */
@@ -785,18 +834,21 @@
   50% { opacity: 0.5; box-shadow: 0 0 20px rgba(255,0,0,0.35); }
 }
 
-
 .warning-box {
   background: rgba(255, 0, 0, 0.2);
-  border: 2px solid #f00;
-  padding: 15px;
+  border: 3px solid #f00;
+  padding: 20px;
   text-align: center;
   color: #f00;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  margin: 20px;      /* pour « mordre » le padding de .intro-box */
-  box-sizing: border-box;
-  animation: warnPulse 2s infinite; /* <-- nouvelle anim, plus de translate */
+  margin: 25px 0;
+  border-radius: 5px;
+  animation: warnPulse 2s infinite;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+  letter-spacing: 2px;
+  width: 100%;
+  box-sizing: border-box; /* évite le débordement avec la bordure */
 }
 
 .final-screen {
@@ -1189,43 +1241,41 @@
         </div>
     </div>
     
-<div class="intro-screen" id="introScreen">
-    <div class="intro-box">
-        <h1>╔════════════════════════════════════════╗<br>
-            ║  PROTOCOLES DE SÉLECTION ACTIVÉS       ║<br>
-            ╚════════════════════════════════════════╝</h1>
-        
-        <div class="intro-message">
-            <p style="margin-bottom: 20px;">
-                "Avant que mes assistants ne disparaissent un à un, je les testais. 
-                Seuls les plus compétents pouvaient accéder à mon atelier secret 
-                et découvrir la véritable nature de mon projet.
-            </p>
-            
-            <p style="margin-bottom: 20px;">
-                Vous avez trouvé le code <span style="color: #ff6600; font-weight: bold;">CYLINDRE</span>.
-                Vous avez déchiffré mes messages.
-            </p>
-            
-            <p style="margin-bottom: 20px;">
-                Maintenant, prouvez-moi que vous méritez d'accéder aux documents finaux.
-                Prouvez que vous auriez pu survivre à mes côtés..."
-            </p>
-        </div>
-        
-        <div class="signature">
-            - Le Mécanicien
-        </div>
-        
-        <div class="warning-box">
-            ⚠️ 7 TESTS À RÉUSSIR ⚠️
-        </div>
-        
-        <button onclick="startTests()" style="font-size: 18px; padding: 15px;">
-            COMMENCER LES TESTS
-        </button>
-    </div>
-</div>
+	<div class="intro-screen" id="introScreen">
+		<div class="intro-box">
+			<h1>PROTOCOLES DE SÉLECTION ACTIVÉS</h1>
+			
+			<div class="intro-message">
+				<p style="margin-bottom: 20px;">
+					"Avant que mes assistants ne disparaissent un à un, je les testais. 
+					Seuls les plus compétents pouvaient accéder à mon atelier secret 
+					et découvrir la véritable nature de mon projet.
+				</p>
+				
+				<p style="margin-bottom: 20px;">
+					Vous avez trouvé le code <span style="color: #ff6600; font-weight: bold;">CYLINDRE</span>.
+					Vous avez déchiffré mes messages.
+				</p>
+				
+				<p style="margin-bottom: 20px;">
+					Maintenant, prouvez-moi que vous méritez d'accéder aux documents finaux.
+					Prouvez que vous auriez pu survivre à mes côtés..."
+				</p>
+			</div>
+			
+			<div class="signature">
+				- Le Mécanicien
+			</div>
+			
+			<div class="warning-box">
+				⚠️ 7 TESTS À RÉUSSIR ⚠️
+			</div>
+			
+			<button onclick="startTests()" style="font-size: 18px; padding: 15px;">
+				COMMENCER LES TESTS
+			</button>
+		</div>
+	</div>
 
     <div class="activation-screen" id="activationScreen">
         <canvas class="matrix-bg" id="matrixCanvas"></canvas>
@@ -1462,69 +1512,69 @@
                 </div>
             </div>
             
-<div class="terminal-module locked" id="mazeModule">
-    <div class="module-header">
-        <span class="module-icon">🗺️</span>
-        <span class="module-title">LABYRINTHE D'ÉVACUATION</span>
-    </div>
-    <div class="module-content">
-        <div class="enigma-box">
-            <h3>Trouvez la sortie</h3>
-            <p>Utilisez les flèches du clavier ou les boutons ci-dessous</p>
-            
-            <canvas id="mazeCanvas" width="300" height="300" style="border: 2px solid #0f0; background: #000; display: block; margin: 15px auto;"></canvas>
-            
-            <!-- NOUVEAUX CONTRÔLES TACTILES -->
-            <div style="display: flex; flex-direction: column; align-items: center; margin: 20px 0; gap: 5px;">
-                <!-- Bouton Haut -->
-                <button onclick="moveMazePlayer('up')" class="maze-btn" style="width: 60px; height: 60px;">
-                    ▲
-                </button>
-                
-                <!-- Boutons Gauche, Centre, Droite -->
-                <div style="display: flex; gap: 5px;">
-                    <button onclick="moveMazePlayer('left')" class="maze-btn" style="width: 60px; height: 60px;">
-                        ◀
-                    </button>
-                    
-                    <div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border: 2px solid #666; border-radius: 5px; font-size: 20px;">
-                        🎃
-                    </div>
-                    
-                    <button onclick="moveMazePlayer('right')" class="maze-btn" style="width: 60px; height: 60px;">
-                        ▶
-                    </button>
-                </div>
-                
-                <!-- Bouton Bas -->
-                <button onclick="moveMazePlayer('down')" class="maze-btn" style="width: 60px; height: 60px;">
-                    ▼
-                </button>
-            </div>
-            
-            <div style="text-align: center; margin-top: 10px; color: #ff6600;">
-                Position: <span id="mazePos">Début</span>
-            </div>
-            <div id="mazeResult" style="text-align: center; margin-top: 10px;"></div>
-            
-            <!-- Bouton Reset -->
-            <button onclick="resetMaze()" style="
-                width: 100%;
-                padding: 10px;
-                background: rgba(255, 102, 0, 0.3);
-                color: #ff6600;
-                border: 2px solid #ff6600;
-                font-weight: bold;
-                cursor: pointer;
-                border-radius: 5px;
-                margin-top: 15px;
-                transition: all 0.3s;
-            " onmouseover="this.style.background='rgba(255,102,0,0.5)'" onmouseout="this.style.background='rgba(255,102,0,0.3)'">
-                🔄 RECOMMENCER LE LABYRINTHE
-            </button>
-        </div>
-    </div>
-</div>
+			<div class="terminal-module locked" id="mazeModule">
+				<div class="module-header">
+					<span class="module-icon">🗺️</span>
+					<span class="module-title">LABYRINTHE D'ÉVACUATION</span>
+				</div>
+				<div class="module-content">
+					<div class="enigma-box">
+						<h3>Trouvez la sortie</h3>
+						<p>Utilisez les flèches du clavier ou les boutons ci-dessous</p>
+						
+						<canvas id="mazeCanvas" width="300" height="300" style="border: 2px solid #0f0; background: #000; display: block; margin: 15px auto;"></canvas>
+						
+						<!-- NOUVEAUX CONTRÔLES TACTILES -->
+						<div style="display: flex; flex-direction: column; align-items: center; margin: 20px 0; gap: 5px;">
+							<!-- Bouton Haut -->
+							<button onclick="moveMazePlayer('up')" class="maze-btn" style="width: 60px; height: 60px;">
+								▲
+							</button>
+							
+							<!-- Boutons Gauche, Centre, Droite -->
+							<div style="display: flex; gap: 5px;">
+								<button onclick="moveMazePlayer('left')" class="maze-btn" style="width: 60px; height: 60px;">
+									◀
+								</button>
+								
+								<div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border: 2px solid #666; border-radius: 5px; font-size: 20px;">
+									🎃
+								</div>
+								
+								<button onclick="moveMazePlayer('right')" class="maze-btn" style="width: 60px; height: 60px;">
+									▶
+								</button>
+							</div>
+							
+							<!-- Bouton Bas -->
+							<button onclick="moveMazePlayer('down')" class="maze-btn" style="width: 60px; height: 60px;">
+								▼
+							</button>
+						</div>
+						
+						<div style="text-align: center; margin-top: 10px; color: #ff6600;">
+							Position: <span id="mazePos">Début</span>
+						</div>
+						<div id="mazeResult" style="text-align: center; margin-top: 10px;"></div>
+						
+						<!-- Bouton Reset -->
+						<button onclick="resetMaze()" style="
+							width: 100%;
+							padding: 10px;
+							background: rgba(255, 102, 0, 0.3);
+							color: #ff6600;
+							border: 2px solid #ff6600;
+							font-weight: bold;
+							cursor: pointer;
+							border-radius: 5px;
+							margin-top: 15px;
+							transition: all 0.3s;
+						" onmouseover="this.style.background='rgba(255,102,0,0.5)'" onmouseout="this.style.background='rgba(255,102,0,0.3)'">
+							🔄 RECOMMENCER LE LABYRINTHE
+						</button>
+					</div>
+				</div>
+			</div>
             
             <div class="terminal-module locked" id="caesarModule">
                 <div class="module-header">
@@ -1601,34 +1651,34 @@
                 </div>
             </div>
 			
-<div class="terminal-module" style="border-color: #ff6600; box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);">
-    <div class="module-header">
-        <span class="module-icon">🎮</span>
-        <span class="module-title">ZONE DE DÉTENTE</span>
-    </div>
-    <div class="module-content">
-        <p style="color: #ff6600; font-weight: bold; text-align: center; font-size: 18px; margin-bottom: 10px;">
-            🎃 MINI-JEUX BONUS 🎃
-        </p>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; text-align: center;">
-            <div style="background: rgba(255, 102, 0, 0.2); padding: 10px; border: 1px solid #ff6600; border-radius: 5px;">
-                <div style="font-size: 24px;">🎯</div>
-                <div style="font-size: 12px; color: #0f0;">Tir aux citrouilles</div>
-            </div>
-            <div style="background: rgba(255, 102, 0, 0.2); padding: 10px; border: 1px solid #ff6600; border-radius: 5px;">
-                <div style="font-size: 24px;">🧠</div>
-                <div style="font-size: 12px; color: #0f0;">Memory</div>
-            </div>
-            <div style="background: rgba(255, 102, 0, 0.2); padding: 10px; border: 1px solid #ff6600; border-radius: 5px;">
-                <div style="font-size: 24px;">⌨️</div>
-                <div style="font-size: 12px; color: #0f0;">Typing</div>
-            </div>
-        </div>
-        <a href="minijeux.html" target="_blank" style="display: block; padding: 15px; background: #ff6600; color: #000; text-align: center; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; transition: all 0.3s; font-size: 16px;">
-            🎮 JOUER MAINTENANT
-        </a>
-    </div>
-</div>
+			<div class="terminal-module" style="border-color: #ff6600; box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);">
+				<div class="module-header">
+					<span class="module-icon">🎮</span>
+					<span class="module-title">ZONE DE DÉTENTE</span>
+				</div>
+				<div class="module-content">
+					<p style="color: #ff6600; font-weight: bold; text-align: center; font-size: 18px; margin-bottom: 10px;">
+						🎃 MINI-JEUX BONUS 🎃
+					</p>
+					<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; text-align: center;">
+						<div style="background: rgba(255, 102, 0, 0.2); padding: 10px; border: 1px solid #ff6600; border-radius: 5px;">
+							<div style="font-size: 24px;">🎯</div>
+							<div style="font-size: 12px; color: #0f0;">Tir aux citrouilles</div>
+						</div>
+						<div style="background: rgba(255, 102, 0, 0.2); padding: 10px; border: 1px solid #ff6600; border-radius: 5px;">
+							<div style="font-size: 24px;">🧠</div>
+							<div style="font-size: 12px; color: #0f0;">Memory</div>
+						</div>
+						<div style="background: rgba(255, 102, 0, 0.2); padding: 10px; border: 1px solid #ff6600; border-radius: 5px;">
+							<div style="font-size: 24px;">⌨️</div>
+							<div style="font-size: 12px; color: #0f0;">Typing</div>
+						</div>
+					</div>
+					<a href="minijeux.html" target="_blank" style="display: block; padding: 15px; background: #ff6600; color: #000; text-align: center; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; transition: all 0.3s; font-size: 16px;">
+						🎮 JOUER MAINTENANT
+					</a>
+				</div>
+			</div>
             
             <div class="terminal-module" style="border-color: #f00;">
                 <div class="module-header">
@@ -1676,35 +1726,40 @@
         
         let caesarSolved = false;
         
-        function triggerJumpscare() {
-            window.errorCount++;
-            const jumpscare = document.getElementById('jumpscare');
-            const img = jumpscare.querySelector('.jumpscare-img');
-            
-            const scares = [
-                { emoji: '💀', duration: 800 },
-                { emoji: '👻', duration: 1000 },
-                { emoji: '🎃', duration: 1200 },
-                { emoji: '🔪', duration: 1500 },
-                { emoji: '😱', duration: 2000 }
-            ];
-            
-            const level = Math.min(window.errorCount - 1, scares.length - 1);
-            const scare = scares[level];
-            
-            img.textContent = scare.emoji;
-            img.style.fontSize = (200 + level * 50) + 'px';
-            
-            jumpscare.classList.add('active');
-            jumpscare.style.animationDuration = '0.05s';
-            jumpscare.style.animationIterationCount = 5 + level * 3;
-            
-            setTimeout(() => {
-                jumpscare.classList.remove('active');
-                jumpscare.style.animationDuration = '0.1s';
-                jumpscare.style.animationIterationCount = '5';
-            }, scare.duration);
-        }
+		function triggerJumpscare() {
+			const jumpscare = document.getElementById('jumpscare');
+			const img = jumpscare.querySelector('.jumpscare-img');
+			
+			const scares = [
+				{ emoji: '💀', duration: 800 },
+				{ emoji: '👻', duration: 1000 },
+				{ emoji: '🎃', duration: 1200 },
+				{ emoji: '🔪', duration: 1500 },
+				{ emoji: '😱', duration: 2000 },
+				{ emoji: '🧟', duration: 900 },
+				{ emoji: '☠️', duration: 1100 },
+				{ emoji: '👹', duration: 1300 }
+			];
+			
+			// Sélection aléatoire d'un jumpscare
+			const randomScare = scares[Math.floor(Math.random() * scares.length)];
+			
+			img.textContent = randomScare.emoji;
+			img.style.fontSize = (200 + Math.random() * 100) + 'px';
+			
+			jumpscare.classList.add('active');
+			jumpscare.style.animationDuration = '0.05s';
+			jumpscare.style.animationIterationCount = Math.floor(5 + Math.random() * 10);
+			
+			setTimeout(() => {
+				jumpscare.classList.remove('active');
+				jumpscare.style.animationDuration = '0.1s';
+				jumpscare.style.animationIterationCount = '5';
+				// Réinitialiser l'icône pour qu'elle ne reste pas visible
+				img.textContent = '';
+				img.style.fontSize = '300px';
+			}, randomScare.duration);
+		}
         
         function rotateWheel(wheelIndex, direction) {
             wheelValues[wheelIndex] = (wheelValues[wheelIndex] + direction + 10) % 10;
@@ -1787,12 +1842,7 @@
                 setTimeout(() => drip.remove(), 3000);
             }, 2000);
         }
-        
-        function triggerJumpscare() {
-            const jumpscare = document.getElementById('jumpscare');
-            jumpscare.classList.add('active');
-            setTimeout(() => jumpscare.classList.remove('active'), 1000);
-        }
+       
         
         function checkPassword() {
             const input = document.getElementById('passwordInput').value.toUpperCase();
@@ -1849,18 +1899,18 @@
             
             const matrixInterval = setInterval(drawMatrix, 50);
             
-setTimeout(() => {
-    clearInterval(matrixInterval);
-    document.getElementById('activationScreen').style.display = 'none';
-    document.getElementById('introScreen').style.display = 'flex';
-    createParticles();
-    createBloodDrips();
-}, 3000);
+		setTimeout(() => {
+			clearInterval(matrixInterval);
+			document.getElementById('activationScreen').style.display = 'none';
+			document.getElementById('introScreen').style.display = 'flex';
+			createParticles();
+			createBloodDrips();
+		}, 3000);
         }
         function startTests() {
-    document.getElementById('introScreen').style.display = 'none';
-    document.getElementById('terminalScreen').style.display = 'block';
-}
+			document.getElementById('introScreen').style.display = 'none';
+			document.getElementById('terminalScreen').style.display = 'block';
+		}
         function unlockStep2() {
             document.getElementById('step1').classList.remove('active');
             document.getElementById('step1').classList.add('completed');
@@ -2064,165 +2114,165 @@ setTimeout(() => {
             }
         }
 
-let mazeCompleted = false;
-let touchStartX = 0;
-let touchStartY = 0;
-        
-        let mazePlayer = {x: 0, y: 0};
-        const mazeSize = 10;
-        const cellSize = 30;
-        let maze = [];
-        
-function initMaze() {
-    mazeCompleted = false;
-    maze = [];
-    for (let y = 0; y < mazeSize; y++) {
-        maze[y] = [];
-        for (let x = 0; x < mazeSize; x++) {
-            maze[y][x] = Math.random() > 0.3 ? 0 : 1;
-        }
-    }
-    maze[0][0] = 0;
-    maze[mazeSize-1][mazeSize-1] = 2;
-    mazePlayer = {x: 0, y: 0};
-    drawMaze();
-    
-    // Activer les boutons
-    document.querySelectorAll('.maze-btn').forEach(btn => btn.disabled = false);
-    
-    document.addEventListener('keydown', handleMazeMove);
-}
+		let mazeCompleted = false;
+		let touchStartX = 0;
+		let touchStartY = 0;
+				
+				let mazePlayer = {x: 0, y: 0};
+				const mazeSize = 10;
+				const cellSize = 30;
+				let maze = [];
+				
+		function initMaze() {
+			mazeCompleted = false;
+			maze = [];
+			for (let y = 0; y < mazeSize; y++) {
+				maze[y] = [];
+				for (let x = 0; x < mazeSize; x++) {
+					maze[y][x] = Math.random() > 0.3 ? 0 : 1;
+				}
+			}
+			maze[0][0] = 0;
+			maze[mazeSize-1][mazeSize-1] = 2;
+			mazePlayer = {x: 0, y: 0};
+			drawMaze();
+			
+			// Activer les boutons
+			document.querySelectorAll('.maze-btn').forEach(btn => btn.disabled = false);
+			
+			document.addEventListener('keydown', handleMazeMove);
+		}
 
-// Fonction pour déplacer le joueur avec les boutons
-function moveMazePlayer(direction) {
-    if (mazeCompleted) return;
-    
-    let newX = mazePlayer.x;
-    let newY = mazePlayer.y;
-    
-    switch(direction) {
-        case 'up':
-            newY--;
-            break;
-        case 'down':
-            newY++;
-            break;
-        case 'left':
-            newX--;
-            break;
-        case 'right':
-            newX++;
-            break;
-    }
-    
-    // Vérifier si le mouvement est valide
-    if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && maze[newY][newX] !== 1) {
-        mazePlayer.x = newX;
-        mazePlayer.y = newY;
-        drawMaze();
-        
-        // Animation du bouton
-        const buttonDirections = {
-            'up': 0,
-            'left': 1,
-            'right': 2,
-            'down': 3
-        };
-        const buttons = document.querySelectorAll('.maze-btn');
-        const btn = buttons[buttonDirections[direction]];
-        if (btn) {
-            btn.classList.add('pressed');
-            setTimeout(() => btn.classList.remove('pressed'), 300);
-        }
-        
-        // Vérifier si on a atteint la sortie
-        if (maze[newY][newX] === 2) {
-            mazeCompleted = true;
-            document.getElementById('mazeResult').innerHTML = '<p style="color: #0f0; font-weight: bold;">✓ SORTIE TROUVÉE !</p>';
-            document.getElementById('mazeModule').style.borderColor = '#0f0';
-            document.getElementById('caesarModule').classList.remove('locked');
-            showNotification('✓ Labyrinthe terminé - Message crypté débloqué !', '#0f0');
-            
-            // Désactiver les boutons
-            document.querySelectorAll('.maze-btn').forEach(btn => btn.disabled = true);
-            
-            // Retirer l'event listener du clavier
-            document.removeEventListener('keydown', handleMazeMove);
-        }
-    } else {
-        // Feedback visuel quand on tape un mur
-        const canvas = document.getElementById('mazeCanvas');
-        canvas.style.animation = 'shake 0.3s';
-        setTimeout(() => canvas.style.animation = '', 300);
-    }
-}
+		// Fonction pour déplacer le joueur avec les boutons
+		function moveMazePlayer(direction) {
+			if (mazeCompleted) return;
+			
+			let newX = mazePlayer.x;
+			let newY = mazePlayer.y;
+			
+			switch(direction) {
+				case 'up':
+					newY--;
+					break;
+				case 'down':
+					newY++;
+					break;
+				case 'left':
+					newX--;
+					break;
+				case 'right':
+					newX++;
+					break;
+			}
+			
+			// Vérifier si le mouvement est valide
+			if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && maze[newY][newX] !== 1) {
+				mazePlayer.x = newX;
+				mazePlayer.y = newY;
+				drawMaze();
+				
+				// Animation du bouton
+				const buttonDirections = {
+					'up': 0,
+					'left': 1,
+					'right': 2,
+					'down': 3
+				};
+				const buttons = document.querySelectorAll('.maze-btn');
+				const btn = buttons[buttonDirections[direction]];
+				if (btn) {
+					btn.classList.add('pressed');
+					setTimeout(() => btn.classList.remove('pressed'), 300);
+				}
+				
+				// Vérifier si on a atteint la sortie
+				if (maze[newY][newX] === 2) {
+					mazeCompleted = true;
+					document.getElementById('mazeResult').innerHTML = '<p style="color: #0f0; font-weight: bold;">✓ SORTIE TROUVÉE !</p>';
+					document.getElementById('mazeModule').style.borderColor = '#0f0';
+					document.getElementById('caesarModule').classList.remove('locked');
+					showNotification('✓ Labyrinthe terminé - Message crypté débloqué !', '#0f0');
+					
+					// Désactiver les boutons
+					document.querySelectorAll('.maze-btn').forEach(btn => btn.disabled = true);
+					
+					// Retirer l'event listener du clavier
+					document.removeEventListener('keydown', handleMazeMove);
+				}
+			} else {
+				// Feedback visuel quand on tape un mur
+				const canvas = document.getElementById('mazeCanvas');
+				canvas.style.animation = 'shake 0.3s';
+				setTimeout(() => canvas.style.animation = '', 300);
+			}
+		}
 
-// Fonction pour recommencer le labyrinthe
-function resetMaze() {
-    mazeCompleted = false;
-    
-    // Régénérer le labyrinthe
-    maze = [];
-    for (let y = 0; y < mazeSize; y++) {
-        maze[y] = [];
-        for (let x = 0; x < mazeSize; x++) {
-            maze[y][x] = Math.random() > 0.3 ? 0 : 1;
-        }
-    }
-    maze[0][0] = 0;
-    maze[mazeSize-1][mazeSize-1] = 2;
-    mazePlayer = {x: 0, y: 0};
-    
-    // Réactiver les boutons
-    document.querySelectorAll('.maze-btn').forEach(btn => btn.disabled = false);
-    
-    // Effacer le résultat
-    document.getElementById('mazeResult').innerHTML = '';
-    
-    // Redessiner
-    drawMaze();
-    
-    showNotification('🔄 Labyrinthe régénéré !', '#ff6600');
-}
+		// Fonction pour recommencer le labyrinthe
+		function resetMaze() {
+			mazeCompleted = false;
+			
+			// Régénérer le labyrinthe
+			maze = [];
+			for (let y = 0; y < mazeSize; y++) {
+				maze[y] = [];
+				for (let x = 0; x < mazeSize; x++) {
+					maze[y][x] = Math.random() > 0.3 ? 0 : 1;
+				}
+			}
+			maze[0][0] = 0;
+			maze[mazeSize-1][mazeSize-1] = 2;
+			mazePlayer = {x: 0, y: 0};
+			
+			// Réactiver les boutons
+			document.querySelectorAll('.maze-btn').forEach(btn => btn.disabled = false);
+			
+			// Effacer le résultat
+			document.getElementById('mazeResult').innerHTML = '';
+			
+			// Redessiner
+			drawMaze();
+			
+			showNotification('🔄 Labyrinthe régénéré !', '#ff6600');
+		}
 
-// Support tactile/swipe
-function handleTouchStart(e) {
-    const touch = e.touches[0];
-    touchStartX = touch.clientX;
-    touchStartY = touch.clientY;
-}
+		// Support tactile/swipe
+		function handleTouchStart(e) {
+			const touch = e.touches[0];
+			touchStartX = touch.clientX;
+			touchStartY = touch.clientY;
+		}
 
-function handleTouchEnd(e) {
-    if (mazeCompleted) return;
-    
-    const touch = e.changedTouches[0];
-    const touchEndX = touch.clientX;
-    const touchEndY = touch.clientY;
-    
-    const deltaX = touchEndX - touchStartX;
-    const deltaY = touchEndY - touchStartY;
-    
-    const minSwipeDistance = 30;
-    
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        if (Math.abs(deltaX) > minSwipeDistance) {
-            moveMazePlayer(deltaX > 0 ? 'right' : 'left');
-        }
-    } else {
-        if (Math.abs(deltaY) > minSwipeDistance) {
-            moveMazePlayer(deltaY > 0 ? 'down' : 'up');
-        }
-    }
-}
+		function handleTouchEnd(e) {
+			if (mazeCompleted) return;
+			
+			const touch = e.changedTouches[0];
+			const touchEndX = touch.clientX;
+			const touchEndY = touch.clientY;
+			
+			const deltaX = touchEndX - touchStartX;
+			const deltaY = touchEndY - touchStartY;
+			
+			const minSwipeDistance = 30;
+			
+			if (Math.abs(deltaX) > Math.abs(deltaY)) {
+				if (Math.abs(deltaX) > minSwipeDistance) {
+					moveMazePlayer(deltaX > 0 ? 'right' : 'left');
+				}
+			} else {
+				if (Math.abs(deltaY) > minSwipeDistance) {
+					moveMazePlayer(deltaY > 0 ? 'down' : 'up');
+				}
+			}
+		}
 
-// Ajouter les event listeners pour le tactile
-document.addEventListener('DOMContentLoaded', () => {
-    const mazeCanvas = document.getElementById('mazeCanvas');
-    if (mazeCanvas) {
-        mazeCanvas.addEventListener('touchstart', handleTouchStart, { passive: true });
-        mazeCanvas.addEventListener('touchend', handleTouchEnd, { passive: true });
-    }
-});
+		// Ajouter les event listeners pour le tactile
+		document.addEventListener('DOMContentLoaded', () => {
+			const mazeCanvas = document.getElementById('mazeCanvas');
+			if (mazeCanvas) {
+				mazeCanvas.addEventListener('touchstart', handleTouchStart, { passive: true });
+				mazeCanvas.addEventListener('touchend', handleTouchEnd, { passive: true });
+			}
+		});
         
         function drawMaze() {
             const canvas = document.getElementById('mazeCanvas');
@@ -2251,21 +2301,21 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('mazePos').textContent = `(${mazePlayer.x}, ${mazePlayer.y})`;
         }
 
-function handleMazeMove(e) {
-    if (mazeCompleted) return;
-    
-    const keyMap = {
-        'ArrowUp': 'up',
-        'ArrowDown': 'down',
-        'ArrowLeft': 'left',
-        'ArrowRight': 'right'
-    };
-    
-    if (keyMap[e.key]) {
-        e.preventDefault();
-        moveMazePlayer(keyMap[e.key]);
-    }
-}
+		function handleMazeMove(e) {
+			if (mazeCompleted) return;
+			
+			const keyMap = {
+				'ArrowUp': 'up',
+				'ArrowDown': 'down',
+				'ArrowLeft': 'left',
+				'ArrowRight': 'right'
+			};
+			
+			if (keyMap[e.key]) {
+				e.preventDefault();
+				moveMazePlayer(keyMap[e.key]);
+			}
+		}
         
         function updateCaesarDecrypt() {
             const shift = parseInt(document.getElementById('caesarShift').value);
@@ -2316,11 +2366,11 @@ function handleMazeMove(e) {
             }
         }
 
-function closeFinalScreen() {
-    document.getElementById('finalScreen').classList.remove('active');
-    // Scroll vers les dossiers
-    document.getElementById('filesModule').scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
+		function closeFinalScreen() {
+			document.getElementById('finalScreen').classList.remove('active');
+			// Scroll vers les dossiers
+			document.getElementById('filesModule').scrollIntoView({ behavior: 'smooth', block: 'center' });
+		}
         
         function checkCode() {
             const input = document.getElementById('codeInput').value;
@@ -2409,225 +2459,231 @@ function closeFinalScreen() {
         document.getElementById('imageModal').addEventListener('click', (e) => {
             if (e.target.id === 'imageModal') closeModal();
         });
-// ============================================
-// SYSTÈME D'ADMINISTRATION
-// ============================================
+		// ============================================
+		// SYSTÈME D'ADMINISTRATION
+		// ============================================
 
-const ADMIN_PASSWORD = "MECANICIEN"; // Changez ce mot de passe !
-let isAdminAuthenticated = false;
+		const ADMIN_PASSWORD = "MECANICIEN"; // Changez ce mot de passe !
+		let isAdminAuthenticated = false;
 
-// Toggle panneau admin
-function toggleAdminPanel() {
-    const panel = document.getElementById('adminPanel');
-    if (panel.style.display === 'none' || panel.style.display === '') {
-        panel.style.display = 'block';
-        updateGameStatus();
-    } else {
-        panel.style.display = 'none';
-    }
-}
+		// Toggle panneau admin
+		function toggleAdminPanel() {
+			const panel = document.getElementById('adminPanel');
+			if (panel.style.display === 'none' || panel.style.display === '') {
+				// Réinitialiser l'authentification à chaque ouverture
+				isAdminAuthenticated = false;
+				document.getElementById('adminAuth').style.display = 'block';
+				document.getElementById('adminControls').style.display = 'none';
+				document.getElementById('adminPassword').value = '';
+				document.getElementById('adminAuthError').textContent = '';
+				
+				panel.style.display = 'block';
+			} else {
+				panel.style.display = 'none';
+			}
+		}
 
-function closeAdminPanel() {
-    document.getElementById('adminPanel').style.display = 'none';
-}
+		function closeAdminPanel() {
+			document.getElementById('adminPanel').style.display = 'none';
+		}
 
-// Vérification mot de passe admin
-function checkAdminPassword() {
-    const input = document.getElementById('adminPassword').value;
-    const error = document.getElementById('adminAuthError');
-    
-    if (input === ADMIN_PASSWORD) {
-        isAdminAuthenticated = true;
-        document.getElementById('adminAuth').style.display = 'none';
-        document.getElementById('adminControls').style.display = 'block';
-        updateGameStatus();
-    } else {
-        error.textContent = '❌ Code incorrect';
-        document.getElementById('adminPassword').value = '';
-        setTimeout(() => error.textContent = '', 2000);
-    }
-}
+		// Vérification mot de passe admin
+		function checkAdminPassword() {
+			const input = document.getElementById('adminPassword').value;
+			const error = document.getElementById('adminAuthError');
+			
+			if (input === ADMIN_PASSWORD) {
+				isAdminAuthenticated = true;
+				document.getElementById('adminAuth').style.display = 'none';
+				document.getElementById('adminControls').style.display = 'block';
+				updateGameStatus();
+			} else {
+				error.textContent = '❌ Code incorrect';
+				document.getElementById('adminPassword').value = '';
+				setTimeout(() => error.textContent = '', 2000);
+			}
+		}
 
-// Mise à jour de l'état du jeu
-function updateGameStatus() {
-    const status = document.getElementById('gameStatus');
-    if (!status) return;
-    
-    const steps = [
-        { id: 'step1', name: 'Cadenas Audio' },
-        { id: 'step2', name: 'Quiz Citrouilles' },
-        { id: 'step3', name: 'Mini-jeux' },
-        { id: 'step4', name: 'Dossiers Finaux' }
-    ];
-    
-    let html = '';
-    steps.forEach(step => {
-        const elem = document.getElementById(step.id);
-        let state = '⚪ Verrouillé';
-        let color = '#666';
-        
-        if (elem.classList.contains('completed')) {
-            state = '✅ Complété';
-            color = '#0f0';
-        } else if (elem.classList.contains('active')) {
-            state = '🔵 En cours';
-            color = '#667eea';
-        }
-        
-        html += `<div style="color: ${color};">${state} - ${step.name}</div>`;
-    });
-    
-    status.innerHTML = html;
-}
+		// Mise à jour de l'état du jeu
+		function updateGameStatus() {
+			const status = document.getElementById('gameStatus');
+			if (!status) return;
+			
+			const steps = [
+				{ id: 'step1', name: 'Cadenas Audio' },
+				{ id: 'step2', name: 'Quiz Citrouilles' },
+				{ id: 'step3', name: 'Mini-jeux' },
+				{ id: 'step4', name: 'Dossiers Finaux' }
+			];
+			
+			let html = '';
+			steps.forEach(step => {
+				const elem = document.getElementById(step.id);
+				let state = '⚪ Verrouillé';
+				let color = '#666';
+				
+				if (elem.classList.contains('completed')) {
+					state = '✅ Complété';
+					color = '#0f0';
+				} else if (elem.classList.contains('active')) {
+					state = '🔵 En cours';
+					color = '#667eea';
+				}
+				
+				html += `<div style="color: ${color};">${state} - ${step.name}</div>`;
+			});
+			
+			status.innerHTML = html;
+		}
 
-// Réinitialiser tout le jeu
-function adminResetGame() {
-    if (!confirm('⚠️ ATTENTION : Réinitialiser complètement le jeu ?')) return;
-    
-    // Reset des étapes
-    ['step1', 'step2', 'step3', 'step4'].forEach(id => {
-        const elem = document.getElementById(id);
-        elem.classList.remove('active', 'completed');
-        elem.classList.add('locked');
-    });
-    
-    // Réactiver étape 1
-    document.getElementById('step1').classList.remove('locked');
-    document.getElementById('step1').classList.add('active');
-    
-    // Verrouiller tous les modules
-    ['enigmaModule', 'codeModule', 'simonModule', 'puzzleModule', 'mazeModule', 'caesarModule', 'filesModule'].forEach(id => {
-        const elem = document.getElementById(id);
-        if (elem) elem.classList.add('locked');
-    });
-    
-    // Reset des variables
-    wheelValues = [0, 0, 0, 0];
-    quizAnswered = false;
-    window.filesOpened = new Set();
-    window.errorCount = 0;
-    simonSequence = [];
-    simonRound = 0;
-    puzzleSolved = false;
-    caesarSolved = false;
-    
-    // Reset des affichages
-    document.querySelectorAll('.wheel-numbers').forEach((wheel, index) => {
-        updateWheelDisplay(index);
-    });
-    
-    document.getElementById('lockResult').innerHTML = '';
-    document.getElementById('codeInput').value = '';
-    document.getElementById('caesarShift').value = '1';
-    updateCaesarDecrypt();
-    
-    // Fermer l'écran final si ouvert
-    document.getElementById('finalScreen').classList.remove('active');
-    
-    alert('✅ Jeu réinitialisé !');
-    updateGameStatus();
-}
+		// Réinitialiser tout le jeu
+		function adminResetGame() {
+			if (!confirm('⚠️ ATTENTION : Réinitialiser complètement le jeu ?')) return;
+			
+			// Reset des étapes
+			['step1', 'step2', 'step3', 'step4'].forEach(id => {
+				const elem = document.getElementById(id);
+				elem.classList.remove('active', 'completed');
+				elem.classList.add('locked');
+			});
+			
+			// Réactiver étape 1
+			document.getElementById('step1').classList.remove('locked');
+			document.getElementById('step1').classList.add('active');
+			
+			// Verrouiller tous les modules
+			['enigmaModule', 'codeModule', 'simonModule', 'puzzleModule', 'mazeModule', 'caesarModule', 'filesModule'].forEach(id => {
+				const elem = document.getElementById(id);
+				if (elem) elem.classList.add('locked');
+			});
+			
+			// Reset des variables
+			wheelValues = [0, 0, 0, 0];
+			quizAnswered = false;
+			window.filesOpened = new Set();
+			window.errorCount = 0;
+			simonSequence = [];
+			simonRound = 0;
+			puzzleSolved = false;
+			caesarSolved = false;
+			
+			// Reset des affichages
+			document.querySelectorAll('.wheel-numbers').forEach((wheel, index) => {
+				updateWheelDisplay(index);
+			});
+			
+			document.getElementById('lockResult').innerHTML = '';
+			document.getElementById('codeInput').value = '';
+			document.getElementById('caesarShift').value = '1';
+			updateCaesarDecrypt();
+			
+			// Fermer l'écran final si ouvert
+			document.getElementById('finalScreen').classList.remove('active');
+			
+			alert('✅ Jeu réinitialisé !');
+			updateGameStatus();
+		}
 
-// Débloquer toutes les étapes
-function adminUnlockAll() {
-    if (!confirm('Débloquer TOUTES les étapes ?')) return;
-    
-    ['step1', 'step2', 'step3', 'step4'].forEach(id => {
-        const elem = document.getElementById(id);
-        elem.classList.remove('locked', 'active');
-        elem.classList.add('completed');
-    });
-    
-    ['enigmaModule', 'codeModule', 'simonModule', 'puzzleModule', 'mazeModule', 'caesarModule', 'filesModule'].forEach(id => {
-        const elem = document.getElementById(id);
-        if (elem) {
-            elem.classList.remove('locked');
-            elem.style.borderColor = '#0f0';
-        }
-    });
-    
-    alert('✅ Toutes les étapes sont débloquées !');
-    updateGameStatus();
-}
+		// Débloquer toutes les étapes
+		function adminUnlockAll() {
+			if (!confirm('Débloquer TOUTES les étapes ?')) return;
+			
+			['step1', 'step2', 'step3', 'step4'].forEach(id => {
+				const elem = document.getElementById(id);
+				elem.classList.remove('locked', 'active');
+				elem.classList.add('completed');
+			});
+			
+			['enigmaModule', 'codeModule', 'simonModule', 'puzzleModule', 'mazeModule', 'caesarModule', 'filesModule'].forEach(id => {
+				const elem = document.getElementById(id);
+				if (elem) {
+					elem.classList.remove('locked');
+					elem.style.borderColor = '#0f0';
+				}
+			});
+			
+			alert('✅ Toutes les étapes sont débloquées !');
+			updateGameStatus();
+		}
 
-// Aller directement aux dossiers finaux
-function adminSkipToFiles() {
-    adminUnlockAll();
-    document.getElementById('finalScreen').classList.add('active');
-    
-    setTimeout(() => {
-        document.getElementById('filesModule').scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center' 
-        });
-    }, 500);
-}
+		// Aller directement aux dossiers finaux
+		function adminSkipToFiles() {
+			adminUnlockAll();
+			document.getElementById('finalScreen').classList.add('active');
+			
+			setTimeout(() => {
+				document.getElementById('filesModule').scrollIntoView({ 
+					behavior: 'smooth', 
+					block: 'center' 
+				});
+			}, 500);
+		}
 
-// Débloquer une étape spécifique
-function adminUnlockStep(stepName) {
-    const modules = {
-        'enigma': { module: 'enigmaModule', step: 'step2', prev: 'step1' },
-        'code': { module: 'codeModule', step: 'step3', prev: 'step2' },
-        'simon': { module: 'simonModule', step: 'step3', prev: 'step2' },
-        'puzzle': { module: 'puzzleModule', step: 'step3', prev: 'step2' },
-        'maze': { module: 'mazeModule', step: 'step3', prev: 'step2' },
-        'caesar': { module: 'caesarModule', step: 'step3', prev: 'step2' },
-        'files': { module: 'filesModule', step: 'step4', prev: 'step3' }
-    };
-    
-    const config = modules[stepName];
-    if (!config) return;
-    
-    // Débloquer le module
-    const moduleElem = document.getElementById(config.module);
-    if (moduleElem) {
-        moduleElem.classList.remove('locked');
-        moduleElem.style.borderColor = '#ff6600';
-        
-        // Scroller vers le module
-        moduleElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    
-    // Mettre à jour les étapes de progression
-    const stepElem = document.getElementById(config.step);
-    if (stepElem) {
-        stepElem.classList.remove('locked');
-        stepElem.classList.add('active');
-    }
-    
-    // Compléter l'étape précédente
-    const prevElem = document.getElementById(config.prev);
-    if (prevElem && !prevElem.classList.contains('completed')) {
-        prevElem.classList.remove('active');
-        prevElem.classList.add('completed');
-    }
-    
-    // Initialiser les jeux si nécessaire
-    if (stepName === 'puzzle' && !puzzleSolved) {
-        initPuzzle();
-    }
-    if (stepName === 'maze') {
-        initMaze();
-    }
-    
-    alert(`✅ ${config.module.replace('Module', '')} débloqué !`);
-    updateGameStatus();
-    closeAdminPanel();
-}
+		// Débloquer une étape spécifique
+		function adminUnlockStep(stepName) {
+			const modules = {
+				'enigma': { module: 'enigmaModule', step: 'step2', prev: 'step1' },
+				'code': { module: 'codeModule', step: 'step3', prev: 'step2' },
+				'simon': { module: 'simonModule', step: 'step3', prev: 'step2' },
+				'puzzle': { module: 'puzzleModule', step: 'step3', prev: 'step2' },
+				'maze': { module: 'mazeModule', step: 'step3', prev: 'step2' },
+				'caesar': { module: 'caesarModule', step: 'step3', prev: 'step2' },
+				'files': { module: 'filesModule', step: 'step4', prev: 'step3' }
+			};
+			
+			const config = modules[stepName];
+			if (!config) return;
+			
+			// Débloquer le module
+			const moduleElem = document.getElementById(config.module);
+			if (moduleElem) {
+				moduleElem.classList.remove('locked');
+				moduleElem.style.borderColor = '#ff6600';
+				
+				// Scroller vers le module
+				moduleElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			}
+			
+			// Mettre à jour les étapes de progression
+			const stepElem = document.getElementById(config.step);
+			if (stepElem) {
+				stepElem.classList.remove('locked');
+				stepElem.classList.add('active');
+			}
+			
+			// Compléter l'étape précédente
+			const prevElem = document.getElementById(config.prev);
+			if (prevElem && !prevElem.classList.contains('completed')) {
+				prevElem.classList.remove('active');
+				prevElem.classList.add('completed');
+			}
+			
+			// Initialiser les jeux si nécessaire
+			if (stepName === 'puzzle' && !puzzleSolved) {
+				initPuzzle();
+			}
+			if (stepName === 'maze') {
+				initMaze();
+			}
+			
+			alert(`✅ ${config.module.replace('Module', '')} débloqué !`);
+			updateGameStatus();
+			closeAdminPanel();
+		}
 
-// Raccourci clavier admin (Ctrl + Shift + A)
-document.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-        toggleAdminPanel();
-    }
-});
+		// Raccourci clavier admin (Ctrl + Shift + A)
+		document.addEventListener('keydown', (e) => {
+			if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+				toggleAdminPanel();
+			}
+		});
 
-// Clic sur le fond pour fermer
-document.getElementById('adminPanel').addEventListener('click', (e) => {
-    if (e.target.id === 'adminPanel') {
-        closeAdminPanel();
-    }
-});
+		// Clic sur le fond pour fermer
+		document.getElementById('adminPanel').addEventListener('click', (e) => {
+			if (e.target.id === 'adminPanel') {
+				closeAdminPanel();
+			}
+		});
 
     </script>
 <div class="final-screen" id="finalScreen">
