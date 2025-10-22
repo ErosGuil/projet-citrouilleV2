@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCANNER DE COULEUR - PROJET CITROUILLE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #0f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid #ff6600;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 50px rgba(255, 102, 0, 0.5);
+        }
+        
+        h1 {
+            color: #ff6600;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-shadow: 0 0 20px #ff6600;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { text-shadow: 0 0 20px #ff6600; }
+            50% { text-shadow: 0 0 40px #ff6600; }
+        }
+        
+        .subtitle {
+            color: #f00;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+        
+        .instruction-box {
+            background: rgba(255, 102, 0, 0.2);
+            border-left: 4px solid #ff6600;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #ff6600;
+        }
+        
+        .instruction-box h2 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .instruction-box p {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .camera-container {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            margin: 20px auto;
+            border: 3px solid #0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+        }
+        
+        #video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        #canvas {
+            display: none;
+        }
+        
+        .scanner-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border: 3px solid #0f0;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5), inset 0 0 20px rgba(0, 255, 0, 0.3);
+            pointer-events: none;
+            animation: scannerPulse 2s infinite;
+        }
+        
+        @keyframes scannerPulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; box-shadow: 0 0 40px rgba(0, 255, 0, 0.8), inset 0 0 40px rgba(0, 255, 0, 0.5); }
+        }
+        
+        .scanner-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #0f0, transparent);
+            animation: scan 2s infinite;
+        }
+        
+        @keyframes scan {
+            0% { top: calc(50% - 100px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: calc(50% + 100px); opacity: 0; }
+        }
+        
+        .color-info {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #0f0;
+            border-radius: 5px;
+        }
+        
+        .color-detail {
+            text-align: center;
+        }
+        
+        .color-detail label {
+            display: block;
+            color: #0f0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .color-detail .value {
+            color: #ff6600;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .color-preview {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #fff;
+            margin: 10px auto;
+            border-radius: 5px;
+        }
+        
+        .status-box {
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            background: rgba(0, 255, 0, 0.1);
+        }
+        
+        .status-text {
+            font-size: 18px;
+            color: #0f0;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #0f0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6600, #ffaa00);
+            width: 0%;
+            transition: width 0.3s;
+            position: relative;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #ff6600;
+            color: #000;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+            margin: 10px 0;
+        }
+        
+        button:hover:not(:disabled) {
+            background: #ff8800;
+            box-shadow: 0 0 30px rgba(255, 102, 0, 0.8);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .success-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .success-box {
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid #0f0;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.8);
+            text-align: center;
+            max-width: 500px;
+            animation: successPop 0.5s;
+        }
+        
+        @keyframes successPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .success-icon {
+            font-size: 100px;
+            margin-bottom: 20px;
+            animation: rotate 2s infinite;
+        }
+        
+        @keyframes rotate {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+        
+        .success-text {
+            color: #0f0;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #0f0;
+        }
+        
+        .error-msg {
+            color: #f00;
+            text-align: center;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .warning-box {
+            background: rgba(255, 0, 0, 0.2);
+            border-left: 4px solid #f00;
+            padding: 15px;
+            margin: 10px 0;
+            color: #f00;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            .scanner-overlay {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .scanner-line {
+                width: 130px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎃 SCANNER DE COULEUR 🎃</h1>
+        <div class="subtitle">MISSION: DÉTECTER UN OBJET JAUNE</div>
+        
+        <div class="instruction-box">
+            <h2>📋 INSTRUCTIONS</h2>
+            <p>1. Cliquez sur "ACTIVER LA CAMÉRA" pour démarrer</p>
+            <p>2. Placez un objet JAUNE dans la zone de scan centrale</p>
+            <p>3. Maintenez l'objet stable pendant 3 secondes</p>
+            <p>4. La barre de progression doit atteindre 100%</p>
+        </div>
+        
+        <div class="camera-container">
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas"></canvas>
+            <div class="scanner-overlay">
+                <div class="scanner-line"></div>
+            </div>
+        </div>
+        
+        <div class="color-info">
+            <div class="color-detail">
+                <label>Couleur Détectée</label>
+                <div class="color-preview" id="colorPreview"></div>
+            </div>
+            <div class="color-detail">
+                <label>Teinte (H)</label>
+                <div class="value" id="hueValue">-</div>
+            </div>
+            <div class="color-detail">
+                <label>Saturation (S)</label>
+                <div class="value" id="satValue">-</div>
+            </div>
+            <div class="color-detail">
+                <label>Luminosité (V)</label>
+                <div class="value" id="valValue">-</div>
+            </div>
+        </div>
+        
+        <div class="status-box">
+            <div class="status-text" id="statusText">📷 En attente de la caméra...</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+        
+        <div id="errorMsg" class="error-msg"></div>
+        
+        <button id="startBtn" onclick="startCamera()">🎥 ACTIVER LA CAMÉRA</button>
+        <button id="stopBtn" onclick="stopCamera()" style="display: none; background: #f00;">🛑 ARRÊTER LA CAMÉRA</button>
+    </div>
+    
+    <div class="success-screen" id="successScreen">
+        <div class="success-box">
+            <div class="success-icon">🎃</div>
+            <div class="success-text">OBJET JAUNE DÉTECTÉ !</div>
+            <p style="color: #0f0; margin: 20px 0;">
+                Mission accomplie ! Le scanner a validé la présence d'un objet jaune.
+            </p>
+            <button onclick="resetGame()">🔄 RECOMMENCER</button>
+        </div>
+    </div>
+
+    <script>
+        let video, canvas, ctx;
+        let stream = null;
+        let animationId = null;
+        let yellowDetectionTime = 0;
+        let isScanning = false;
+        let successTriggered = false;
+        
+        const YELLOW_HUE_MIN = 40;  // Teinte minimum pour le jaune (en degrés)
+        const YELLOW_HUE_MAX = 70;  // Teinte maximum pour le jaune
+        const MIN_SATURATION = 30;   // Saturation minimum (pour éviter le blanc/gris)
+        const MIN_VALUE = 30;        // Luminosité minimum (pour éviter le noir)
+        const DETECTION_DURATION = 3000; // 3 secondes de détection continue
+        
+        function init() {
+            video = document.getElementById('video');
+            canvas = document.getElementById('canvas');
+            ctx = canvas.getContext('2d', { willReadFrequently: true });
+        }
+        
+        async function startCamera() {
+            try {
+                const constraints = {
+                    video: {
+                        facingMode: 'environment', // Caméra arrière sur mobile
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    }
+                };
+                
+                stream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = stream;
+                
+                video.onloadedmetadata = () => {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    isScanning = true;
+                    successTriggered = false;
+                    yellowDetectionTime = 0;
+                    
+                    document.getElementById('startBtn').style.display = 'none';
+                    document.getElementById('stopBtn').style.display = 'block';
+                    document.getElementById('errorMsg').textContent = '';
+                    
+                    scanForYellow();
+                };
+            } catch (error) {
+                console.error('Erreur caméra:', error);
+                document.getElementById('errorMsg').textContent = 
+                    '❌ Impossible d\'accéder à la caméra. Vérifiez les autorisations.';
+            }
+        }
+        
+        function stopCamera() {
+            isScanning = false;
+            
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+            
+            video.srcObject = null;
+            yellowDetectionTime = 0;
+            
+            document.getElementById('startBtn').style.display = 'block';
+            document.getElementById('stopBtn').style.display = 'none';
+            document.getElementById('statusText').textContent = '📷 Caméra arrêtée';
+            document.getElementById('progressFill').style.width = '0%';
+        }
+        
+        function rgbToHsv(r, g, b) {
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            const delta = max - min;
+            
+            let h = 0;
+            let s = max === 0 ? 0 : delta / max;
+            let v = max;
+            
+            if (delta !== 0) {
+                if (max === r) {
+                    h = ((g - b) / delta) % 6;
+                } else if (max === g) {
+                    h = (b - r) / delta + 2;
+                } else {
+                    h = (r - g) / delta + 4;
+                }
+                h *= 60;
+                if (h < 0) h += 360;
+            }
+            
+            return {
+                h: Math.round(h),
+                s: Math.round(s * 100),
+                v: Math.round(v * 100)
+            };
+        }
+        
+        function scanForYellow() {
+            if (!isScanning || successTriggered) return;
+            
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // Zone de scan au centre (carré de 200x200)
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const scanSize = 200;
+            const scanX = centerX - scanSize / 2;
+            const scanY = centerY - scanSize / 2;
+            
+            const imageData = ctx.getImageData(scanX, scanY, scanSize, scanSize);
+            const pixels = imageData.data;
+            
+            let yellowPixels = 0;
+            let totalPixels = scanSize * scanSize;
+            let avgR = 0, avgG = 0, avgB = 0;
+            
+            // Analyse des pixels
+            for (let i = 0; i < pixels.length; i += 4) {
+                const r = pixels[i];
+                const g = pixels[i + 1];
+                const b = pixels[i + 2];
+                
+                avgR += r;
+                avgG += g;
+                avgB += b;
+                
+                const hsv = rgbToHsv(r, g, b);
+                
+                // Vérifier si le pixel est jaune
+                if (hsv.h >= YELLOW_HUE_MIN && hsv.h <= YELLOW_HUE_MAX &&
+                    hsv.s >= MIN_SATURATION && hsv.v >= MIN_VALUE) {
+                    yellowPixels++;
+                }
+            }
+            
+            // Calculer les moyennes
+            avgR = Math.round(avgR / totalPixels);
+            avgG = Math.round(avgG / totalPixels);
+            avgB = Math.round(avgB / totalPixels);
+            
+            const avgHsv = rgbToHsv(avgR, avgG, avgB);
+            
+            // Mettre à jour l'affichage
+            document.getElementById('colorPreview').style.backgroundColor = 
+                `rgb(${avgR}, ${avgG}, ${avgB})`;
+            document.getElementById('hueValue').textContent = avgHsv.h + '°';
+            document.getElementById('satValue').textContent = avgHsv.s + '%';
+            document.getElementById('valValue').textContent = avgHsv.v + '%';
+            
+            // Pourcentage de pixels jaunes
+            const yellowPercentage = (yellowPixels / totalPixels) * 100;
+            
+            // Si au moins 40% des pixels sont jaunes
+            if (yellowPercentage >= 40) {
+                if (yellowDetectionTime === 0) {
+                    yellowDetectionTime = Date.now();
+                }
+                
+                const elapsed = Date.now() - yellowDetectionTime;
+                const progress = Math.min((elapsed / DETECTION_DURATION) * 100, 100);
+                
+                document.getElementById('progressFill').style.width = progress + '%';
+                document.getElementById('statusText').textContent = 
+                    `🟡 JAUNE DÉTECTÉ ! Maintenez... ${Math.round(progress)}%`;
+                
+                // Succès !
+                if (progress >= 100 && !successTriggered) {
+                    successTriggered = true;
+                    triggerSuccess();
+                }
+            } else {
+                // Réinitialiser si l'objet jaune n'est plus détecté
+                if (yellowDetectionTime > 0) {
+                    yellowDetectionTime = 0;
+                    document.getElementById('progressFill').style.width = '0%';
+                }
+                
+                if (yellowPercentage > 10) {
+                    document.getElementById('statusText').textContent = 
+                        `🔍 Couleur détectée mais pas assez jaune...`;
+                } else {
+                    document.getElementById('statusText').textContent = 
+                        `🔍 Recherche d'un objet jaune...`;
+                }
+            }
+            
+            animationId = requestAnimationFrame(scanForYellow);
+        }
+        
+        function triggerSuccess() {
+            stopCamera();
+            document.getElementById('successScreen').style.display = 'flex';
+            
+            // Effet sonore (si autorisé)
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 800;
+                gainNode.gain.value = 0.3;
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.3);
+            } catch (e) {
+                console.log('Audio non disponible');
+            }
+        }
+        
+        function resetGame() {
+            document.getElementById('successScreen').style.display = 'none';
+            yellowDetectionTime = 0;
+            successTriggered = false;
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('statusText').textContent = '📷 En attente de la caméra...';
+        }
+        
+        // Initialisation au chargement
+        window.onload = init;
+        
+        // Nettoyage à la fermeture
+        window.onbeforeunload = () => {
+            if (stream) {
+                stopCamera();
+            }
+        };
+    </script>
+</body>
+</html>

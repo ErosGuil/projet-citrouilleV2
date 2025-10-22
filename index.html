@@ -549,19 +549,63 @@
             max-width: 300px;
         }
         
-        .puzzle-piece {
+       .puzzle-piece {
             aspect-ratio: 1;
-            background: rgba(255, 102, 0, 0.3);
             border: 2px solid #ff6600;
             border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #0f0;
             cursor: pointer;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .puzzle-piece canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .puzzle-piece.empty {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px dashed #666;
+            cursor: default;
+        }
+
+        .puzzle-piece:hover:not(.empty) {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.8);
+            border-color: #0f0;
+        }
+
+        .puzzle-piece-number {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            background: rgba(0, 0, 0, 0.9);
+            color: #ff6600;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            display: none;
+            border: 1px solid #ff6600;
+            z-index: 10;
+        }
+
+        .puzzle-container.show-numbers .puzzle-piece-number {
+            display: block;
+        }
+
+        /* Amélioration du bouton d'aide */
+        button.help-btn {
+            background: rgba(0, 255, 0, 0.2);
+            color: #0f0;
+            border: 2px solid #0f0;
+        }
+
+        button.help-btn:hover {
+            background: rgba(0, 255, 0, 0.4);
         }
         
         .puzzle-piece:hover {
@@ -1000,7 +1044,7 @@
 
 /* Empêcher le scroll lors du swipe sur mobile */
 .terminal-module#mazeModule {
-    touch-action: none;
+    touch-action: auto;
 }
         
         @keyframes scream {
@@ -1231,7 +1275,7 @@
             <p class="subtitle">SYSTÈME DE SÉCURITÉ NIVEAU 5</p>
             
             <div class="warning">
-                ⚠️ AVERTISSEMENT : Accès restreint au personnel autorisé uniquement.
+                ⚠️ AVERTISSEMENT : Accès restreint au personnel autorisé uniquement. Toute tentative d'intrusion sera enregistrée et signalée.
             </div>
             
             <input type="password" id="passwordInput" placeholder="CODE D'ACCÈS" maxlength="8" autocomplete="off">
@@ -1259,7 +1303,7 @@
 				
 				<p style="margin-bottom: 20px;">
 					Maintenant, prouvez-moi que vous méritez d'accéder aux documents finaux.
-					Prouvez que vous auriez pu survivre à mes côtés..."
+					Prouvez que vous auriez pu survivre à mes côtés... et que vous êtes dignes d'accéder à ma création final !"
 				</p>
 			</div>
 			
@@ -1330,8 +1374,8 @@
                         <source src="EnregistrementVocal.mp3" type="audio/mpeg">
                     </audio>
                     <p style="font-size: 12px; margin-top: 15px; color: #0f0; line-height: 1.6;">
-                        📝 Instructions : Écoutez attentivement le message et comptez les éléments mentionnés dans l'ordre.
-                    </p>
+                        📝 Instructions : Écoutez attentivement le message et comptez les éléments mentionnés dans l'ordre. <br>
+                        ☸️ Des Indices peuvent être récupérer à la Roue des Gages, contre un sacrifice ...
                     <p style="font-size: 12px; margin-top: 10px; color: #f00;">
                         🎃 Enregistré le 31/10/2025 à 23:47
                     </p>
@@ -1356,8 +1400,8 @@
                                 <div class="number">1</div>
                             </div>
                             <div class="wheel-buttons">
-                                <button class="wheel-btn up" onclick="rotateWheel(0, -1)">▲</button>
-                                <button class="wheel-btn down" onclick="rotateWheel(0, 1)">▼</button>
+                                <button class="wheel-btn up" onclick="rotateWheel(0, 1)">▲</button>
+                                <button class="wheel-btn down" onclick="rotateWheel(0, -1)">▼</button>
                             </div>
                         </div>
                         
@@ -1368,8 +1412,8 @@
                                 <div class="number">1</div>
                             </div>
                             <div class="wheel-buttons">
-                                <button class="wheel-btn up" onclick="rotateWheel(1, -1)">▲</button>
-                                <button class="wheel-btn down" onclick="rotateWheel(1, 1)">▼</button>
+                                <button class="wheel-btn up" onclick="rotateWheel(1, 1)">▲</button>
+                                <button class="wheel-btn down" onclick="rotateWheel(1, -1)">▼</button>
                             </div>
                         </div>
                         
@@ -1380,8 +1424,8 @@
                                 <div class="number">1</div>
                             </div>
                             <div class="wheel-buttons">
-                                <button class="wheel-btn up" onclick="rotateWheel(2, -1)">▲</button>
-                                <button class="wheel-btn down" onclick="rotateWheel(2, 1)">▼</button>
+                                <button class="wheel-btn up" onclick="rotateWheel(2, 1)">▲</button>
+                                <button class="wheel-btn down" onclick="rotateWheel(2, -1)">▼</button>
                             </div>
                         </div>
                         
@@ -1392,8 +1436,8 @@
                                 <div class="number">1</div>
                             </div>
                             <div class="wheel-buttons">
-                                <button class="wheel-btn up" onclick="rotateWheel(3, -1)">▲</button>
-                                <button class="wheel-btn down" onclick="rotateWheel(3, 1)">▼</button>
+                                <button class="wheel-btn up" onclick="rotateWheel(3, 1)">▲</button>
+                                <button class="wheel-btn down" onclick="rotateWheel(3, -1)">▼</button>
                             </div>
                         </div>
                     </div>
@@ -1418,19 +1462,22 @@
                 <div class="module-content">
                     <div class="enigma-box">
                         <h3>Question du Dr. Halloween :</h3>
-                        <p>"Dans mon laboratoire, j'ai créé 3 citrouilles le premier jour. Chaque jour suivant, chaque citrouille se duplique. Combien de citrouilles ai-je après 5 jours ?"</p>
+                        <p>"Dans mon laboratoire, Au matin du jour 1, j’ai créer 3 citrouilles. Chaque nuit, chaque citrouille se dupliquent. Après 5 nuits, combien de citrouilles ai-je ?"</p>
                         
                         <div class="quiz-option" onclick="checkQuiz(this, false)">
                             A) 15 citrouilles
                         </div>
                         <div class="quiz-option" onclick="checkQuiz(this, false)">
-                            B) 48 citrouilles
-                        </div>
-                        <div class="quiz-option" onclick="checkQuiz(this, true)">
-                            C) 96 citrouilles
+                            B) 36 citrouilles
                         </div>
                         <div class="quiz-option" onclick="checkQuiz(this, false)">
-                            D) 128 citrouilles
+                            C) 48 citrouilles
+                        </div>
+                        <div class="quiz-option" onclick="checkQuiz(this, true)">
+                            D) 96 citrouilles
+                        </div>
+                        <div class="quiz-option" onclick="checkQuiz(this, false)">
+                            E) 128 citrouilles
                         </div>
                     </div>
                 </div>
@@ -1498,16 +1545,26 @@
                 <div class="module-content">
                     <div class="enigma-box">
                         <h3>Puzzle du Laboratoire</h3>
-                        <p>Glissez les pièces pour reconstituer l'image</p>
+                        <p>Reconstituez l'image du Projet Citrouille !</p>
                         
                         <div class="puzzle-container" id="puzzleContainer">
                             <!-- Généré dynamiquement -->
                         </div>
                         
-                        <button onclick="shufflePuzzle()" style="margin-top: 15px; width: 100%;">
-                            🔀 MÉLANGER
-                        </button>
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <button onclick="shufflePuzzle()" style="flex: 1;">
+                                🔀 MÉLANGER
+                            </button>
+                            <button onclick="togglePuzzleNumbers()" class="help-btn" style="flex: 1;">
+                                🔢 AIDE
+                            </button>
+                        </div>
+                        
                         <div id="puzzleResult" style="text-align: center; margin-top: 10px;"></div>
+                        
+                        <p style="font-size: 12px; margin-top: 15px; color: #ff6600; text-align: center;">
+                            💡 Cliquez sur une pièce adjacente à la case vide
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1620,6 +1677,9 @@
                 </div>
                 <div class="module-content">
                     <ul class="file-list">
+                        <li class="file-item" onclick="openFile('secret')">
+                            🎃 PROJET_CITROUILLE_PLAN.img
+                        </li>
                         <li class="file-item" onclick="openFile('specimen')">
                             🧪 DOSSIER_SPECIMEN_001.img
                         </li>
@@ -1627,11 +1687,9 @@
                             🔬 LABORATOIRE_PHOTOS.img
                         </li>
                         <li class="file-item" onclick="openFile('warning')">
-                            ⚠️ AVERTISSEMENT_FINAL.img
+                            ⚠️🔦 AVERTISSEMENT_FINAL.img 
                         </li>
-                        <li class="file-item" onclick="openFile('secret')">
-                            🎃 PROJET_CITROUILLE_PLAN.img
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -1642,11 +1700,15 @@
                     <span class="module-title">NOTES DU LABORATOIRE</span>
                 </div>
                 <div class="module-content">
-                    <p style="color: #ff6600;">JOURNAL DU DR. HALLOWEEN</p>
+               <p style="color: #ff6600;">JOURNAL DU DR. HALLOWEEN</p>
                     <p style="margin: 10px 0; line-height: 1.6;">
                         Jour 31 : L'expérience a dépassé toutes nos attentes... 
-                        Les citrouilles ont développé une conscience. 
+                        ou nos pires cauchemars. Les citrouilles ont développé 
+                        une conscience. Elles grandissent. Elles observent. 
                         <span class="glitch" style="color: #f00;">ELLES ATTENDENT.</span>
+                    </p>
+                    <p style="color: #f00; font-size: 12px;">
+                        ⚠️ DERNIER CONTACT: 31/10/2025 - 23:59
                     </p>
                 </div>
             </div>
@@ -1691,7 +1753,10 @@
                     </p>
                     <p style="line-height: 1.6; margin-top: 10px;">
                         PROTOCOLE D'ÉVACUATION ACTIVÉ<br>
-                        NIVEAU DE DANGER: MAXIMUM
+                        TEMPS RESTANT: [INCONNU]<br>
+                        NIVEAU DE DANGER: MAXIMUM<br>
+                        <span style="color: #ff6600;">NE RESTEZ PAS SEUL DANS LE NOIR</span><br>
+                        Le projet à pris vie !
                     </p>
                 </div>
             </div>
@@ -1723,6 +1788,8 @@
         
         let puzzlePieces = [];
         let puzzleSolved = false;
+        let showNumbers = false;
+        let masterCanvas = null;
         
         let caesarSolved = false;
         
@@ -2024,11 +2091,169 @@
             }
         }
         
+        function generatePuzzleImage() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 900;  // Augmenté pour meilleure qualité
+            canvas.height = 900;
+            const ctx = canvas.getContext('2d');
+            
+            // Fond dégradé Halloween
+            const gradient = ctx.createRadialGradient(450, 450, 100, 450, 450, 600);
+            gradient.addColorStop(0, '#ff6600');
+            gradient.addColorStop(0.5, '#ff3300');
+            gradient.addColorStop(1, '#8B0000');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 900, 900);
+            
+            // Texture de fond
+            for (let i = 0; i < 200; i++) {
+                ctx.fillStyle = `rgba(0, 0, 0, ${Math.random() * 0.1})`;
+                ctx.fillRect(Math.random() * 900, Math.random() * 900, Math.random() * 50, Math.random() * 50);
+            }
+            
+            // Grande citrouille centrale avec détails
+            ctx.save();
+            ctx.translate(450, 450);
+            
+            // Ombre de la citrouille
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.beginPath();
+            ctx.ellipse(0, 280, 280, 40, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Corps de la citrouille avec dégradé
+            const pumpkinGradient = ctx.createRadialGradient(0, 0, 50, 0, 0, 300);
+            pumpkinGradient.addColorStop(0, '#ffa500');
+            pumpkinGradient.addColorStop(0.7, '#ff8800');
+            pumpkinGradient.addColorStop(1, '#ff6600');
+            ctx.fillStyle = pumpkinGradient;
+            ctx.beginPath();
+            ctx.arc(0, 0, 280, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Rainures verticales (plus détaillées)
+            ctx.strokeStyle = '#cc6600';
+            ctx.lineWidth = 12;
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            ctx.shadowBlur = 10;
+            for(let i = -3; i <= 3; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * 50, -280);
+                ctx.bezierCurveTo(
+                    i * 50 - 20, -100,
+                    i * 50 + 20, 100,
+                    i * 70, 280
+                );
+                ctx.stroke();
+            }
+            ctx.shadowBlur = 0;
+            
+            // Reflets sur la citrouille
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.beginPath();
+            ctx.ellipse(-80, -100, 60, 100, -0.5, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Yeux triangulaires avec ombres
+            ctx.fillStyle = '#000';
+            ctx.shadowColor = 'rgba(255, 102, 0, 0.8)';
+            ctx.shadowBlur = 20;
+            
+            // Œil gauche
+            ctx.beginPath();
+            ctx.moveTo(-110, -50);
+            ctx.lineTo(-60, 0);
+            ctx.lineTo(-160, 0);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Œil droit
+            ctx.beginPath();
+            ctx.moveTo(110, -50);
+            ctx.lineTo(160, 0);
+            ctx.lineTo(60, 0);
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.shadowBlur = 0;
+            
+            // Nez triangulaire
+            ctx.beginPath();
+            ctx.moveTo(0, 20);
+            ctx.lineTo(-30, 80);
+            ctx.lineTo(30, 80);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Bouche effrayante avec dents
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 15;
+            ctx.beginPath();
+            ctx.arc(0, 100, 120, 0, Math.PI);
+            ctx.stroke();
+            
+            // Dents
+            ctx.fillStyle = '#000';
+            for(let i = -3; i <= 3; i++) {
+                const x = i * 30;
+                ctx.fillRect(x - 8, 100 + Math.sqrt(120*120 - x*x) - 5, 16, 30);
+            }
+            
+            // Tige (plus détaillée)
+            ctx.fillStyle = '#228B22';
+            ctx.fillRect(-35, -350, 70, 100);
+            
+            // Texture de la tige
+            ctx.strokeStyle = '#1a6b1a';
+            ctx.lineWidth = 3;
+            for(let i = 0; i < 10; i++) {
+                ctx.beginPath();
+                ctx.moveTo(-35, -350 + i * 10);
+                ctx.lineTo(35, -340 + i * 10);
+                ctx.stroke();
+            }
+            
+            // Feuille sur la tige
+            ctx.fillStyle = '#32CD32';
+            ctx.beginPath();
+            ctx.moveTo(35, -300);
+            ctx.bezierCurveTo(100, -320, 120, -280, 100, -250);
+            ctx.bezierCurveTo(80, -260, 60, -270, 35, -280);
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.restore();
+            
+            // Étoiles et particules Halloween
+            ctx.fillStyle = '#ffff00';
+            for(let i = 0; i < 30; i++) {
+                const x = Math.random() * 900;
+                const y = Math.random() * 900;
+                const size = Math.random() * 3 + 1;
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Texte "PROJET CITROUILLE" en haut
+            ctx.font = 'bold 48px Arial';
+            ctx.fillStyle = '#000';
+            ctx.textAlign = 'center';
+            ctx.strokeStyle = '#ff6600';
+            ctx.lineWidth = 3;
+            ctx.strokeText('PROJET CITROUILLE', 450, 80);
+            ctx.fillText('PROJET CITROUILLE', 450, 80);
+            
+            return canvas;
+        }
+
         function initPuzzle() {
             puzzlePieces = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+            showNumbers = false;
+            masterCanvas = generatePuzzleImage();
             shufflePuzzle();
         }
-        
+
         function shufflePuzzle() {
             do {
                 for (let i = puzzlePieces.length - 1; i > 0; i--) {
@@ -2038,9 +2263,10 @@
             } while (!isSolvable() || isSolved());
             
             puzzleSolved = false;
+            document.getElementById('puzzleResult').innerHTML = '';
             renderPuzzle();
         }
-        
+
         function isSolvable() {
             let inversions = 0;
             for (let i = 0; i < puzzlePieces.length - 1; i++) {
@@ -2052,76 +2278,132 @@
             }
             return inversions % 2 === 0;
         }
-        
+
         function isSolved() {
             for (let i = 0; i < puzzlePieces.length - 1; i++) {
                 if (puzzlePieces[i] !== i + 1) return false;
             }
             return puzzlePieces[puzzlePieces.length - 1] === 0;
         }
-        
-        function renderPuzzle() {
-            const container = document.getElementById('puzzleContainer');
-            container.innerHTML = '';
-            
-            puzzlePieces.forEach((piece, index) => {
-                const div = document.createElement('div');
-                div.className = 'puzzle-piece';
-                div.textContent = piece === 0 ? '' : piece;
-                div.onclick = () => movePuzzlePiece(index);
-                if (piece === 0) {
-                    div.style.background = 'rgba(0,0,0,0.5)';
-                    div.style.border = '2px dashed #666';
-                }
-                container.appendChild(div);
-            });
-        }
-        
-        function movePuzzlePiece(index) {
-            const emptyIndex = puzzlePieces.indexOf(0);
-            const validMoves = [
-                emptyIndex - 1, emptyIndex + 1,
-                emptyIndex - 3, emptyIndex + 3
-            ].filter(i => {
-                if (i < 0 || i > 8) return false;
-                if (emptyIndex % 3 === 0 && i === emptyIndex - 1) return false;
-                if (emptyIndex % 3 === 2 && i === emptyIndex + 1) return false;
-                return true;
-            });
-            
-            if (validMoves.includes(index)) {
-                [puzzlePieces[index], puzzlePieces[emptyIndex]] = [puzzlePieces[emptyIndex], puzzlePieces[index]];
-                renderPuzzle();
-                checkPuzzle();
-            }
-        }
-        
-        function checkPuzzle() {
-            if (isSolved() && !puzzleSolved) {
-                puzzleSolved = true;
-                document.getElementById('puzzleResult').innerHTML = '<p style="color: #0f0; font-weight: bold;">✓ PUZZLE RÉSOLU !</p>';
-                document.getElementById('puzzleModule').style.borderColor = '#0f0';
-                document.getElementById('mazeModule').classList.remove('locked');
-                showNotification('✓ Puzzle complété - Labyrinthe débloqué !', '#0f0');
-                
-                const pieces = document.querySelectorAll('.puzzle-piece');
-                pieces.forEach(piece => {
-                    piece.style.borderColor = '#0f0';
-                    piece.style.boxShadow = '0 0 20px rgba(0, 255, 0, 0.5)';
-                });
-                
-                initMaze();
-            }
-        }
 
+        function renderPuzzle() {
+    const container = document.getElementById('puzzleContainer');
+    container.innerHTML = '';
+    
+    const pieceSize = 300; // 900 / 3 (haute résolution)
+    
+    puzzlePieces.forEach((piece, index) => {
+        const div = document.createElement('div');
+        div.className = 'puzzle-piece';
+        
+        if (piece === 0) {
+            div.classList.add('empty');
+        } else {
+            const canvas = document.createElement('canvas');
+            canvas.width = pieceSize;
+            canvas.height = pieceSize;
+            const ctx = canvas.getContext('2d');
+            
+            const correctRow = Math.floor((piece - 1) / 3);
+            const correctCol = (piece - 1) % 3;
+            
+            const sx = correctCol * pieceSize;
+            const sy = correctRow * pieceSize;
+            
+            ctx.drawImage(
+                masterCanvas,
+                sx, sy, pieceSize, pieceSize,
+                0, 0, pieceSize, pieceSize
+            );
+            
+            div.appendChild(canvas);
+            
+            const numberSpan = document.createElement('span');
+            numberSpan.className = 'puzzle-piece-number';
+            numberSpan.textContent = piece;
+            div.appendChild(numberSpan);
+        }
+        
+        div.onclick = () => movePuzzlePiece(index);
+        container.appendChild(div);
+    });
+}
+
+        function movePuzzlePiece(index) {
+    const emptyIndex = puzzlePieces.indexOf(0);
+    
+    const validMoves = [
+        emptyIndex - 1,
+        emptyIndex + 1,
+        emptyIndex - 3,
+        emptyIndex + 3
+    ].filter(i => {
+        if (i < 0 || i > 8) return false;
+        if (emptyIndex % 3 === 0 && i === emptyIndex - 1) return false;
+        if (emptyIndex % 3 === 2 && i === emptyIndex + 1) return false;
+        return true;
+    });
+    
+    if (validMoves.includes(index)) {
+        [puzzlePieces[index], puzzlePieces[emptyIndex]] = 
+        [puzzlePieces[emptyIndex], puzzlePieces[index]];
+        
+        renderPuzzle();
+        checkPuzzle();
+    } else {
+        const piece = document.querySelectorAll('.puzzle-piece')[index];
+        if (!piece.classList.contains('empty')) {
+            piece.style.animation = 'shake 0.3s';
+            setTimeout(() => piece.style.animation = '', 300);
+        }
+    }
+}
+
+        function checkPuzzle() {
+    if (isSolved() && !puzzleSolved) {
+        puzzleSolved = true;
+        
+        document.getElementById('puzzleResult').innerHTML = 
+            '<p style="color: #0f0; font-weight: bold; font-size: 18px;">✓ PUZZLE RÉSOLU !</p>';
+        
+        document.getElementById('puzzleModule').style.borderColor = '#0f0';
+        document.getElementById('mazeModule').classList.remove('locked');
+        
+        showNotification('✓ Puzzle complété - Labyrinthe débloqué !', '#0f0');
+        
+        const pieces = document.querySelectorAll('.puzzle-piece');
+        pieces.forEach((piece, i) => {
+            setTimeout(() => {
+                piece.style.borderColor = '#0f0';
+                piece.style.boxShadow = '0 0 20px rgba(0, 255, 0, 0.8)';
+                piece.style.animation = 'successPulse 0.5s';
+            }, i * 50);
+        });
+        
+        setTimeout(() => {
+            initMaze();
+        }, 500);
+    }
+}
+
+        function togglePuzzleNumbers() {
+    showNumbers = !showNumbers;
+    const container = document.getElementById('puzzleContainer');
+    
+    if (showNumbers) {
+        container.classList.add('show-numbers');
+    } else {
+        container.classList.remove('show-numbers');
+    }
+}
 		let mazeCompleted = false;
 		let touchStartX = 0;
 		let touchStartY = 0;
 				
-				let mazePlayer = {x: 0, y: 0};
-				const mazeSize = 10;
-				const cellSize = 30;
-				let maze = [];
+		let mazePlayer = {x: 0, y: 0};
+		const mazeSize = 10;
+		const cellSize = 30;
+		let maze = [];
 				
 		function initMaze() {
 			mazeCompleted = false;
@@ -2235,44 +2517,6 @@
 			showNotification('🔄 Labyrinthe régénéré !', '#ff6600');
 		}
 
-		// Support tactile/swipe
-		function handleTouchStart(e) {
-			const touch = e.touches[0];
-			touchStartX = touch.clientX;
-			touchStartY = touch.clientY;
-		}
-
-		function handleTouchEnd(e) {
-			if (mazeCompleted) return;
-			
-			const touch = e.changedTouches[0];
-			const touchEndX = touch.clientX;
-			const touchEndY = touch.clientY;
-			
-			const deltaX = touchEndX - touchStartX;
-			const deltaY = touchEndY - touchStartY;
-			
-			const minSwipeDistance = 30;
-			
-			if (Math.abs(deltaX) > Math.abs(deltaY)) {
-				if (Math.abs(deltaX) > minSwipeDistance) {
-					moveMazePlayer(deltaX > 0 ? 'right' : 'left');
-				}
-			} else {
-				if (Math.abs(deltaY) > minSwipeDistance) {
-					moveMazePlayer(deltaY > 0 ? 'down' : 'up');
-				}
-			}
-		}
-
-		// Ajouter les event listeners pour le tactile
-		document.addEventListener('DOMContentLoaded', () => {
-			const mazeCanvas = document.getElementById('mazeCanvas');
-			if (mazeCanvas) {
-				mazeCanvas.addEventListener('touchstart', handleTouchStart, { passive: true });
-				mazeCanvas.addEventListener('touchend', handleTouchEnd, { passive: true });
-			}
-		});
         
         function drawMaze() {
             const canvas = document.getElementById('mazeCanvas');
@@ -2420,15 +2664,15 @@
             const files = {
                 specimen: {
                     title: '🧪 DOSSIER SPECIMEN 001',
-                    content: '<p style="color: #0f0;">Classification: TOP SECRET</p><img src="https://via.placeholder.com/600x400/000000/ff6600?text=SPECIMEN+CITROUILLE" alt="Specimen"><p style="color: #ff6600; margin-top: 15px;">Sujet: Citrouille génétiquement modifiée</p><p style="color: #f00;">Statut: CONFINEMENT ROMPU</p>'
+                    content: '<p style="color: #0f0;">Classification: TOP SECRET</p><img src="SPECIMEN001.png" alt="Specimen"><p style="color: #ff6600; margin-top: 15px;">Sujet: Citrouille génétiquement modifiée</p><p style="color: #f00;">Statut: CONFINEMENT ROMPU</p>'
                 },
                 lab: {
-                    title: '🔬 LABORATOIRE - DERNIÈRES PHOTOS',
-                    content: '<p style="color: #0f0;">Horodatage: 31/10/2025 23:42</p><img src="https://via.placeholder.com/600x400/000000/00ff00?text=LABORATOIRE+VIDE" alt="Lab"><p style="color: #f00; margin-top: 15px;">⚠️ Aucun personnel détecté</p>'
+                    title: '🔐 COFFRE D\' ACCES AU PROJET CITROUILLE - DERNIÈRES PHOTOS',
+                    content: '<p style="color: #0f0;">Horodatage: 31/10/2025 23:42</p><img src="BOITECLEF.png" alt="Lab"><p style="color: #f00; margin-top: 15px;">⚠️ Aucun personnel détecté aux environs.</p>'
                 },
                 warning: {
-                    title: '⚠️ AVERTISSEMENT FINAL',
-                    content: '<div style="background: rgba(255,0,0,0.2); padding: 20px; border: 2px solid #f00;"><p style="color: #f00; font-size: 20px; font-weight: bold;">ÉVACUEZ IMMÉDIATEMENT</p><img src="https://via.placeholder.com/600x300/000000/ff0000?text=DANGER" alt="Warning"><p style="color: #ff6600; margin-top: 15px;">Les citrouilles ont pris le contrôle.</p><p style="color: #f00;">IL EST TROP TARD.</p></div>'
+                    title: '⚠️ AVERTISSEMENT FINAL ⚠️🔦',
+                    content: '<div style="background: rgba(255,0,0,0.2); padding: 20px; border: 2px solid #f00;"><p style="color: #f00; font-size: 20px; font-weight: bold;">ÉQUIPEZ-VOUS IMMÉDIATEMENT</p><img src="UVLight.png" alt="Warning"><p style="color: #ff6600; margin-top: 15px;">Les citrouilles ont pris le contrôle.</p><p style="color: #f00;">NE VOUS DEPLACEZ PAS SANS LUMIERE POUR VOUS DEFENDRE ! </p></div>'
                 },
                 secret: {
                     title: '🎃 PROJET CITROUILLE - PLANS',
