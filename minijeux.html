@@ -326,6 +326,58 @@
             body {
                 padding: 10px !important;
             }
+
+            .maze-btn {
+                width: 60px;
+                height: 60px;
+                background: rgba(255, 102, 0, 0.3);
+                color: #ff6600;
+                border: 2px solid #ff6600;
+                font-size: 24px;
+                font-weight: bold;
+                cursor: pointer;
+                border-radius: 8px;
+                transition: all 0.2s;
+                user-select: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+            }
+
+            .maze-btn:hover:not(:disabled) {
+                background: rgba(255, 102, 0, 0.5);
+                transform: scale(1.05);
+                box-shadow: 0 0 15px rgba(255, 102, 0, 0.6);
+            }
+
+            .maze-btn:active:not(:disabled) {
+                transform: scale(0.95);
+                background: rgba(255, 102, 0, 0.7);
+            }
+
+            .maze-btn:disabled {
+                opacity: 0.3;
+                cursor: not-allowed;
+            }
+
+            .maze-btn.pressed {
+                background: rgba(255, 102, 0, 0.8);
+                transform: scale(0.9);
+                box-shadow: 0 0 20px rgba(255, 102, 0, 0.8);
+            }
+
+            @media (max-width: 600px) {
+                .maze-btn {
+                    width: 50px;
+                    height: 50px;
+                    font-size: 20px;
+                }
+                
+                #mazeContainer {
+                    max-width: 90vw !important;
+                }
+            }
         }
     </style>
 </head>
@@ -475,16 +527,45 @@
             </div>
             
             <div style="text-align: center; color: #0f0; margin: 15px 0; font-size: 14px;" id="mazeHint">
-                Utilisez les flèches ⬆️⬇️⬅️➡️ ou ZQSD pour vous déplacer
+                Utilisez les flèches du clavier ou les boutons ci-dessous
             </div>
-            
+
             <div id="mazeContainer" style="position: relative; width: 100%; max-width: 500px; aspect-ratio: 1; margin: 20px auto; background: #000; border: 3px solid #0f0; border-radius: 5px; overflow: hidden;">
                 <canvas id="mazeCanvas" width="500" height="500" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
                 <div id="mazeFlashlight" style="position: absolute; width: 30%; height: 30%; border-radius: 50%; pointer-events: none; background: radial-gradient(circle, rgba(255, 255, 200, 0.8) 0%, rgba(255, 255, 200, 0.4) 40%, transparent 70%); box-shadow: 0 0 60px rgba(255, 255, 200, 0.6); z-index: 10;"></div>
             </div>
-            
+
+            <!-- NOUVEAUX CONTRÔLES TACTILES -->
+            <div style="display: flex; flex-direction: column; align-items: center; margin: 20px 0; gap: 5px;">
+                <!-- Bouton Haut -->
+                <button onclick="moveMazePlayerButton('up')" class="maze-btn" id="mazeBtnUp">
+                    ▲
+                </button>
+                
+                <!-- Boutons Gauche, Centre, Droite -->
+                <div style="display: flex; gap: 5px;">
+                    <button onclick="moveMazePlayerButton('left')" class="maze-btn" id="mazeBtnLeft">
+                        ◀
+                    </button>
+                    
+                    <div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border: 2px solid #666; border-radius: 5px; font-size: 28px;">
+                        🔦
+                    </div>
+                    
+                    <button onclick="moveMazePlayerButton('right')" class="maze-btn" id="mazeBtnRight">
+                        ▶
+                    </button>
+                </div>
+                
+                <!-- Bouton Bas -->
+                <button onclick="moveMazePlayerButton('down')" class="maze-btn" id="mazeBtnDown">
+                    ▼
+                </button>
+            </div>
+
             <div id="mazeMessage" style="text-align: center; min-height: 30px; font-weight: bold; margin: 10px 0;"></div>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+
+             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                 <button onclick="startMaze()" style="flex: 1; min-width: 150px;">NOUVELLE PARTIE</button>
                 <button onclick="showMazeHint()" id="mazeHintBtn" style="flex: 1; min-width: 150px; background: #ffaa00;" disabled>
                     💡 INDICE (après 30s)
@@ -1196,6 +1277,13 @@
             // Initialiser canvas
             mazeCanvas = document.getElementById('mazeCanvas');
             mazeCtx = mazeCanvas.getContext('2d');
+
+            // Activer les boutons de déplacement
+            const mazeButtons = ['mazeBtnUp', 'mazeBtnDown', 'mazeBtnLeft', 'mazeBtnRight'];
+            mazeButtons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) btn.disabled = false;
+            });
             
             // Générer labyrinthe
             generateMaze();
@@ -1527,6 +1615,45 @@
             requestAnimationFrame(drawMaze);
         }
         
+        // Fonction pour les boutons tactiles
+        function moveMazePlayerButton(direction) {
+            if (!mazeActive) return;
+            
+            let dx = 0, dy = 0;
+            
+            switch(direction) {
+                case 'up':
+                    dy = -1;
+                    break;
+                case 'down':
+                    dy = 1;
+                    break;
+                case 'left':
+                    dx = -1;
+                    break;
+                case 'right':
+                    dx = 1;
+                    break;
+            }
+            
+            // Appeler la fonction de mouvement existante
+            moveMazePlayer(dx, dy);
+            
+            // Animation du bouton
+            const buttonIds = {
+                'up': 'mazeBtnUp',
+                'down': 'mazeBtnDown',
+                'left': 'mazeBtnLeft',
+                'right': 'mazeBtnRight'
+            };
+            
+            const btn = document.getElementById(buttonIds[direction]);
+            if (btn) {
+                btn.classList.add('pressed');
+                setTimeout(() => btn.classList.remove('pressed'), 200);
+            }
+        }
+
         function moveMazePlayer(dx, dy) {
             if (!mazeActive) return;
             
@@ -1584,6 +1711,13 @@
             const time = Math.floor((Date.now() - mazeStartTime) / 1000);
             const trapsHit = 3 - mazeHP;
             
+            // Désactiver les boutons
+            const mazeButtons = ['mazeBtnUp', 'mazeBtnDown', 'mazeBtnLeft', 'mazeBtnRight'];
+            mazeButtons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) btn.disabled = true;
+            });
+
             document.getElementById('mazeMessage').innerHTML = `
                 <div style="color: #0f0; font-size: 18px;">
                     🎉 SORTIE TROUVÉE !<br>
@@ -1598,7 +1732,14 @@
         function loseMaze() {
             mazeActive = false;
             clearInterval(mazeTimerInterval);
-            
+ 
+            // Désactiver les boutons
+            const mazeButtons = ['mazeBtnUp', 'mazeBtnDown', 'mazeBtnLeft', 'mazeBtnRight'];
+            mazeButtons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) btn.disabled = true;
+            });
+
             document.getElementById('mazeMessage').innerHTML = `
                 <div style="color: #f00; font-size: 18px;">
                     💀 VOUS ÊTES PERDU...<br>
