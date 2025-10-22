@@ -1046,6 +1046,97 @@
 .terminal-module#mazeModule {
     touch-action: auto;
 }
+
+/* Memory Game */
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.memory-card {
+    aspect-ratio: 1;
+    background: rgba(255, 102, 0, 0.3);
+    border: 2px solid #ff6600;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    cursor: pointer;
+    transition: all 0.3s;
+    user-select: none;
+}
+
+.memory-card:hover:not(.flipped):not(.matched) {
+    background: rgba(255, 102, 0, 0.5);
+    transform: scale(1.05);
+}
+
+.memory-card.flipped {
+    background: rgba(0, 255, 0, 0.3);
+    border-color: #0f0;
+}
+
+.memory-card.matched {
+    background: rgba(0, 255, 0, 0.5);
+    border-color: #0f0;
+    opacity: 0.7;
+}
+
+.memory-card .back {
+    display: block;
+}
+
+.memory-card .front {
+    display: none;
+}
+
+.memory-card.flipped .back {
+    display: none;
+}
+
+.memory-card.flipped .front {
+    display: block;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.stat-box {
+    background: rgba(255, 102, 0, 0.2);
+    border: 2px solid #ff6600;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.stat-label {
+    color: #0f0;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    color: #ff6600;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.shake {
+    animation: shake 0.3s;
+}
         
         @keyframes scream {
             0% { transform: scale(0); opacity: 0; }
@@ -1235,8 +1326,8 @@
             </div>
 
             <div class="admin-step-control" style="margin-bottom: 10px;">
-                <button onclick="adminUnlockStep('caesar')" class="admin-btn">
-                    🔐 Débloquer César
+                <button onclick="adminUnlockStep('memory')" class="admin-btn">
+                    🧠 Débloquer Memory
                 </button>
             </div>
 
@@ -1633,39 +1724,50 @@
 				</div>
 			</div>
             
-            <div class="terminal-module locked" id="caesarModule">
+            <!-- Module Memory Game -->
+            <div class="terminal-module locked" id="memoryModule">
                 <div class="module-header">
-                    <span class="module-icon">🔐</span>
-                    <span class="module-title">MESSAGE CRYPTÉ</span>
+                    <span class="module-icon">🧠</span>
+                    <span class="module-title">MEMORY HALLOWEEN</span>
                 </div>
+                
                 <div class="module-content">
                     <div class="enigma-box">
-                        <h3>Déchiffrement César</h3>
-                        <p style="color: #ff6600; font-size: 18px; text-align: center; margin: 20px 0; letter-spacing: 2px;">
-                            IXLHC GHV FLWURXLOOHV
-                        </p>
-                        <p>Message encodé avec un décalage. Trouvez la clé !</p>
+                        <h3>Trouvez les paires</h3>
+                        <p>🎃 Memoriser et assembler les symboles Halloween !</p>
+
+                        <div class="challenge-description">
+                            <p style="color: #ff6600; font-size: 14px;">⚠️ Attention : vous n'avez que 9 vies !</p>
+                        </div>
                         
-                        <div style="margin: 20px 0;">
-                            <label style="color: #0f0;">Décalage (1-25): </label>
-                            <input type="range" id="caesarShift" min="1" max="25" value="1" 
-                                   oninput="updateCaesarDecrypt()" 
-                                   style="width: 100%; margin: 10px 0;">
-                            <div style="text-align: center; color: #ff6600; font-size: 20px;">
-                                Décalage: <span id="caesarShiftValue">1</span>
+                        <!-- Statistiques -->
+                        <div class="stats">
+                            <div class="stat-box">
+                                <div class="stat-label">Coups</div>
+                                <div class="stat-value" id="memoryMoves">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Paires</div>
+                                <div class="stat-value" id="memoryPairs">0/8</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Vies</div>
+                                <div class="stat-value" id="memoryLives" style="color: #f00;">❤️❤️❤️❤️❤️❤️❤️❤️❤️</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Temps</div>
+                                <div class="stat-value" id="memoryTime">0s</div>
                             </div>
                         </div>
                         
-                        <div style="background: rgba(0,255,0,0.1); padding: 15px; border: 2px solid #0f0; border-radius: 5px; margin-top: 15px;">
-                            <p style="color: #0f0; text-align: center; font-size: 18px; letter-spacing: 2px;" id="caesarDecrypted">
-                                HXKGB FGU EKVTQWKNNGУ
-                            </p>
-                        </div>
+                        <!-- Grille du jeu -->
+                        <div class="memory-grid" id="memoryGrid"></div>
                         
-                        <button onclick="checkCaesar()" style="margin-top: 15px; width: 100%;">
-                            VALIDER LE DÉCHIFFREMENT
-                        </button>
-                        <div id="caesarResult" style="text-align: center; margin-top: 10px;"></div>
+                        <!-- Bouton -->
+                        <button class="game-button" onclick="startMemory()">NOUVELLE PARTIE</button>
+                        
+                        <!-- Message de résultat -->
+                        <div id="memoryResult" style="text-align: center; margin-top: 20px; font-weight: bold;"></div>
                     </div>
                 </div>
             </div>
@@ -1728,8 +1830,8 @@
 							<div style="font-size: 12px; color: #0f0;">Tir aux citrouilles</div>
 						</div>
 						<div style="background: rgba(255, 102, 0, 0.2); padding: 10px; border: 1px solid #ff6600; border-radius: 5px;">
-							<div style="font-size: 24px;">🧠</div>
-							<div style="font-size: 12px; color: #0f0;">Memory</div>
+							<div style="font-size: 24px;">🪦</div>
+							<div style="font-size: 12px; color: #0f0;">Pendu</div>
 						</div>
 						<div style="background: rgba(255, 102, 0, 0.2); padding: 10px; border: 1px solid #ff6600; border-radius: 5px;">
 							<div style="font-size: 24px;">⌨️</div>
@@ -1791,7 +1893,6 @@
         let showNumbers = false;
         let masterCanvas = null;
         
-        let caesarSolved = false;
         
 		function triggerJumpscare() {
 			const jumpscare = document.getElementById('jumpscare');
@@ -1986,6 +2087,182 @@
             document.getElementById('enigmaModule').classList.remove('locked');
             showNotification('✓ ÉTAPE 1 COMPLÉTÉE - Énigme débloquée !', '#0f0');
         }
+
+        // ==================== MEMORY GAME ====================
+const memorySymbols = ['🎃', '👻', '💀', '🦇', '🕷️', '🕸️', '🧙', '🧛'];
+let memoryCards = [];
+let flippedCards = [];
+let matchedPairs = 0;
+let memoryMoves = 0;
+let memoryLives = 5;
+let memoryStartTime = 0;
+let memoryTimerInterval;
+let memorySolved = false;
+
+function startMemory() {
+    const grid = document.getElementById('memoryGrid');
+    grid.innerHTML = '';
+    flippedCards = [];
+    matchedPairs = 0;
+    memoryMoves = 0;
+    memoryLives = 9;
+    memoryStartTime = Date.now();
+    memorySolved = false;
+    
+    document.getElementById('memoryMoves').textContent = '0';
+    document.getElementById('memoryPairs').textContent = '0/8';
+    document.getElementById('memoryTime').textContent = '0s';
+    document.getElementById('memoryLives').textContent = '❤️❤️❤️❤️❤️❤️❤️❤️❤️';
+    document.getElementById('memoryLives').style.color = '#f00';
+    document.getElementById('memoryResult').innerHTML = '';
+    
+    // Activer la grille
+    grid.style.pointerEvents = 'auto';
+    grid.style.opacity = '1';
+    
+    memoryCards = [...memorySymbols, ...memorySymbols]
+        .sort(() => Math.random() - 0.5)
+        .map((symbol, index) => ({
+            id: index,
+            symbol: symbol,
+            flipped: false,
+            matched: false
+        }));
+    
+    memoryCards.forEach((card, index) => {
+        const cardElement = document.createElement('div');
+        cardElement.className = 'memory-card';
+        cardElement.innerHTML = `
+            <span class="back">❓</span>
+            <span class="front">${card.symbol}</span>
+        `;
+        cardElement.onclick = () => flipCard(index, cardElement);
+        grid.appendChild(cardElement);
+    });
+    
+    clearInterval(memoryTimerInterval);
+    memoryTimerInterval = setInterval(updateMemoryTimer, 1000);
+}
+
+function updateMemoryTimer() {
+    const elapsed = Math.floor((Date.now() - memoryStartTime) / 1000);
+    document.getElementById('memoryTime').textContent = elapsed + 's';
+}
+
+function flipCard(index, element) {
+    if (flippedCards.length >= 2) return;
+    if (memoryCards[index].flipped || memoryCards[index].matched) return;
+    
+    memoryCards[index].flipped = true;
+    element.classList.add('flipped');
+    flippedCards.push({ index, element });
+    
+    if (flippedCards.length === 2) {
+        memoryMoves++;
+        document.getElementById('memoryMoves').textContent = memoryMoves;
+        
+        setTimeout(checkMemoryMatch, 600);
+    }
+}
+
+function checkMemoryMatch() {
+    const [card1, card2] = flippedCards;
+    
+    if (memoryCards[card1.index].symbol === memoryCards[card2.index].symbol) {
+        // PAIRE TROUVÉE !
+        memoryCards[card1.index].matched = true;
+        memoryCards[card2.index].matched = true;
+        card1.element.classList.add('matched');
+        card2.element.classList.add('matched');
+        
+        matchedPairs++;
+        document.getElementById('memoryPairs').textContent = matchedPairs + '/8';
+        
+        // VICTOIRE !
+        if (matchedPairs === 8) {
+            clearInterval(memoryTimerInterval);
+            memorySolved = true;
+            
+            const timeElapsed = document.getElementById('memoryTime').textContent;
+            
+            setTimeout(() => {
+                document.getElementById('memoryResult').innerHTML = `
+                    <div style="color: #0f0; font-size: 20px; animation: pulse 1s infinite;">
+                        🎉 VICTOIRE ! 🎉<br>
+                        <span style="font-size: 16px;">Temps: ${timeElapsed} | Coups: ${memoryMoves}</span>
+                    </div>
+                `;
+                
+            document.getElementById('memoryModule').style.borderColor = '#0f0';
+
+            setTimeout(() => {
+                document.getElementById('step3').classList.remove('active');
+                document.getElementById('step3').classList.add('completed');
+                document.getElementById('step4').classList.remove('locked');
+                document.getElementById('step4').classList.add('active');
+                document.getElementById('filesModule').classList.remove('locked');
+                showNotification('✓ ÉTAPE 3 COMPLÉTÉE - Dossiers débloqués !', '#0f0');
+                setTimeout(() => {
+                    document.getElementById('finalScreen').classList.add('active');
+                }, 1500);
+                triggerJumpscare();
+            }, 1000);
+            }, 300);
+        }
+    } else {
+        // ERREUR - Perdre une vie
+        memoryLives--;
+        
+        // Mettre à jour l'affichage des vies
+        const heartsDisplay = '❤️'.repeat(memoryLives) + '🖤'.repeat(9 - memoryLives);
+        document.getElementById('memoryLives').textContent = heartsDisplay;
+        
+        // Changer la couleur selon les vies restantes
+        if (memoryLives <= 2) {
+            document.getElementById('memoryLives').style.color = '#ff6600';
+        }
+        if (memoryLives <= 1) {
+            document.getElementById('memoryLives').style.color = '#f00';
+        }
+        
+        memoryCards[card1.index].flipped = false;
+        memoryCards[card2.index].flipped = false;
+        card1.element.classList.remove('flipped');
+        card2.element.classList.remove('flipped');
+        card1.element.classList.add('shake');
+        card2.element.classList.add('shake');
+        
+        setTimeout(() => {
+            card1.element.classList.remove('shake');
+            card2.element.classList.remove('shake');
+        }, 300);
+        
+        // GAME OVER après 5 erreurs
+        if (memoryLives <= 0) {
+            clearInterval(memoryTimerInterval);
+            
+            // Bloquer toutes les cartes
+            const grid = document.getElementById('memoryGrid');
+            grid.style.pointerEvents = 'none';
+            grid.style.opacity = '0.5';
+            triggerJumpscare();
+            document.getElementById('memoryResult').innerHTML = `
+                <div style="color: #f00; font-size: 18px;">
+                    💀 GAME OVER !<br>
+                    <span style="font-size: 14px;">Paires trouvées: ${matchedPairs}/8</span>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                grid.style.pointerEvents = 'auto';
+                grid.style.opacity = '1';
+                startMemory();
+            }, 2000);
+        }
+    }
+    
+    flippedCards = [];
+}
         
         function checkQuiz(element, isCorrect) {
             if (quizAnswered) return;
@@ -2472,7 +2749,7 @@
 					mazeCompleted = true;
 					document.getElementById('mazeResult').innerHTML = '<p style="color: #0f0; font-weight: bold;">✓ SORTIE TROUVÉE !</p>';
 					document.getElementById('mazeModule').style.borderColor = '#0f0';
-					document.getElementById('caesarModule').classList.remove('locked');
+					document.getElementById('memoryModule').classList.remove('locked');
 					showNotification('✓ Labyrinthe terminé - Message crypté débloqué !', '#0f0');
 					
 					// Désactiver les boutons
@@ -2560,55 +2837,7 @@
 				moveMazePlayer(keyMap[e.key]);
 			}
 		}
-        
-        function updateCaesarDecrypt() {
-            const shift = parseInt(document.getElementById('caesarShift').value);
-            document.getElementById('caesarShiftValue').textContent = shift;
-            
-            const encrypted = "IXLHC GHV FLWURXLOOHV";
-            let decrypted = "";
-            
-            for (let char of encrypted) {
-                if (char === ' ') {
-                    decrypted += ' ';
-                } else {
-                    let code = char.charCodeAt(0) - shift;
-                    if (code < 65) code += 26;
-                    decrypted += String.fromCharCode(code);
-                }
-            }
-            
-            document.getElementById('caesarDecrypted').textContent = decrypted;
-        }
-        
-        function checkCaesar() {
-            const shift = parseInt(document.getElementById('caesarShift').value);
-            const result = document.getElementById('caesarResult');
-            
-            // CHANGEZ ICI : Remplacez 5 par la valeur souhaitée
-            if (shift === 3) {
-                result.innerHTML = '<p style="color: #0f0; font-weight: bold;">✓ MESSAGE DÉCHIFFRÉ: "FUYEZ DES CITROUILLES"</p>';
-                document.getElementById('caesarModule').style.borderColor = '#0f0';
-                caesarSolved = true;
-                
-                setTimeout(() => {
-                    document.getElementById('step3').classList.remove('active');
-                    document.getElementById('step3').classList.add('completed');
-                    document.getElementById('step4').classList.remove('locked');
-                    document.getElementById('step4').classList.add('active');
-                    document.getElementById('filesModule').classList.remove('locked');
-                    showNotification('✓ ÉTAPE 3 COMPLÉTÉE - Dossiers débloqués !', '#0f0');
-        setTimeout(() => {
-            document.getElementById('finalScreen').classList.add('active');
-        }, 1500);
-                    triggerJumpscare();
-                }, 1000);
-            } else {
-                result.innerHTML = '<p style="color: #f00;">✗ DÉCALAGE INCORRECT</p>';
-                triggerJumpscare();
-                setTimeout(() => result.innerHTML = '', 2000);
-            }
-        }
+    
 
 		function closeFinalScreen() {
 			document.getElementById('finalScreen').classList.remove('active');
@@ -2796,7 +3025,7 @@
 			document.getElementById('step1').classList.add('active');
 			
 			// Verrouiller tous les modules
-			['enigmaModule', 'codeModule', 'simonModule', 'puzzleModule', 'mazeModule', 'caesarModule', 'filesModule'].forEach(id => {
+			['enigmaModule', 'codeModule', 'simonModule', 'puzzleModule', 'mazeModule', 'memoryModule', 'filesModule'].forEach(id => {
 				const elem = document.getElementById(id);
 				if (elem) elem.classList.add('locked');
 			});
@@ -2809,7 +3038,7 @@
 			simonSequence = [];
 			simonRound = 0;
 			puzzleSolved = false;
-			caesarSolved = false;
+			memorySolved = false;
 			
 			// Reset des affichages
 			document.querySelectorAll('.wheel-numbers').forEach((wheel, index) => {
@@ -2818,8 +3047,6 @@
 			
 			document.getElementById('lockResult').innerHTML = '';
 			document.getElementById('codeInput').value = '';
-			document.getElementById('caesarShift').value = '1';
-			updateCaesarDecrypt();
 			
 			// Fermer l'écran final si ouvert
 			document.getElementById('finalScreen').classList.remove('active');
@@ -2838,7 +3065,7 @@
 				elem.classList.add('completed');
 			});
 			
-			['enigmaModule', 'codeModule', 'simonModule', 'puzzleModule', 'mazeModule', 'caesarModule', 'filesModule'].forEach(id => {
+			['enigmaModule', 'codeModule', 'simonModule', 'puzzleModule', 'mazeModule', 'memoryModule', 'filesModule'].forEach(id => {
 				const elem = document.getElementById(id);
 				if (elem) {
 					elem.classList.remove('locked');
@@ -2871,7 +3098,7 @@
 				'simon': { module: 'simonModule', step: 'step3', prev: 'step2' },
 				'puzzle': { module: 'puzzleModule', step: 'step3', prev: 'step2' },
 				'maze': { module: 'mazeModule', step: 'step3', prev: 'step2' },
-				'caesar': { module: 'caesarModule', step: 'step3', prev: 'step2' },
+				'memory': { module: 'memoryModule', step: 'step3', prev: 'step2' },
 				'files': { module: 'filesModule', step: 'step4', prev: 'step3' }
 			};
 			
@@ -2951,9 +3178,8 @@
             </p>
             
             <p style="margin-bottom: 20px; color: #ff6600; font-weight: bold;">
-                Trouvez la <span class="glitch">BOÎTE</span>.<br>
-                Trouvez les <span class="glitch">LAMPES UV</span>.<br>
                 Découvrez la <span class="glitch">VÉRITÉ</span>.
+                Découvrez ma <span class="glitch">CRÉATION</span>.
             </p>
         </div>
         
