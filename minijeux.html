@@ -446,9 +446,54 @@
             </button>
         </div>
         
+        <!-- SPECIMEN 001 -->
+        <div class="game-card">
+            <h2>🎯 SPECIMEN 001</h2>
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 80px; margin: 20px 0; animation: pulse 2s infinite;">🚗</div>
+                <div style="color: #f00; font-size: 14px; letter-spacing: 3px; margin-bottom: 15px;">
+                    ⚠️ CONFIDENTIEL - NIVEAU 5 ⚠️
+                </div>
+                <p style="color: #0f0; margin-bottom: 20px; line-height: 1.6;">
+                    Mission d'identification prioritaire<br>
+                    <span style="color: #ff6600;">PROJET CITROUILLE</span><br>
+                    <span style="font-size: 12px;">Classification: TOP SECRET</span>
+                </p>
+                <div style="background: rgba(255, 102, 0, 0.2); border: 2px solid #ff6600; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                    <p style="color: #ff6600; font-size: 14px;">
+                        🎯 Objectif : Localiser le spécimen<br>
+                        🔍 Scanner avec précision<br>
+                        ⏱️ Temps limité : 60 secondes<br>
+                        ✅ Validation automatique
+                    </p>
+                </div>
+            </div>
+            <button onclick="window.open('Specimen-001.html', '_blank')" style="background: #f00; animation: glow 1.5s infinite;">
+                🚨 ACTIVER LA MISSION
+            </button>
+        </div>
+        
+        <style>
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.9); }
+        }
+        </style>
         <!-- Jeu du Pendu -->
         <div class="game-card">
-            <h2>🎃 LE PENDU MAUDIT</h2>
+            <h2>🎃 PENDU DES ÉNIGMES</h2>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <button id="btnEasy" onclick="changeDifficulty('easy')" style="flex: 1; padding: 10px; background: rgba(0, 255, 0, 0.2); border: 2px solid #0f0;">
+                    😊 FACILE
+                </button>
+                <button id="btnHard" onclick="changeDifficulty('hard')" style="flex: 1; padding: 10px; background: #ff6600; border: 2px solid #ff6600;">
+                    🔥 DIFFICILE
+                </button>
+            </div>
             <div class="stats">
                 <div class="stat-box">
                     <div class="stat-label">Erreurs</div>
@@ -905,28 +950,54 @@
         }
         
         // ==================== JEU DU PENDU ====================
-        const hangmanWords = [
-            { word: "CITROUILLE", hint: "Le symbole d'Halloween 🎃" },
-            { word: "FANTOME", hint: "Il traverse les murs 👻" },
-            { word: "SQUELETTE", hint: "Il n'a que des os 💀" },
-            { word: "SORCIERE", hint: "Elle vole sur un balai 🧙" },
-            { word: "VAMPIRE", hint: "Il boit du sang 🧛" },
-            { word: "CHAUVESOURIS", hint: "Animal volant nocturne 🦇" },
-            { word: "ARAIGNEE", hint: "Elle tisse sa toile 🕷️" },
-            { word: "LOUPGAROU", hint: "Homme qui se transforme 🐺" },
-            { word: "MONSTRE", hint: "Créature effrayante 👹" },
-            { word: "ZOMBI", hint: "Mort-vivant 🧟" },
-            { word: "CERCUEIL", hint: "Dernier repos ⚰️" },
-            { word: "CIMETIERE", hint: "Lieu de repos éternel 🪦" },
-            { word: "TOMBE", hint: "Monument funéraire" },
-            { word: "SQUELETTE", hint: "Structure osseuse" },
-            { word: "BALAI", hint: "Véhicule de sorcière 🧹" },
-            { word: "CHAUDRON", hint: "Pour préparer les potions" },
-            { word: "POTION", hint: "Breuvage magique 🧪" },
-            { word: "MALEDICTION", hint: "Sort maléfique" },
-            { word: "EPOUVANTAIL", hint: "Gardien de champ" },
-            { word: "BONBONS", hint: "Récompense d'Halloween 🍬" }
+        const hangmanWordsEasy = [
+            { word: "CITROUILLE", hint: "🎃 CHARADE : Mon premier est le début de 'citer', mon second est une rouille, mon tout est orange et sourit à Halloween !" },
+            { word: "FANTOME", hint: "👻 ÉNIGME : Je traverse les murs sans les casser, je fais 'Bouuuh' pour effrayer, je suis blanc et transparent. Qui suis-je ?" },
+            { word: "SQUELETTE", hint: "💀 ÉNIGME : Je suis blanc et je cliquette, je n'ai plus de chair ni de peau, je suis fait uniquement d'os. Qui suis-je ?" },
+            { word: "SORCIERE", hint: "🧙 CHARADE : Mon premier est un outil pour scier, mon second est un cri de douleur (AIE!), mon tout vole sur un balai magique !" },
+            { word: "VAMPIRE", hint: "🧛 ÉNIGME : Je dors le jour dans un cercueil, je crains l'ail et les crucifix, je ne me reflète pas dans les miroirs. Qui suis-je ?" },
+            { word: "CHAUVESOURIS", hint: "🦇 ÉNIGME : Je vole mais ne suis pas un oiseau, je dors la tête en bas, j'utilise les ultrasons pour voir dans le noir. Qui suis-je ?" },
+            { word: "ARAIGNEE", hint: "🕷️ ÉNIGME : J'ai 8 pattes mais ne suis pas un meuble, je tisse ma maison, je piège les mouches. Qui suis-je ?" },
+            { word: "LOUPGAROU", hint: "🐺 CHARADE : Mon premier est un animal qui hurle à la lune, mon second est un lieu avec de l'herbe (pré/gazon), mon tout se transforme les nuits de pleine lune !" },
+            { word: "MONSTRE", hint: "👹 CHARADE : Mon premier suit le dimanche, mon second est un animal à longues oreilles, mon tout fait très peur aux enfants !" },
+            { word: "ZOMBI", hint: "🧟 ÉNIGME : Je suis mort mais je marche encore, je mange des cerveaux, je grogne 'Graaaaah'. Qui suis-je ?" },
+            { word: "CERCUEIL", hint: "⚰️ ÉNIGME : Je suis une boîte pour dormir éternellement, souvent en bois, on m'enterre sous terre. Qui suis-je ?" },
+            { word: "CIMETIERE", hint: "🪦 CHARADE : Mon premier se trouve au bout du pied (orteil), mon second est caché dans 'matière', mon tout est le lieu de repos des morts !" },
+            { word: "TOMBE", hint: "💐 ÉNIGME : Je commence comme 'tomber', je rime avec 'bombe', je marque l'endroit où repose un défunt. Qui suis-je ?" },
+            { word: "BALAI", hint: "🧹 ÉNIGME : On me chevauche pour voler la nuit, j'ai des brindilles à mon bout, les sorcières m'adorent pour voyager. Qui suis-je ?" },
+            { word: "CHAUDRON", hint: "🔮 ÉNIGME : Je suis rond et noir, je bouillonne sur le feu, les sorcières y préparent leurs potions magiques. Qui suis-je ?" },
+            { word: "POTION", hint: "🧪 ÉNIGME : Je suis un liquide magique coloré, on me boit pour se transformer, les sorcières me préparent avec des ingrédients bizarres. Qui suis-je ?" },
+            { word: "MALEDICTION", hint: "🪄 CHARADE : Mon premier est un synonyme de 'mauvais', mon second vient après 'neuf', mon tout est un sort qui porte malheur !" },
+            { word: "EPOUVANTAIL", hint: "🌾 CHARADE : Mon premier exprime la peur intense (épouvante), mon second protège un château, mon tout fait fuir les oiseaux dans les champs !" },
+            { word: "BONBONS", hint: "🍬 CHARADE : Mon premier signifie 'bien', mon second est caché dans 'bondir', mon tout est ce qu'on récolte en criant 'Trick or Treat' !" },
+            { word: "TOILE", hint: "🕸️ ÉNIGME : Je suis collante et argentée, une créature à 8 pattes me fabrique, je piège les insectes volants. Qui suis-je ?" }
         ];
+        
+        const hangmanWordsHard = [
+            { word: "NECROMANCIE", hint: "🔮 CHARADE : Mon premier est une négation, mon second est le cri du corbeau, mon troisième pratique la magie. Mon tout invoque les défunts." },
+            { word: "PUTREFACTION", hint: "💀 ÉNIGME : Processus inexorable qui transforme la chair en poussière. Sans moi, point de renaissance. Les vers sont mes ouvriers. Je suis..." },
+            { word: "EXORCISME", hint: "⛪ CHARADE : Mon premier sort du corps, mon second est un courant philosophique, mon tout chasse les démons." },
+            { word: "MEMENTO-MORI", hint: "☠️ ÉNIGME : Locution latine gravée sur les vanités. Je te rappelle l'inéluctable. Les moines me murmurent. Souviens-toi que tu..." },
+            { word: "LINCEUL", hint: "⚰️ CHARADE : Mon premier est un tissu précieux, mon second est le contraire de 'lent', mon tout enveloppe les morts dans leur dernier voyage." },
+            { word: "CROQUE-MORT", hint: "🎩 ÉNIGME : Mon métier est d'accompagner ceux qui ne reviendront jamais. Je porte le noir avec solennité. On dit que je 'croque' symboliquement pour vérifier le trépas..." },
+            { word: "THANATOLOGIE", hint: "📚 CHARADE : Mon premier est le dieu grec de la mort, mon second est une science. Mon tout étudie la mort sous tous ses aspects." },
+            { word: "CATACOMBES", hint: "🏛️ ÉNIGME : Labyrinthe souterrain tapissé d'ossements. À Paris ou Rome, je garde les secrets des siècles. Les touristes me visitent, les morts m'habitent." },
+            { word: "POLTERGEIST", hint: "👻 ÉNIGME : Mot allemand signifiant 'esprit frappeur'. Je déplace les objets, claque les portes. Les parapsychologues m'étudient, les sceptiques me nient." },
+            { word: "LYCANTHROPIE", hint: "🐺 CHARADE : Mon premier est un canidé, mon second vient du grec 'anthropos' (homme). Mon tout est une transformation maudite sous la pleine lune." },
+            { word: "NOSFERATU", hint: "🧛 ÉNIGME : Nom roumain du vampire, popularisé par Murnau en 1922. Je suis l'ombre qui boit la vie, le non-mort par excellence..." },
+            { word: "APOCALYPSE", hint: "🔥 CHARADE : Mon premier cache quelque chose, mon second est un astre, mon troisième est un fleuve français. Mon tout annonce la fin des temps." },
+            { word: "INCANTATION", hint: "🪄 ÉNIGME : Formule magique prononcée avec solennité. Les sorcières me psalmodient, les druides me chantent. Abracadabra est ma cousine..." },
+            { word: "SEPULTURE", hint: "🪦 CHARADE : Mon premier est un chiffre, mon second est un verbe à l'infinitif, mon tout est l'acte d'inhumer un corps." },
+            { word: "GRIMOIRE", hint: "📖 ÉNIGME : Livre de magie défendu, relié de cuir sombre. Mes pages contiennent sorts et rituels oubliés. Faust me consultait..." },
+            { word: "ECTOPLASME", hint: "👻 CHARADE : Mon premier est un préfixe grec signifiant 'extérieur', mon second est la matière vivante. Mon tout est la substance spectrale des fantômes." },
+            { word: "MAUSOLEE", hint: "🏛️ ÉNIGME : Monument funéraire grandiose tirant mon nom du roi Mausole. Je suis plus qu'une tombe, je suis une œuvre d'art mortuaire." },
+            { word: "FLAGELLATION", hint: "⛓️ CHARADE : Mon premier est un drapeau, mon second termine 'nation'. Mon tout est une punition par le fouet, pratiquée aussi en pénitence." },
+            { word: "SACRIFICE", hint: "🗡️ ÉNIGME : Offrande aux dieux, souvent sanglante. Les Aztèques me pratiquaient au sommet des pyramides. Je rends sacré ce qui est immolé..." },
+            { word: "TOURMENTE", hint: "🌪️ CHARADE : Mon premier fait le tour, mon second vient de 'mentir'. Mon tout est une souffrance psychique intense ou une tempête violente." }
+        ];
+        
+        let hangmanDifficulty = 'hard'; // Difficulté par défaut
+        let hangmanWords = hangmanWordsHard;
         
         let hangmanCurrentWord = '';
         let hangmanGuessedLetters = [];
@@ -944,6 +1015,31 @@
             '🪦'            // 6 erreurs - Game Over
         ];
         
+        function changeDifficulty(level) {
+            hangmanDifficulty = level;
+            hangmanWords = level === 'easy' ? hangmanWordsEasy : hangmanWordsHard;
+            
+            const btnEasy = document.getElementById('btnEasy');
+            const btnHard = document.getElementById('btnHard');
+            
+            if (level === 'easy') {
+                btnEasy.style.background = '#0f0';
+                btnEasy.style.borderColor = '#0f0';
+                btnEasy.style.color = '#000';
+                btnHard.style.background = 'rgba(255, 102, 0, 0.2)';
+                btnHard.style.borderColor = '#ff6600';
+                btnHard.style.color = '#ff6600';
+            } else {
+                btnEasy.style.background = 'rgba(0, 255, 0, 0.2)';
+                btnEasy.style.borderColor = '#0f0';
+                btnEasy.style.color = '#0f0';
+                btnHard.style.background = '#ff6600';
+                btnHard.style.borderColor = '#ff6600';
+                btnHard.style.color = '#000';
+            }
+            startHangman();
+        }
+
         function startHangman() {
             // Choisir un mot aléatoire
             const randomIndex = Math.floor(Math.random() * hangmanWords.length);
