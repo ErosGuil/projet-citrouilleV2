@@ -1296,11 +1296,16 @@
             <h3 style="color: #667eea; margin-bottom: 15px; font-size: 18px;">🎯 DÉBLOCAGE PAR ÉTAPE</h3>
             
             <div class="admin-step-control" style="margin-bottom: 10px;">
-                <button onclick="adminUnlockStep('enigma')" class="admin-btn">
-                    🧩 Débloquer Quiz
+                <button onclick="adminUnlockStep('quiz')" class="admin-btn">
+                    🧩 Débloquer Énigmes
                 </button>
             </div>
 
+            <div class="admin-step-control" style="margin-bottom: 10px;">
+                <button onclick="adminUnlockStep('hangman')" class="admin-btn">
+                    🎃 Débloquer Pendu
+                </button>
+            </div>
             <div class="admin-step-control" style="margin-bottom: 10px;">
                 <button onclick="adminUnlockStep('code')" class="admin-btn">
                     🔐 Débloquer Code Sécurité
@@ -1338,6 +1343,23 @@
             </div>
         </div>
 
+
+
+        <!-- Section Difficulté du Pendu -->
+        <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+            <h3 style="color: #ff6600; margin-bottom: 15px; font-size: 18px;">🎃 MODE PENDU</h3>
+            <button onclick="adminToggleHangmanDifficulty()" id="hangmanDifficultyBtn" style="
+                width: 100%;
+                padding: 12px;
+                background: #ff6600;
+                color: #000;
+                border: none;
+                font-weight: bold;
+                cursor: pointer;
+                border-radius: 5px;
+                font-size: 14px;
+            ">🔄 Mode: DIFFICILE → FACILE</button>
+        </div>
         <!-- Section Codes et Réponses -->
         <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px;">
             <h3 style="color: #ff6600; margin-bottom: 15px; font-size: 18px;">🔑 CODES ET RÉPONSES</h3>
@@ -1545,31 +1567,132 @@
                 </div>
             </div>
             
-            <div class="terminal-module locked" id="enigmaModule">
+            <div class="terminal-module locked" id="quizModule">
                 <div class="module-header">
-                    <span class="module-icon">🧩</span>
-                    <span class="module-title">ÉNIGME DU LABORATOIRE</span>
+                    <span class="module-icon">🎃</span>
+                    <span class="module-title">ÉNIGMES DU LABORATOIRE</span>
+                </div>
+                <div class="module-content">
+                    <div style="background: rgba(255, 102, 0, 0.1); border: 2px solid #ff6600; padding: 15px; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+                        <p style="color: #ff6600; font-weight: bold; font-size: 16px;">
+                            🧩 PROTOCOLE DE VALIDATION<br>
+                            <span style="font-size: 14px; color: #0f0;">Résoudre les 2 énigmes pour débloquer le PENDU</span>
+                        </p>
+                        <div style="margin-top: 10px;">
+                            <span style="color: #0f0; font-size: 18px;" id="quizProgress">0/2 ✓</span>
+                        </div>
+                    </div>
+                
+                    <!-- QUESTION 1 : Quiz -->
+                    <div class="enigma-box" style="border: 2px solid #ff6600; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                        <h3 style="color: #ff6600;">📊 Question 1 - Calcul :</h3>
+                        <p style="color: #ff6600; font-size: 16px; margin: 20px 0;">
+                            Un fermier a planté des citrouilles dans son champ.<br>
+                            Il y a 8 rangées de citrouilles.<br>
+                            Chaque rangée contient 12 citrouilles.<br><br>
+                            Combien de citrouilles y a-t-il en tout ?
+                        </p>
+                        
+                        <div style="margin: 20px 0;">
+                            <button onclick="checkQuizAnswer('A')" class="quiz-btn quiz1-btn" style="width: 100%; margin: 5px 0; padding: 12px; background: rgba(255, 102, 0, 0.3); border: 2px solid #ff6600; color: #ff6600; cursor: pointer; border-radius: 5px; font-size: 16px;">
+                                A) 88 citrouilles
+                            </button>
+                            <button onclick="checkQuizAnswer('B')" class="quiz1-btn" style="width: 100%; margin: 5px 0; padding: 12px; background: rgba(255, 102, 0, 0.3); border: 2px solid #ff6600; color: #ff6600; cursor: pointer; border-radius: 5px; font-size: 16px;">
+                                B) 92 citrouilles
+                            </button>
+                            <button onclick="checkQuizAnswer('C')" class="quiz1-btn" style="width: 100%; margin: 5px 0; padding: 12px; background: rgba(255, 102, 0, 0.3); border: 2px solid #ff6600; color: #ff6600; cursor: pointer; border-radius: 5px; font-size: 16px;">
+                                C) 96 citrouilles
+                            </button>
+                            <button onclick="checkQuizAnswer('D')" class="quiz1-btn" style="width: 100%; margin: 5px 0; padding: 12px; background: rgba(255, 102, 0, 0.3); border: 2px solid #ff6600; color: #ff6600; cursor: pointer; border-radius: 5px; font-size: 16px;">
+                                D) 100 citrouilles
+                            </button>
+                        </div>
+                        
+                        <div id="quizResult" style="text-align: center; margin-top: 15px; font-size: 16px; font-weight: bold;"></div>
+                    </div>
+                    
+                    <!-- QUESTION 2 : Énigme -->
+                    <div class="enigma-box" style="border: 2px solid #ff6600; padding: 15px; border-radius: 5px;">
+                        <h3 style="color: #ff6600;">🧪 Question 2 - Énigme du Dr. Halloween :</h3>
+                        <p style="color: #ff6600; font-size: 16px; margin: 20px 0;">
+                            "Dans mon laboratoire, au matin du jour 1, j'ai créé 3 citrouilles.<br>
+                            Chaque nuit, chaque citrouille se duplique.<br><br>
+                            Après 5 nuits, combien de citrouilles ai-je ?"
+                        </p>
+                        
+                        <div style="margin: 20px 0;">
+                            <button onclick="checkEnigmaAnswer('A')" class="quiz2-btn" style="width: 100%; margin: 5px 0; padding: 12px; background: rgba(255, 102, 0, 0.3); border: 2px solid #ff6600; color: #ff6600; cursor: pointer; border-radius: 5px; font-size: 16px;">
+                                A) 15 citrouilles
+                            </button>
+                            <button onclick="checkEnigmaAnswer('B')" class="quiz2-btn" style="width: 100%; margin: 5px 0; padding: 12px; background: rgba(255, 102, 0, 0.3); border: 2px solid #ff6600; color: #ff6600; cursor: pointer; border-radius: 5px; font-size: 16px;">
+                                B) 36 citrouilles
+                            </button>
+                            <button onclick="checkEnigmaAnswer('C')" class="quiz2-btn" style="width: 100%; margin: 5px 0; padding: 12px; background: rgba(255, 102, 0, 0.3); border: 2px solid #ff6600; color: #ff6600; cursor: pointer; border-radius: 5px; font-size: 16px;">
+                                C) 48 citrouilles
+                            </button>
+                            <button onclick="checkEnigmaAnswer('D')" class="quiz2-btn" style="width: 100%; margin: 5px 0; padding: 12px; background: rgba(255, 102, 0, 0.3); border: 2px solid #ff6600; color: #ff6600; cursor: pointer; border-radius: 5px; font-size: 16px;">
+                                D) 96 citrouilles
+                            </button>
+                            <button onclick="checkEnigmaAnswer('E')" class="quiz2-btn" style="width: 100%; margin: 5px 0; padding: 12px; background: rgba(255, 102, 0, 0.3); border: 2px solid #ff6600; color: #ff6600; cursor: pointer; border-radius: 5px; font-size: 16px;">
+                                E) 128 citrouilles
+                            </button>
+                        </div>
+                        
+                        <div id="enigmaResult" style="text-align: center; margin-top: 15px; font-size: 16px; font-weight: bold;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="terminal-module locked" id="hangmanModule">
+                <div class="module-header">
+                    <span class="module-icon">🎃</span>
+                    <span class="module-title">PENDU DES ÉNIGMES - NIVEAU 5</span>
                 </div>
                 <div class="module-content">
                     <div class="enigma-box">
-                        <h3>Question du Dr. Halloween :</h3>
-                        <p>"Dans mon laboratoire, Au matin du jour 1, j’ai créer 3 citrouilles. Chaque nuit, chaque citrouille se dupliquent. Après 5 nuits, combien de citrouilles ai-je ?"</p>
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <h3 style="color: #ff6600;">PROTOCOLE DE DÉVERROUILLAGE</h3>
+                            <p style="color: #0f0; font-size: 14px; margin: 10px 0;">
+                                ⚠️ 6 énigmes à résoudre pour débloquer l'étape suivante<br>
+                                Mode DIFFICILE activé - Énigmes complexes
+                            </p>
+                            <div style="background: rgba(0, 255, 0, 0.1); border: 2px solid #0f0; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                                <span style="color: #0f0; font-size: 16px; font-weight: bold;">Progression: </span>
+                                <span id="hangmanProgress" style="color: #ff6600; font-size: 20px; font-weight: bold;">0/6</span>
+                            </div>
+                        </div>
                         
-                        <div class="quiz-option" onclick="checkQuiz(this, false)">
-                            A) 15 citrouilles
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <div style="flex: 1; background: rgba(255, 0, 0, 0.2); border: 2px solid #f00; padding: 10px; border-radius: 5px; text-align: center;">
+                                <div style="color: #0f0; font-size: 12px;">Erreurs</div>
+                                <div id="hangmanErrorsDisplay" style="color: #f00; font-size: 20px; font-weight: bold;">0/6</div>
+                            </div>
+                            <div style="flex: 1; background: rgba(102, 126, 234, 0.2); border: 2px solid #667eea; padding: 10px; border-radius: 5px; text-align: center;">
+                                <div style="color: #0f0; font-size: 12px;">Mode</div>
+                                <div id="hangmanModeDisplay" style="color: #667eea; font-size: 16px; font-weight: bold;">DIFFICILE</div>
+                            </div>
                         </div>
-                        <div class="quiz-option" onclick="checkQuiz(this, false)">
-                            B) 36 citrouilles
+                        
+                        <div id="hangmanDrawing" style="font-size: 100px; text-align: center; min-height: 120px; margin: 15px 0;">
+                            🎃
                         </div>
-                        <div class="quiz-option" onclick="checkQuiz(this, false)">
-                            C) 48 citrouilles
+                        
+                        <div id="hangmanWord" style="text-align: center; font-size: 24px; letter-spacing: 4px; margin: 15px 0; color: #ff6600; min-height: 40px; word-wrap: break-word;">
+                            _ _ _ _ _
                         </div>
-                        <div class="quiz-option" onclick="checkQuiz(this, true)">
-                            D) 96 citrouilles
+                        
+                        <div id="hangmanHint" style="text-align: center; color: #0f0; margin: 10px 0; font-size: 13px; min-height: 40px; line-height: 1.4; padding: 10px; background: rgba(0, 255, 0, 0.05); border-radius: 5px;">
+                            💡 Cliquez sur COMMENCER pour débuter
                         </div>
-                        <div class="quiz-option" onclick="checkQuiz(this, false)">
-                            E) 128 citrouilles
+                        
+                        <div id="hangmanKeyboard" style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin: 15px 0;">
                         </div>
+                        
+                        <div id="hangmanMessage" style="text-align: center; margin: 15px 0; font-size: 16px; font-weight: bold; min-height: 25px;"></div>
+                        
+                        <button onclick="startHangmanGame()" id="hangmanStartBtn" style="width: 100%; margin-top: 10px;">
+                            🎮 COMMENCER LE PENDU
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1876,6 +1999,7 @@
     <script>
         const PASSWORD = "CYLINDRE";
         let quizAnswered = false;
+        let enigmaAnswered = false;
         window.attemptCount = 0;
         window.filesOpened = new Set();
         window.errorCount = 0;
@@ -1958,8 +2082,8 @@
                     document.getElementById('step1').classList.add('completed');
                     document.getElementById('step2').classList.remove('locked');
                     document.getElementById('step2').classList.add('active');
-                    document.getElementById('enigmaModule').classList.remove('locked');
-                    showNotification('✓ ÉTAPE 1 COMPLÉTÉE - Énigme débloquée !', '#0f0');
+                    document.getElementById('quizModule').classList.remove('locked');
+                    showNotification('✓ ÉTAPE 1 COMPLÉTÉE - Énigmes débloquées !', '#0f0');
                     
                     document.querySelectorAll('.lock-wheel').forEach(wheel => {
                         wheel.style.borderColor = '#0f0';
@@ -2084,7 +2208,7 @@
             document.getElementById('step1').classList.add('completed');
             document.getElementById('step2').classList.remove('locked');
             document.getElementById('step2').classList.add('active');
-            document.getElementById('enigmaModule').classList.remove('locked');
+            document.getElementById('quizModule').classList.remove('locked');
             showNotification('✓ ÉTAPE 1 COMPLÉTÉE - Énigme débloquée !', '#0f0');
         }
 
@@ -2264,27 +2388,346 @@ function checkMemoryMatch() {
     flippedCards = [];
 }
         
-        function checkQuiz(element, isCorrect) {
-            if (quizAnswered) return;
+        // ==================== ÉNIGMES DU LABORATOIRE ====================
+        
+        function updateQuizProgress() {
+            let count = 0;
+            if (quizAnswered) count++;
+            if (enigmaAnswered) count++;
             
-            if (isCorrect) {
-                element.classList.add('correct');
-                quizAnswered = true;
-                
+            document.getElementById('quizProgress').textContent = count + '/2 ✓';
+            
+            // Si les 2 questions sont résolues, débloquer le Pendu
+            if (quizAnswered && enigmaAnswered) {
+                document.getElementById('quizModule').style.borderColor = '#0f0';
                 setTimeout(() => {
-                    document.getElementById('step2').classList.remove('active');
-                    document.getElementById('step2').classList.add('completed');
-                    document.getElementById('step3').classList.remove('locked');
-                    document.getElementById('step3').classList.add('active');
-                    document.getElementById('codeModule').classList.remove('locked');
-                    showNotification('✓ ÉTAPE 2 COMPLÉTÉE - Code de sécurité débloqué !', '#0f0');
+                    showNotification('✅ Toutes les énigmes résolues ! Pendu débloqué !', '#0f0');
+                    unlockHangman();
                 }, 1000);
-            } else {
-                element.classList.add('wrong');
-                triggerJumpscare();
-                setTimeout(() => element.classList.remove('wrong'), 500);
             }
         }
+        
+        function checkQuizAnswer(answer) {
+            const buttons = document.querySelectorAll('.quiz1-btn');
+            buttons.forEach(btn => btn.disabled = true);
+            
+            if (answer === 'C') {
+                quizAnswered = true;
+                document.getElementById('quizResult').innerHTML = '<div style="color: #0f0;">✅ CORRECT ! 8 × 12 = 96 citrouilles</div>';
+                updateQuizProgress();
+            } else {
+                document.getElementById('quizResult').innerHTML = '<div style="color: #f00;">❌ INCORRECT ! Réessayez...</div>';
+                setTimeout(() => {
+                    buttons.forEach(btn => btn.disabled = false);
+                    document.getElementById('quizResult').innerHTML = '';
+                }, 2000);
+            }
+        }
+        
+        function checkEnigmaAnswer(answer) {
+            const buttons = document.querySelectorAll('.quiz2-btn');
+            buttons.forEach(btn => btn.disabled = true);
+            
+            if (answer === 'D') {
+                enigmaAnswered = true;
+                document.getElementById('enigmaResult').innerHTML = '<div style="color: #0f0;">✅ CORRECT ! 3×2×2×2×2×2 = 96 citrouilles après 5 nuits</div>';
+                updateQuizProgress();
+            } else {
+                document.getElementById('enigmaResult').innerHTML = '<div style="color: #f00;">❌ INCORRECT ! Pensez à la duplication chaque nuit...</div>';
+                setTimeout(() => {
+                    buttons.forEach(btn => btn.disabled = false);
+                    document.getElementById('enigmaResult').innerHTML = '';
+                }, 2000);
+            }
+        }
+        
+        function unlockHangman() {
+            document.getElementById('hangmanModule').classList.remove('locked');
+            document.getElementById('hangmanModule').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // ==================== JEU DU PENDU ====================
+        const hangmanWordsEasy = [
+            { word: "CITROUILLE", hint: "🎃 CHARADE : Mon premier est le début de 'citer', mon second est une rouille, mon tout est orange et sourit à Halloween !" },
+            { word: "FANTOME", hint: "👻 ÉNIGME : Je traverse les murs sans les casser, je fais 'Bouuuh' pour effrayer, je suis blanc et transparent. Qui suis-je ?" },
+            { word: "SQUELETTE", hint: "💀 ÉNIGME : Je suis blanc et je cliquette, je n'ai plus de chair ni de peau, je suis fait uniquement d'os. Qui suis-je ?" },
+            { word: "SORCIERE", hint: "🧙 CHARADE : Mon premier est un outil pour scier, mon second est un cri de douleur (AIE!), mon tout vole sur un balai magique !" },
+            { word: "VAMPIRE", hint: "🧛 ÉNIGME : Je dors le jour dans un cercueil, je crains l'ail et les crucifix, je ne me reflète pas dans les miroirs. Qui suis-je ?" },
+            { word: "CHAUVESOURIS", hint: "🦇 ÉNIGME : Je vole mais ne suis pas un oiseau, je dors la tête en bas, j'utilise les ultrasons pour voir dans le noir. Qui suis-je ?" },
+            { word: "ARAIGNEE", hint: "🕷️ ÉNIGME : J'ai 8 pattes mais ne suis pas un meuble, je tisse ma maison, je piège les mouches. Qui suis-je ?" },
+            { word: "LOUPGAROU", hint: "🐺 CHARADE : Mon premier est un animal qui hurle à la lune, mon second est un lieu avec de l'herbe (pré/gazon), mon tout se transforme les nuits de pleine lune !" },
+            { word: "MONSTRE", hint: "👹 CHARADE : Mon premier suit le dimanche, mon second est un animal à longues oreilles, mon tout fait très peur aux enfants !" },
+            { word: "ZOMBI", hint: "🧟 ÉNIGME : Je suis mort mais je marche encore, je mange des cerveaux, je grogne 'Graaaaah'. Qui suis-je ?" },
+            { word: "CERCUEIL", hint: "⚰️ ÉNIGME : Je suis une boîte pour dormir éternellement, souvent en bois, on m'enterre sous terre. Qui suis-je ?" },
+            { word: "CIMETIERE", hint: "🪦 CHARADE : Mon premier se trouve au bout du pied (orteil), mon second est caché dans 'matière', mon tout est le lieu de repos des morts !" },
+            { word: "TOMBE", hint: "💐 ÉNIGME : Je commence comme 'tomber', je rime avec 'bombe', je marque l'endroit où repose un défunt. Qui suis-je ?" },
+            { word: "BALAI", hint: "🧹 ÉNIGME : On me chevauche pour voler la nuit, j'ai des brindilles à mon bout, les sorcières m'adorent pour voyager. Qui suis-je ?" },
+            { word: "CHAUDRON", hint: "🔮 ÉNIGME : Je suis rond et noir, je bouillonne sur le feu, les sorcières y préparent leurs potions magiques. Qui suis-je ?" },
+            { word: "POTION", hint: "🧪 ÉNIGME : Je suis un liquide magique coloré, on me boit pour se transformer, les sorcières me préparent avec des ingrédients bizarres. Qui suis-je ?" },
+            { word: "MALEDICTION", hint: "🪄 CHARADE : Mon premier est un synonyme de 'mauvais', mon second vient après 'neuf', mon tout est un sort qui porte malheur !" },
+            { word: "EPOUVANTAIL", hint: "🌾 CHARADE : Mon premier exprime la peur intense (épouvante), mon second protège un château, mon tout fait fuir les oiseaux dans les champs !" },
+            { word: "BONBONS", hint: "🍬 CHARADE : Mon premier signifie 'bien', mon second est caché dans 'bondir', mon tout est ce qu'on récolte en criant 'Trick or Treat' !" },
+            { word: "TOILE", hint: "🕸️ ÉNIGME : Je suis collante et argentée, une créature à 8 pattes me fabrique, je piège les insectes volants. Qui suis-je ?" }
+        ];
+        
+        const allHangmanWords = [
+            { word: "NECROMANCIE", hint: "🔮 CHARADE : Mon premier est une négation, mon second est le cri du corbeau, mon troisième pratique la magie. Mon tout invoque les défunts." },
+            { word: "PUTREFACTION", hint: "💀 ÉNIGME : Processus inexorable qui transforme la chair en poussière. Sans moi, point de renaissance. Les vers sont mes ouvriers. Je suis..." },
+            { word: "EXORCISME", hint: "⛪ CHARADE : Mon premier sort du corps, mon second est un courant philosophique, mon tout chasse les démons." },
+            { word: "MEMENTO-MORI", hint: "☠️ ÉNIGME : Locution latine gravée sur les vanités. Je te rappelle l'inéluctable. Les moines me murmurent. Souviens-toi que tu..." },
+            { word: "LINCEUL", hint: "⚰️ CHARADE : Mon premier est un tissu précieux, mon second est le contraire de 'lent', mon tout enveloppe les morts dans leur dernier voyage." },
+            { word: "CROQUE-MORT", hint: "🎩 ÉNIGME : Mon métier est d'accompagner ceux qui ne reviendront jamais. Je porte le noir avec solennité. On dit que je 'croque' symboliquement pour vérifier le trépas..." },
+            { word: "THANATOLOGIE", hint: "📚 CHARADE : Mon premier est le dieu grec de la mort, mon second est une science. Mon tout étudie la mort sous tous ses aspects." },
+            { word: "CATACOMBES", hint: "🏛️ ÉNIGME : Labyrinthe souterrain tapissé d'ossements. À Paris ou Rome, je garde les secrets des siècles. Les touristes me visitent, les morts m'habitent." },
+            { word: "POLTERGEIST", hint: "👻 ÉNIGME : Mot allemand signifiant 'esprit frappeur'. Je déplace les objets, claque les portes. Les parapsychologues m'étudient, les sceptiques me nient." },
+            { word: "LYCANTHROPIE", hint: "🐺 CHARADE : Mon premier est un canidé, mon second vient du grec 'anthropos' (homme). Mon tout est une transformation maudite sous la pleine lune." },
+            { word: "NOSFERATU", hint: "🧛 ÉNIGME : Nom roumain du vampire, popularisé par Murnau en 1922. Je suis l'ombre qui boit la vie, le non-mort par excellence..." },
+            { word: "APOCALYPSE", hint: "🔥 CHARADE : Mon premier cache quelque chose, mon second est un astre, mon troisième est un fleuve français. Mon tout annonce la fin des temps." },
+            { word: "INCANTATION", hint: "🪄 ÉNIGME : Formule magique prononcée avec solennité. Les sorcières me psalmodient, les druides me chantent. Abracadabra est ma cousine..." },
+            { word: "SEPULTURE", hint: "🪦 CHARADE : Mon premier est un chiffre, mon second est un verbe à l'infinitif, mon tout est l'acte d'inhumer un corps." },
+            { word: "GRIMOIRE", hint: "📖 ÉNIGME : Livre de magie défendu, relié de cuir sombre. Mes pages contiennent sorts et rituels oubliés. Faust me consultait..." },
+            { word: "ECTOPLASME", hint: "👻 CHARADE : Mon premier est un préfixe grec signifiant 'extérieur', mon second est la matière vivante. Mon tout est la substance spectrale des fantômes." },
+            { word: "MAUSOLEE", hint: "🏛️ ÉNIGME : Monument funéraire grandiose tirant mon nom du roi Mausole. Je suis plus qu'une tombe, je suis une œuvre d'art mortuaire." },
+            { word: "FLAGELLATION", hint: "⛓️ CHARADE : Mon premier est un drapeau, mon second termine 'nation'. Mon tout est une punition par le fouet, pratiquée aussi en pénitence." },
+            { word: "SACRIFICE", hint: "🗡️ ÉNIGME : Offrande aux dieux, souvent sanglante. Les Aztèques me pratiquaient au sommet des pyramides. Je rends sacré ce qui est immolé..." },
+            { word: "TOURMENTE", hint: "🌪️ CHARADE : Mon premier fait le tour, mon second vient de 'mentir'. Mon tout est une souffrance psychique intense ou une tempête violente." },
+            { word: "MALEDICTION", hint: "🪄 CHARADE : Mon premier est un synonyme de 'mauvais', mon second vient après 'neuf', mon tout est un sort qui porte malheur !" },
+            { word: "NECROPHAGE", hint: "🦴 CHARADE : Mon premier désigne la mort (nécro), mon second vient de 'manger' en grec. Mon tout se nourrit de cadavres." },
+            { word: "TRANSMUTATION", hint: "⚗️ ÉNIGME : Transformation alchimique de la matière. Les alchimistes cherchaient à changer le plomb en or par mon processus..." },
+            { word: "HALLUCINATION", hint: "👁️ ÉNIGME : Perception sans objet réel. Je peux être visuelle, auditive ou tactile. La fièvre et la folie me provoquent..." },
+            { word: "METAMORPHOSE", hint: "🦋 CHARADE : Mon premier vient du grec 'meta' (au-delà), mon second est la forme. Mon tout est une transformation complète." },
+            { word: "ALCHIMIE", hint: "⚗️ ÉNIGME : Science occulte médiévale cherchant la pierre philosophale. Je suis l'ancêtre de la chimie moderne..." },
+            { word: "PENTAGONE", hint: "⭐ CHARADE : Mon premier signifie 'cinq' en grec, mon second est un polygone. Mon tout a 5 côtés et protège contre le mal." },
+            { word: "PARCHEMIN", hint: "📜 ÉNIGME : Support d'écriture fait de peau animale. Les grimoires anciens étaient écrits sur moi. Je suis plus précieux que le papier..." },
+            { word: "CRYPTE", hint: "⚰️ ÉNIGME : Caveau souterrain d'une église où reposent les morts illustres. Je suis froide, humide et inquiétante..." },
+            { word: "EXSANGUE", hint: "💉 ÉNIGME : Adjectif désignant quelqu'un qui a perdu tout son sang. Je suis pâle, vidé de ma substance vitale..." },
+            { word: "MALEDICTION", hint: "💀 ÉNIGME : Sort jeté pour causer du malheur. Les pharaons en plaçaient sur leurs tombeaux. Je pèse sur les générations..." },
+            { word: "OUIJA", hint: "🔮 ÉNIGME : Planche spirite utilisée pour communiquer avec les esprits. Mon nom vient de 'oui' en français et allemand..." },
+            { word: "SPECTRE", hint: "👻 ÉNIGME : Apparition fantomatique d'un mort. Je hante les vivants, je suis une ombre du passé qui refuse de partir..." },
+            { word: "SUPPLICE", hint: "😱 ÉNIGME : Torture physique ou morale intense. Au Moyen-Âge, j'étais infligé publiquement. La roue et l'écartèlement sont mes formes..." },
+            { word: "RITUEL", hint: "🕯️ ÉNIGME : Ensemble de gestes et paroles codifiés pour une cérémonie. Je peux être religieux, magique ou funéraire..." },
+            { word: "POSSEDEE", hint: "😈 ÉNIGME : État d'une personne habitée par un esprit malin. L'exorcisme tente de me libérer du démon qui me contrôle..." },
+            { word: "CAUCHEMAR", hint: "😱 CHARADE : Mon premier vient du latin 'calcare' (presser), mon second est la jument. Mon tout est un rêve terrifiant." },
+            { word: "MACABRE", hint: "💀 ÉNIGME : Adjectif qualifiant ce qui évoque la mort de manière sinistre. La danse des squelettes est ma danse..." },
+            { word: "TENEBRES", hint: "🌑 ÉNIGME : Obscurité profonde et inquiétante. Je suis plus que la nuit, je suis l'absence totale de lumière..." },
+            { word: "DIABOLIQUE", hint: "😈 CHARADE : Mon premier est un préfixe grec, mon second vient de 'balle'. Mon tout qualifie ce qui est démoniaque." }
+        ];
+        
+        let hangmanDifficulty = 'hard'; // 'easy' ou 'hard'
+        let usedHangmanWords = [];
+        let hangmanCurrentWord = '';
+        let hangmanGuessedLetters = [];
+        let hangmanErrors = 0;
+        let hangmanWins = 0;
+        let hangmanMaxErrors = 6;
+        let hangmanActive = false;
+        
+        const hangmanStages = ['🎃', '😨', '😱', '💀', '☠️', '⚰️', '🪦'];
+        
+        function getUniqueWord() {
+            // Choisir la liste selon la difficulté
+            const wordList = hangmanDifficulty === 'easy' ? hangmanWordsEasy : allHangmanWords;
+            
+            // Filtrer les mots déjà utilisés
+            const availableWords = wordList.filter(w => !usedHangmanWords.includes(w.word));
+            
+            // Si tous les mots sont utilisés, réinitialiser
+            if (availableWords.length === 0) {
+                usedHangmanWords = [];
+                return wordList[Math.floor(Math.random() * wordList.length)];
+            }
+            
+            // Choisir un mot aléatoire parmi les disponibles
+            const randomIndex = Math.floor(Math.random() * availableWords.length);
+            const selected = availableWords[randomIndex];
+            usedHangmanWords.push(selected.word);
+            return selected;
+        }
+        
+        function startHangmanGame() {
+            if (hangmanWins >= 6) return;
+            
+            const selected = getUniqueWord();
+            hangmanCurrentWord = selected.word.toUpperCase();
+            hangmanGuessedLetters = [];
+            hangmanErrors = 0;
+            hangmanActive = true;
+            
+            document.getElementById('hangmanErrorsDisplay').textContent = '0/' + hangmanMaxErrors;
+            document.getElementById('hangmanDrawing').textContent = hangmanStages[0];
+            document.getElementById('hangmanHint').innerHTML = '💡 ' + selected.hint;
+            document.getElementById('hangmanMessage').innerHTML = '';
+            document.getElementById('hangmanStartBtn').style.display = 'none';
+            
+            createHangmanKeyboard();
+            updateHangmanWord();
+        }
+        
+        function createHangmanKeyboard() {
+            const keyboard = document.getElementById('hangmanKeyboard');
+            keyboard.innerHTML = '';
+            
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ-'.split('');
+            
+            letters.forEach(letter => {
+                const btn = document.createElement('button');
+                btn.textContent = letter;
+                btn.style.cssText = `
+                    width: 38px;
+                    height: 38px;
+                    margin: 2px;
+                    padding: 3px;
+                    background: rgba(255, 102, 0, 0.3);
+                    border: 2px solid #ff6600;
+                    color: #ff6600;
+                    font-family: 'Courier New', monospace;
+                    font-size: 16px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    transition: all 0.3s;
+                    min-width: 38px;
+                    flex-shrink: 0;
+                `;
+                btn.onmouseover = () => {
+                    if (!btn.disabled) {
+                        btn.style.background = '#ff6600';
+                        btn.style.color = '#000';
+                    }
+                };
+                btn.onmouseout = () => {
+                    if (!btn.disabled) {
+                        btn.style.background = 'rgba(255, 102, 0, 0.3)';
+                        btn.style.color = '#ff6600';
+                    }
+                };
+                btn.onclick = () => guessLetter(letter, btn);
+                keyboard.appendChild(btn);
+            });
+        }
+        
+        function guessLetter(letter, button) {
+            if (!hangmanActive || hangmanGuessedLetters.includes(letter)) return;
+            
+            hangmanGuessedLetters.push(letter);
+            button.disabled = true;
+            button.style.opacity = '0.3';
+            button.style.cursor = 'not-allowed';
+            
+            if (hangmanCurrentWord.includes(letter)) {
+                button.style.background = '#0f0';
+                button.style.borderColor = '#0f0';
+                button.style.color = '#000';
+                updateHangmanWord();
+            } else {
+                button.style.background = '#f00';
+                button.style.borderColor = '#f00';
+                button.style.color = '#000';
+                hangmanErrors++;
+                document.getElementById('hangmanErrorsDisplay').textContent = hangmanErrors + '/' + hangmanMaxErrors;
+                document.getElementById('hangmanDrawing').textContent = hangmanStages[hangmanErrors];
+                
+                if (hangmanErrors >= hangmanMaxErrors) {
+                    hangmanLose();
+                }
+            }
+        }
+        
+        function updateHangmanWord() {
+            const display = hangmanCurrentWord
+                .split('')
+                .map(letter => {
+                    if (letter === '-') return '-';
+                    return hangmanGuessedLetters.includes(letter) ? letter : '_';
+                })
+                .join(' ');
+            
+            document.getElementById('hangmanWord').textContent = display;
+            
+            // Vérifier la victoire
+            const won = hangmanCurrentWord.split('').every(letter => 
+                letter === '-' || hangmanGuessedLetters.includes(letter)
+            );
+            
+            if (won) {
+                hangmanWin();
+            }
+        }
+        
+        function hangmanWin() {
+            hangmanActive = false;
+            hangmanWins++;
+            
+            document.getElementById('hangmanProgress').textContent = hangmanWins + '/6';
+            document.getElementById('hangmanMessage').innerHTML = `
+                <div style="color: #0f0; font-size: 18px; animation: pulse 1s infinite;">
+                    ✅ CORRECT ! (${hangmanWins}/6)
+                </div>
+            `;
+            
+            const keyboard = document.getElementById('hangmanKeyboard');
+            keyboard.style.opacity = '0.3';
+            keyboard.style.pointerEvents = 'none';
+            
+            if (hangmanWins >= 6) {
+                setTimeout(() => {
+                    document.getElementById('hangmanMessage').innerHTML = `
+                        <div style="color: #0f0; font-size: 20px; animation: pulse 1s infinite;">
+                            🎉 PROTOCOLE COMPLÉTÉ !<br>
+                            <span style="font-size: 14px;">Déverrouillage de l'étape 3...</span>
+                        </div>
+                    `;
+                    document.getElementById('hangmanModule').style.borderColor = '#0f0';
+                    
+                    setTimeout(() => {
+                        unlockStep3();
+                    }, 2000);
+                }, 1000);
+            } else {
+                // Passer automatiquement à l'énigme suivante après 2 secondes
+                setTimeout(() => {
+                    keyboard.style.opacity = '1';
+                    keyboard.style.pointerEvents = 'auto';
+                    startHangmanGame();
+                }, 2000);
+            }
+        }
+        
+        function hangmanLose() {
+            hangmanActive = false;
+            
+            const word = hangmanCurrentWord;
+            document.getElementById('hangmanWord').textContent = word;
+            document.getElementById('hangmanMessage').innerHTML = `
+                <div style="color: #f00; font-size: 16px;">
+                    💀 PERDU ! Le mot était : ${word}<br>
+                    <span style="font-size: 14px;">Progression conservée (${hangmanWins}/6)</span>
+                </div>
+            `;
+            
+            const keyboard = document.getElementById('hangmanKeyboard');
+            keyboard.style.opacity = '0.3';
+            keyboard.style.pointerEvents = 'none';
+            
+            triggerJumpscare();
+            
+            setTimeout(() => {
+                document.getElementById('hangmanStartBtn').textContent = '🔄 NOUVELLE ÉNIGME';
+                document.getElementById('hangmanStartBtn').style.display = 'block';
+                keyboard.style.opacity = '1';
+                keyboard.style.pointerEvents = 'auto';
+            }, 2000);
+        }
+        
+        function unlockStep3() {
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step2').classList.add('completed');
+            document.getElementById('step3').classList.remove('locked');
+            document.getElementById('step3').classList.add('active');
+            document.getElementById('codeModule').classList.remove('locked');
+            showNotification('✓ ÉTAPE 2 COMPLÉTÉE - Code de sécurité débloqué !', '#0f0');
+        }
+
        
         
         let simonPlaying = false;
@@ -2936,199 +3379,225 @@ function checkMemoryMatch() {
 		// SYSTÈME D'ADMINISTRATION
 		// ============================================
 
-		const ADMIN_PASSWORD = "MECANICIEN"; // Changez ce mot de passe !
-		let isAdminAuthenticated = false;
+const ADMIN_PASSWORD = "MECANICIEN"; // Changez ce mot de passe !
+let isAdminAuthenticated = false;
 
-		// Toggle panneau admin
-		function toggleAdminPanel() {
-			const panel = document.getElementById('adminPanel');
-			if (panel.style.display === 'none' || panel.style.display === '') {
-				// Réinitialiser l'authentification à chaque ouverture
-				isAdminAuthenticated = false;
-				document.getElementById('adminAuth').style.display = 'block';
-				document.getElementById('adminControls').style.display = 'none';
-				document.getElementById('adminPassword').value = '';
-				document.getElementById('adminAuthError').textContent = '';
-				
-				panel.style.display = 'block';
-			} else {
-				panel.style.display = 'none';
-			}
+	// Toggle panneau admin
+function toggleAdminPanel() {
+		const panel = document.getElementById('adminPanel');
+		if (panel.style.display === 'none' || panel.style.display === '') {
+			// Réinitialiser l'authentification à chaque ouverture
+			isAdminAuthenticated = false;
+			document.getElementById('adminAuth').style.display = 'block';
+			document.getElementById('adminControls').style.display = 'none';
+			document.getElementById('adminPassword').value = '';
+			document.getElementById('adminAuthError').textContent = '';
+			
+			panel.style.display = 'block';
+		} else {
+			panel.style.display = 'none';
 		}
+	}
 
-		function closeAdminPanel() {
-			document.getElementById('adminPanel').style.display = 'none';
-		}
+function closeAdminPanel() {
+		document.getElementById('adminPanel').style.display = 'none';
+	}
 
-		// Vérification mot de passe admin
-		function checkAdminPassword() {
-			const input = document.getElementById('adminPassword').value;
-			const error = document.getElementById('adminAuthError');
-			
-			if (input === ADMIN_PASSWORD) {
-				isAdminAuthenticated = true;
-				document.getElementById('adminAuth').style.display = 'none';
-				document.getElementById('adminControls').style.display = 'block';
-				updateGameStatus();
-			} else {
-				error.textContent = '❌ Code incorrect';
-				document.getElementById('adminPassword').value = '';
-				setTimeout(() => error.textContent = '', 2000);
-			}
-		}
-
-		// Mise à jour de l'état du jeu
-		function updateGameStatus() {
-			const status = document.getElementById('gameStatus');
-			if (!status) return;
-			
-			const steps = [
-				{ id: 'step1', name: 'Cadenas Audio' },
-				{ id: 'step2', name: 'Quiz Citrouilles' },
-				{ id: 'step3', name: 'Mini-jeux' },
-				{ id: 'step4', name: 'Dossiers Finaux' }
-			];
-			
-			let html = '';
-			steps.forEach(step => {
-				const elem = document.getElementById(step.id);
-				let state = '⚪ Verrouillé';
-				let color = '#666';
-				
-				if (elem.classList.contains('completed')) {
-					state = '✅ Complété';
-					color = '#0f0';
-				} else if (elem.classList.contains('active')) {
-					state = '🔵 En cours';
-					color = '#667eea';
-				}
-				
-				html += `<div style="color: ${color};">${state} - ${step.name}</div>`;
-			});
-			
-			status.innerHTML = html;
-		}
-
-		// Réinitialiser tout le jeu
-		function adminResetGame() {
-			if (!confirm('⚠️ ATTENTION : Réinitialiser complètement le jeu ?')) return;
-			
-			// Reset des étapes
-			['step1', 'step2', 'step3', 'step4'].forEach(id => {
-				const elem = document.getElementById(id);
-				elem.classList.remove('active', 'completed');
-				elem.classList.add('locked');
-			});
-			
-			// Réactiver étape 1
-			document.getElementById('step1').classList.remove('locked');
-			document.getElementById('step1').classList.add('active');
-			
-			// Verrouiller tous les modules
-			['enigmaModule', 'codeModule', 'simonModule', 'puzzleModule', 'mazeModule', 'memoryModule', 'filesModule'].forEach(id => {
-				const elem = document.getElementById(id);
-				if (elem) elem.classList.add('locked');
-			});
-			
-			// Reset des variables
-			wheelValues = [0, 0, 0, 0];
-			quizAnswered = false;
-			window.filesOpened = new Set();
-			window.errorCount = 0;
-			simonSequence = [];
-			simonRound = 0;
-			puzzleSolved = false;
-			memorySolved = false;
-			
-			// Reset des affichages
-			document.querySelectorAll('.wheel-numbers').forEach((wheel, index) => {
-				updateWheelDisplay(index);
-			});
-			
-			document.getElementById('lockResult').innerHTML = '';
-			document.getElementById('codeInput').value = '';
-			
-			// Fermer l'écran final si ouvert
-			document.getElementById('finalScreen').classList.remove('active');
-			
-			alert('✅ Jeu réinitialisé !');
+	// Vérification mot de passe admin
+function checkAdminPassword() {
+		const input = document.getElementById('adminPassword').value;
+		const error = document.getElementById('adminAuthError');
+		
+		if (input === ADMIN_PASSWORD) {
+			isAdminAuthenticated = true;
+			document.getElementById('adminAuth').style.display = 'none';
+			document.getElementById('adminControls').style.display = 'block';
 			updateGameStatus();
+		} else {
+			error.textContent = '❌ Code incorrect';
+			document.getElementById('adminPassword').value = '';
+			setTimeout(() => error.textContent = '', 2000);
 		}
+	}
 
-		// Débloquer toutes les étapes
-		function adminUnlockAll() {
-			if (!confirm('Débloquer TOUTES les étapes ?')) return;
+	// Mise à jour de l'état du jeu
+function updateGameStatus() {
+		const status = document.getElementById('gameStatus');
+		if (!status) return;
+		
+		const steps = [
+			{ id: 'step1', name: 'Cadenas Audio' },
+			{ id: 'step2', name: 'Quiz + Pendu' },
+			{ id: 'step3', name: 'Mini-jeux' },
+			{ id: 'step4', name: 'Dossiers Finaux' }
+		];
+		
+		let html = '';
+		steps.forEach(step => {
+			const elem = document.getElementById(step.id);
+			let state = '⚪ Verrouillé';
+			let color = '#666';
 			
-			['step1', 'step2', 'step3', 'step4'].forEach(id => {
-				const elem = document.getElementById(id);
-				elem.classList.remove('locked', 'active');
-				elem.classList.add('completed');
-			});
-			
-			['enigmaModule', 'codeModule', 'simonModule', 'puzzleModule', 'mazeModule', 'memoryModule', 'filesModule'].forEach(id => {
-				const elem = document.getElementById(id);
-				if (elem) {
-					elem.classList.remove('locked');
-					elem.style.borderColor = '#0f0';
-				}
-			});
-			
-			alert('✅ Toutes les étapes sont débloquées !');
-			updateGameStatus();
-		}
-
-		// Aller directement aux dossiers finaux
-		function adminSkipToFiles() {
-			adminUnlockAll();
-			document.getElementById('finalScreen').classList.add('active');
-			
-			setTimeout(() => {
-				document.getElementById('filesModule').scrollIntoView({ 
-					behavior: 'smooth', 
-					block: 'center' 
-				});
-			}, 500);
-		}
-
-		// Débloquer une étape spécifique
-		function adminUnlockStep(stepName) {
-			const modules = {
-				'enigma': { module: 'enigmaModule', step: 'step2', prev: 'step1' },
-				'code': { module: 'codeModule', step: 'step3', prev: 'step2' },
-				'simon': { module: 'simonModule', step: 'step3', prev: 'step2' },
-				'puzzle': { module: 'puzzleModule', step: 'step3', prev: 'step2' },
-				'maze': { module: 'mazeModule', step: 'step3', prev: 'step2' },
-				'memory': { module: 'memoryModule', step: 'step3', prev: 'step2' },
-				'files': { module: 'filesModule', step: 'step4', prev: 'step3' }
-			};
-			
-			const config = modules[stepName];
-			if (!config) return;
-			
-			// Débloquer le module
-			const moduleElem = document.getElementById(config.module);
-			if (moduleElem) {
-				moduleElem.classList.remove('locked');
-				moduleElem.style.borderColor = '#ff6600';
-				
-				// Scroller vers le module
-				moduleElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			if (elem.classList.contains('completed')) {
+				state = '✅ Complété';
+				color = '#0f0';
+			} else if (elem.classList.contains('active')) {
+				state = '🔵 En cours';
+				color = '#667eea';
 			}
 			
-			// Mettre à jour les étapes de progression
-			const stepElem = document.getElementById(config.step);
-			if (stepElem) {
-				stepElem.classList.remove('locked');
-				stepElem.classList.add('active');
-			}
+			html += `<div style="color: ${color};">${state} - ${step.name}</div>`;
+		});
+		
+		status.innerHTML = html;
+	}
+
+
+
+    // Réinitialiser tout le jeu
+    function adminResetGame() {
+        // Confirmation retirée pour compatibilité sandbox
+        
+        // Reset des étapes
+        ['step1', 'step2', 'step3', 'step4'].forEach(id => {
+            const elem = document.getElementById(id);
+            elem.classList.remove('active', 'completed');
+            elem.classList.add('locked');
+        });
+        
+        // Réactiver étape 1
+        document.getElementById('step1').classList.remove('locked');
+        document.getElementById('step1').classList.add('active');
+        
+        // Verrouiller tous les modules
+        ['quizModule', 'hangmanModule', 'codeModule', 'simonModule', 'puzzleModule', 'mazeModule', 'memoryModule', 'filesModule'].forEach(id => {
+            const elem = document.getElementById(id);
+            if (elem) elem.classList.add('locked');
+        });
+        
+        // Reset des variables
+        wheelValues = [0, 0, 0, 0];
+        quizAnswered = false;
+        enigmaAnswered = false;
+        window.filesOpened = new Set();
+        window.errorCount = 0;
+        simonSequence = [];
+        simonRound = 0;
+        puzzleSolved = false;
+        memorySolved = false;
+        
+        // Reset du Pendu
+        hangmanWins = 0;
+        if (document.getElementById('hangmanProgress')) {
+            document.getElementById('hangmanProgress').textContent = '0/6';
+        }
+        if (document.getElementById('hangmanMessage')) {
+            document.getElementById('hangmanMessage').innerHTML = '';
+        }
+        
+        // Reset des affichages
+        document.querySelectorAll('.wheel-numbers').forEach((wheel, index) => {
+            updateWheelDisplay(index);
+        });
+        
+        document.getElementById('lockResult').innerHTML = '';
+        document.getElementById('codeInput').value = '';
+        
+        // Reset des énigmes
+        document.getElementById('quizResult').innerHTML = '';
+        document.getElementById('enigmaResult').innerHTML = '';
+        document.getElementById('quizProgress').textContent = '0/2 ✓';
+        document.querySelectorAll('.quiz1-btn, .quiz2-btn').forEach(btn => btn.disabled = false);
+        
+        // Fermer l'écran final si ouvert
+        document.getElementById('finalScreen').classList.remove('active');
+        
+        console.log('✅ Jeu réinitialisé !'); showNotification('✅ Jeu réinitialisé !', '#0f0');
+        updateGameStatus();
+    }
+
+    // Débloquer toutes les étapes
+    function adminUnlockAll() {
+        // Confirmation retirée pour compatibilité sandbox
+        
+        ['step1', 'step2', 'step3', 'step4'].forEach(id => {
+            const elem = document.getElementById(id);
+            elem.classList.remove('locked', 'active');
+            elem.classList.add('completed');
+        });
+        
+        ['quizModule', 'hangmanModule', 'codeModule', 'simonModule', 'puzzleModule', 'mazeModule', 'memoryModule', 'filesModule'].forEach(id => {
+            const elem = document.getElementById(id);
+            if (elem) {
+                elem.classList.remove('locked');
+                elem.style.borderColor = '#0f0';
+            }
+        });
+        
+        // Compléter les énigmes pour débloquer le Pendu
+        quizAnswered = true;
+        enigmaAnswered = true;
+        updateQuizProgress();
+        
+        // NOTE: Le Pendu est débloqué mais PAS complété - le joueur doit jouer
+        // hangmanWins reste à 0 pour permettre au joueur de faire le jeu
+
+        console.log('✅ Toutes les étapes débloquées !'); showNotification('✅ Toutes les étapes débloquées !', '#0f0');
+        updateGameStatus();
+    }
+
+    // Aller directement aux dossiers finaux
+    function adminSkipToFiles() {
+        adminUnlockAll();
+        document.getElementById('finalScreen').classList.add('active');
+        
+        setTimeout(() => {
+            document.getElementById('filesModule').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        }, 500);
+    }
+	// Débloquer une étape spécifique
+function adminUnlockStep(stepName) {
+		const modules = {
+			'quiz': { module: 'quizModule', step: 'step2', prev: 'step1' },
+			'hangman': { module: 'hangmanModule', step: 'step2', prev: 'step1' },
+			'code': { module: 'codeModule', step: 'step3', prev: 'step2' },
+			'simon': { module: 'simonModule', step: 'step3', prev: 'step2' },
+			'puzzle': { module: 'puzzleModule', step: 'step3', prev: 'step2' },
+			'maze': { module: 'mazeModule', step: 'step3', prev: 'step2' },
+			'memory': { module: 'memoryModule', step: 'step3', prev: 'step2' },
+			'files': { module: 'filesModule', step: 'step4', prev: 'step3' }
+		};
+		
+		const config = modules[stepName];
+		if (!config) return;
+		
+		// Débloquer le module
+		const moduleElem = document.getElementById(config.module);
+		if (moduleElem) {
+			moduleElem.classList.remove('locked');
+			moduleElem.style.borderColor = '#ff6600';
 			
-			// Compléter l'étape précédente
-			const prevElem = document.getElementById(config.prev);
-			if (prevElem && !prevElem.classList.contains('completed')) {
-				prevElem.classList.remove('active');
-				prevElem.classList.add('completed');
-			}
-			
+			// Scroller vers le module
+			moduleElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		}
+		
+		// Mettre à jour les étapes de progression
+		const stepElem = document.getElementById(config.step);
+		if (stepElem) {
+			stepElem.classList.remove('locked');
+			stepElem.classList.add('active');
+		}
+		
+		// Compléter l'étape précédente
+		const prevElem = document.getElementById(config.prev);
+		if (prevElem && !prevElem.classList.contains('completed')) {
+			prevElem.classList.remove('active');
+			prevElem.classList.add('completed');
+		}
+		
 			// Initialiser les jeux si nécessaire
 			if (stepName === 'puzzle' && !puzzleSolved) {
 				initPuzzle();
@@ -3137,24 +3606,53 @@ function checkMemoryMatch() {
 				initMaze();
 			}
 			
-			alert(`✅ ${config.module.replace('Module', '')} débloqué !`);
+			console.log('✅ Module débloqué !'); showNotification('✅ Module débloqué !', '#0f0');
 			updateGameStatus();
 			closeAdminPanel();
+	}
+
+
+function adminToggleHangmanDifficulty() {
+		if (hangmanDifficulty === 'hard') {
+			hangmanDifficulty = 'easy';
+			document.getElementById('hangmanDifficultyBtn').textContent = '🔄 Mode: FACILE → DIFFICILE';
+			document.getElementById('hangmanDifficultyBtn').style.background = '#0f0';
+			document.getElementById('hangmanModeDisplay').textContent = 'FACILE';
+			document.getElementById('hangmanModeDisplay').style.color = '#0f0';
+			console.log('✅ Mode FACILE activé !'); showNotification('✅ Mode FACILE activé !', '#0f0');
+		} else {
+			hangmanDifficulty = 'hard';
+			document.getElementById('hangmanDifficultyBtn').textContent = '🔄 Mode: DIFFICILE → FACILE';
+			document.getElementById('hangmanDifficultyBtn').style.background = '#ff6600';
+			document.getElementById('hangmanModeDisplay').textContent = 'DIFFICILE';
+			document.getElementById('hangmanModeDisplay').style.color = '#667eea';
+			console.log('✅ Mode DIFFICILE activé !'); showNotification('✅ Mode DIFFICILE activé !', '#667eea');
 		}
+		
+		// Réinitialiser les mots utilisés
+		usedHangmanWords = [];
+		
+		// Si une partie est en cours, la redémarrer avec la nouvelle difficulté
+		if (hangmanActive || document.getElementById('hangmanStartBtn').style.display !== 'none') {
+			startHangmanGame();
+		}
+		
+		closeAdminPanel();
+	}
 
-		// Raccourci clavier admin (Ctrl + Shift + A)
-		document.addEventListener('keydown', (e) => {
-			if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-				toggleAdminPanel();
-			}
-		});
+	// Raccourci clavier admin (Ctrl + Shift + A)
+	document.addEventListener('keydown', (e) => {
+		if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+			toggleAdminPanel();
+		}
+	});
 
-		// Clic sur le fond pour fermer
-		document.getElementById('adminPanel').addEventListener('click', (e) => {
-			if (e.target.id === 'adminPanel') {
-				closeAdminPanel();
-			}
-		});
+	// Clic sur le fond pour fermer
+	document.getElementById('adminPanel').addEventListener('click', (e) => {
+		if (e.target.id === 'adminPanel') {
+			closeAdminPanel();
+		}
+	});
 
     </script>
 <div class="final-screen" id="finalScreen">
