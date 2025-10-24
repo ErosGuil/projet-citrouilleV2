@@ -10,7 +10,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Courier New', monospace;
             background: linear-gradient(135deg, #1a0a00 0%, #0a0a0a 100%);
@@ -18,7 +18,7 @@
             min-height: 100vh;
             padding: 20px;
         }
-        
+
         .header {
             text-align: center;
             margin-bottom: 30px;
@@ -28,19 +28,19 @@
             border-radius: 10px;
             box-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
         }
-        
-        .header h1 {
-            color: #ff6600;
-            font-size: 32px;
-            text-shadow: 0 0 20px #ff6600;
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            color: #0f0;
-            font-size: 14px;
-        }
-        
+
+            .header h1 {
+                color: #ff6600;
+                font-size: 32px;
+                text-shadow: 0 0 20px #ff6600;
+                margin-bottom: 10px;
+            }
+
+            .header p {
+                color: #0f0;
+                font-size: 14px;
+            }
+
         .games-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
@@ -48,7 +48,7 @@
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
         .game-card {
             background: rgba(0, 0, 0, 0.9);
             border: 2px solid #0f0;
@@ -59,25 +59,25 @@
             overflow: hidden;
             position: relative;
         }
-        
-        .game-card:hover {
-            border-color: #ff6600;
-            box-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
-            transform: translateY(-5px);
-        }
-        
-        .game-card h2 {
-            color: #ff6600;
-            margin-bottom: 15px;
-            font-size: 24px;
-            text-align: center;
-        }
-        
+
+            .game-card:hover {
+                border-color: #ff6600;
+                box-shadow: 0 0 30px rgba(255, 102, 0, 0.5);
+                transform: translateY(-5px);
+            }
+
+            .game-card h2 {
+                color: #ff6600;
+                margin-bottom: 15px;
+                font-size: 24px;
+                text-align: center;
+            }
+
         .game-area {
             margin: 20px 0;
             min-height: 300px;
         }
-        
+
         button {
             width: 100%;
             padding: 12px;
@@ -92,12 +92,12 @@
             transition: all 0.3s;
             margin-top: 10px;
         }
-        
-        button:hover {
-            background: #ff8800;
-            box-shadow: 0 0 20px rgba(255, 102, 0, 0.8);
-        }
-        
+
+            button:hover {
+                background: #ff8800;
+                box-shadow: 0 0 20px rgba(255, 102, 0, 0.8);
+            }
+
         /* Tir aux citrouilles */
         #shootingGame {
             position: relative;
@@ -109,7 +109,7 @@
             overflow: hidden;
             cursor: crosshair;
         }
-        
+
         .pumpkin-target {
             position: absolute;
             font-size: 40px;
@@ -117,24 +117,36 @@
             animation: float-pumpkin 3s ease-in-out infinite;
             user-select: none;
         }
-        
+
         @keyframes float-pumpkin {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
         }
-        
+
         .explosion {
             position: absolute;
             font-size: 60px;
             animation: explode 0.5s ease-out forwards;
             pointer-events: none;
         }
-        
+
         @keyframes explode {
-            0% { transform: scale(0) rotate(0deg); opacity: 1; }
-            100% { transform: scale(2) rotate(360deg); opacity: 0; }
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(2) rotate(360deg);
+                opacity: 0;
+            }
         }
-        
+
         .score-display {
             text-align: center;
             font-size: 24px;
@@ -142,13 +154,13 @@
             margin: 10px 0;
             font-weight: bold;
         }
-        
-        
+
+
         /* Typing Game */
         #typingGame {
             text-align: center;
         }
-        
+
         .typing-target {
             background: rgba(0, 255, 0, 0.1);
             border: 2px solid #0f0;
@@ -163,7 +175,7 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         #typingInput {
             width: 100%;
             padding: 15px;
@@ -175,27 +187,27 @@
             text-align: center;
             border-radius: 5px;
         }
-        
-        #typingInput:focus {
-            outline: none;
-            border-color: #ff6600;
-            box-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
-        }
-        
+
+            #typingInput:focus {
+                outline: none;
+                border-color: #ff6600;
+                box-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
+            }
+
         .timer {
             font-size: 32px;
             color: #f00;
             margin: 10px 0;
             font-weight: bold;
         }
-        
+
         .stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             margin: 15px 0;
         }
-        
+
         .stat-box {
             background: rgba(255, 102, 0, 0.2);
             border: 2px solid #ff6600;
@@ -203,19 +215,19 @@
             border-radius: 5px;
             text-align: center;
         }
-        
+
         .stat-label {
             color: #0f0;
             font-size: 12px;
             margin-bottom: 5px;
         }
-        
+
         .stat-value {
             color: #ff6600;
             font-size: 20px;
             font-weight: bold;
         }
-        
+
         .message {
             text-align: center;
             padding: 15px;
@@ -223,106 +235,107 @@
             border-radius: 5px;
             font-weight: bold;
         }
-        
-        .message.success {
-            background: rgba(0, 255, 0, 0.2);
-            border: 2px solid #0f0;
-            color: #0f0;
-        }
-        
-        .message.error {
-            background: rgba(255, 0, 0, 0.2);
-            border: 2px solid #f00;
-            color: #f00;
-        }
-        
+
+            .message.success {
+                background: rgba(0, 255, 0, 0.2);
+                border: 2px solid #0f0;
+                color: #0f0;
+            }
+
+            .message.error {
+                background: rgba(255, 0, 0, 0.2);
+                border: 2px solid #f00;
+                color: #f00;
+            }
+
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+            0%, 100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
         }
-        
+
         .shake {
             animation: shake 0.3s;
         }
-        
+
         @keyframes fadeUp {
             0% {
                 transform: translateY(0);
                 opacity: 1;
             }
+
             100% {
                 transform: translateY(-50px);
                 opacity: 0;
             }
         }
-        
+
         .shooting-target {
             animation: pulse 0.5s infinite alternate;
         }
-        
-        .shooting-target.gold {
-            filter: drop-shadow(0 0 10px #ffaa00);
-        }
-        
-        .shooting-target.bad:hover {
-            filter: brightness(1.5);
-        }
-        
+
+            .shooting-target.gold {
+                filter: drop-shadow(0 0 10px #ffaa00);
+            }
+
+            .shooting-target.bad:hover {
+                filter: brightness(1.5);
+            }
+
         /* Media queries pour mobile */
         @media (max-width: 768px) {
             .games-container {
                 grid-template-columns: 1fr;
             }
-            
+
             .game-card {
                 padding: 15px;
             }
-            
-            .game-card h2 {
-                font-size: 20px;
-            }
-            
+
+                .game-card h2 {
+                    font-size: 20px;
+                }
+
             #shootingGame {
                 height: 300px;
             }
-            
-            #hangmanWord {
-                font-size: 20px !important;
-                letter-spacing: 3px !important;
-            }
-            
-            #hangmanDrawing {
-                font-size: 80px !important;
-            }
-            
+
+
             #diffImage1, #diffImage2 {
                 max-width: 100% !important;
                 height: 250px !important;
             }
-            
+
             .stats {
                 gap: 5px;
             }
-            
+
             .stat-box {
                 padding: 8px;
             }
-            
+
             .stat-label {
                 font-size: 10px;
             }
-            
+
             .stat-value {
                 font-size: 16px;
             }
-            
+
             #mazeContainer {
                 max-width: 100% !important;
                 width: calc(100vw - 60px) !important;
                 margin: 15px auto !important;
             }
-            
+
             body {
                 padding: 10px !important;
             }
@@ -345,27 +358,27 @@
                 padding: 0;
             }
 
-            .maze-btn:hover:not(:disabled) {
-                background: rgba(255, 102, 0, 0.5);
-                transform: scale(1.05);
-                box-shadow: 0 0 15px rgba(255, 102, 0, 0.6);
-            }
+                .maze-btn:hover:not(:disabled) {
+                    background: rgba(255, 102, 0, 0.5);
+                    transform: scale(1.05);
+                    box-shadow: 0 0 15px rgba(255, 102, 0, 0.6);
+                }
 
-            .maze-btn:active:not(:disabled) {
-                transform: scale(0.95);
-                background: rgba(255, 102, 0, 0.7);
-            }
+                .maze-btn:active:not(:disabled) {
+                    transform: scale(0.95);
+                    background: rgba(255, 102, 0, 0.7);
+                }
 
-            .maze-btn:disabled {
-                opacity: 0.3;
-                cursor: not-allowed;
-            }
+                .maze-btn:disabled {
+                    opacity: 0.3;
+                    cursor: not-allowed;
+                }
 
-            .maze-btn.pressed {
-                background: rgba(255, 102, 0, 0.8);
-                transform: scale(0.9);
-                box-shadow: 0 0 20px rgba(255, 102, 0, 0.8);
-            }
+                .maze-btn.pressed {
+                    background: rgba(255, 102, 0, 0.8);
+                    transform: scale(0.9);
+                    box-shadow: 0 0 20px rgba(255, 102, 0, 0.8);
+                }
 
             @media (max-width: 600px) {
                 .maze-btn {
@@ -373,7 +386,7 @@
                     height: 50px;
                     font-size: 20px;
                 }
-                
+
                 #mazeContainer {
                     max-width: 90vw !important;
                 }
@@ -386,7 +399,7 @@
         <h1>🎃 MINI-JEUX BONUS 🎃</h1>
         <p>PROJET CITROUILLE - ZONE DE DÉTENTE</p>
     </div>
-    
+
     <div class="games-container">
         <!-- Tir aux citrouilles -->
         <div class="game-card">
@@ -397,9 +410,9 @@
             <div id="shootingGame"></div>
             <button onclick="startShooting()">DÉMARRER</button>
         </div>
-        
 
-        
+
+
         <!-- Typing Game -->
         <div class="game-card">
             <h2>⌨️ TYPING GAME</h2>
@@ -425,102 +438,6 @@
             </div>
             <button onclick="startTyping()">DÉMARRER</button>
         </div>
-        <!-- Scanner de Couleur Jaune -->
-        <div class="game-card">
-            <h2>📷 SCANNER DE COULEUR</h2>
-            <div style="text-align: center; padding: 20px;">
-                <div style="font-size: 80px; margin: 20px 0;">🟡</div>
-                <p style="color: #0f0; margin-bottom: 20px;">
-                    Utilisez votre caméra pour détecter<br>un objet de couleur JAUNE !
-                </p>
-                <div style="background: rgba(255, 102, 0, 0.2); border: 2px solid #ff6600; padding: 15px; border-radius: 5px; margin: 20px 0;">
-                    <p style="color: #ff6600; font-size: 14px;">
-                        🎯 Mission : Scanner un objet jaune<br>
-                        ⏱️ Maintenez l'objet 3 secondes<br>
-                        ✅ Validation automatique
-                    </p>
-                </div>
-            </div>
-            <button onclick="window.open('scanner-jaune.html', '_blank')" style="background: #ffaa00;">
-                🎥 LANCER LE SCANNER
-            </button>
-        </div>
-        
-        <!-- SPECIMEN 001 -->
-        <div class="game-card">
-            <h2>🎯 SPECIMEN 001</h2>
-            <div style="text-align: center; padding: 20px;">
-                <div style="font-size: 80px; margin: 20px 0; animation: pulse 2s infinite;">🚗</div>
-                <div style="color: #f00; font-size: 14px; letter-spacing: 3px; margin-bottom: 15px;">
-                    ⚠️ CONFIDENTIEL - NIVEAU 5 ⚠️
-                </div>
-                <p style="color: #0f0; margin-bottom: 20px; line-height: 1.6;">
-                    Mission d'identification prioritaire<br>
-                    <span style="color: #ff6600;">PROJET CITROUILLE</span><br>
-                    <span style="font-size: 12px;">Classification: TOP SECRET</span>
-                </p>
-                <div style="background: rgba(255, 102, 0, 0.2); border: 2px solid #ff6600; padding: 15px; border-radius: 5px; margin: 20px 0;">
-                    <p style="color: #ff6600; font-size: 14px;">
-                        🎯 Objectif : Localiser le spécimen<br>
-                        🔍 Scanner avec précision<br>
-                        ⏱️ Temps limité : 60 secondes<br>
-                        ✅ Validation automatique
-                    </p>
-                </div>
-            </div>
-            <button onclick="window.open('Specimen-001.html', '_blank')" style="background: #f00; animation: glow 1.5s infinite;">
-                🚨 ACTIVER LA MISSION
-            </button>
-        </div>
-        
-        <style>
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
-            50% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.9); }
-        }
-        </style>
-        <!-- Jeu du Pendu -->
-        <div class="game-card">
-            <h2>🎃 PENDU DES ÉNIGMES</h2>
-            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                <button id="btnEasy" onclick="changeDifficulty('easy')" style="flex: 1; padding: 10px; background: rgba(0, 255, 0, 0.2); border: 2px solid #0f0;">
-                    😊 FACILE
-                </button>
-                <button id="btnHard" onclick="changeDifficulty('hard')" style="flex: 1; padding: 10px; background: #ff6600; border: 2px solid #ff6600;">
-                    🔥 DIFFICILE
-                </button>
-            </div>
-            <div class="stats">
-                <div class="stat-box">
-                    <div class="stat-label">Erreurs</div>
-                    <div class="stat-value" id="hangmanErrors" style="color: #f00;">0/6</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">Score</div>
-                    <div class="stat-value" id="hangmanScore">0</div>
-                </div>
-            </div>
-            <div id="hangmanGame">
-                <div id="hangmanDrawing" style="font-size: 120px; text-align: center; min-height: 150px; margin: 20px 0;">
-                    🎃
-                </div>
-                <div id="hangmanWord" style="text-align: center; font-size: 28px; letter-spacing: 5px; margin: 20px 0; color: #ff6600; min-height: 50px; word-wrap: break-word; max-width: 100%; overflow-wrap: break-word;">
-                    _ _ _ _ _
-                </div>
-                <div id="hangmanHint" style="text-align: center; color: #0f0; margin: 10px 0; font-size: 14px; min-height: 20px;">
-                    💡 Cliquez sur NOUVELLE PARTIE
-                </div>
-                <div id="hangmanKeyboard" style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; margin: 20px 0;">
-                </div>
-                <div id="hangmanMessage" style="text-align: center; margin: 15px 0; font-size: 16px; font-weight: bold; min-height: 25px;"></div>
-            </div>
-            <button onclick="startHangman()">NOUVELLE PARTIE</button>
-        </div>
-        
         <!-- Endless Runner -->
         <div class="game-card">
             <h2>🏃 ENDLESS RUNNER MAUDIT</h2>
@@ -550,9 +467,9 @@
             </div>
             <button onclick="startRunner()" id="runnerStartBtn">DÉMARRER LA COURSE</button>
         </div>
-        
-    
-        
+
+
+
         <!-- Labyrinthe dans le Noir -->
         <div class="game-card">
             <h2>🔦 LABYRINTHE DANS LE NOIR</h2>
@@ -570,7 +487,7 @@
                     <div class="stat-value" id="mazeTime">0s</div>
                 </div>
             </div>
-            
+
             <div style="text-align: center; color: #0f0; margin: 15px 0; font-size: 14px;" id="mazeHint">
                 Utilisez les flèches du clavier ou les boutons ci-dessous
             </div>
@@ -586,22 +503,22 @@
                 <button onclick="moveMazePlayerButton('up')" class="maze-btn" id="mazeBtnUp">
                     ▲
                 </button>
-                
+
                 <!-- Boutons Gauche, Centre, Droite -->
                 <div style="display: flex; gap: 5px;">
                     <button onclick="moveMazePlayerButton('left')" class="maze-btn" id="mazeBtnLeft">
                         ◀
                     </button>
-                    
+
                     <div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border: 2px solid #666; border-radius: 5px; font-size: 28px;">
                         🔦
                     </div>
-                    
+
                     <button onclick="moveMazePlayerButton('right')" class="maze-btn" id="mazeBtnRight">
                         ▶
                     </button>
                 </div>
-                
+
                 <!-- Bouton Bas -->
                 <button onclick="moveMazePlayerButton('down')" class="maze-btn" id="mazeBtnDown">
                     ▼
@@ -610,14 +527,14 @@
 
             <div id="mazeMessage" style="text-align: center; min-height: 30px; font-weight: bold; margin: 10px 0;"></div>
 
-             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                 <button onclick="startMaze()" style="flex: 1; min-width: 150px;">NOUVELLE PARTIE</button>
                 <button onclick="showMazeHint()" id="mazeHintBtn" style="flex: 1; min-width: 150px; background: #ffaa00;" disabled>
                     💡 INDICE (après 30s)
                 </button>
             </div>
         </div>
-        
+
         <!-- Détecteur d'Objets -->
         <div class="game-card">
             <h2>📷 DÉTECTEUR D'OBJETS MAUDIT</h2>
@@ -635,29 +552,29 @@
                     <div class="stat-value" id="detectTime">90s</div>
                 </div>
             </div>
-            
+
             <div style="text-align: center; color: #ff6600; margin: 15px 0; font-size: 16px; font-weight: bold; background: rgba(255, 102, 0, 0.1); padding: 10px; border-radius: 5px;" id="detectTarget">
                 🎃 Cliquez sur DÉMARRER pour commencer
             </div>
-            
+
             <!-- Caméra -->
             <div style="position: relative; max-width: 500px; margin: 20px auto;">
                 <video id="detectVideo" autoplay playsinline style="width: 100%; border: 3px solid #0f0; border-radius: 10px; background: #000; display: none;"></video>
                 <canvas id="detectCanvas" style="width: 100%; border: 3px solid #0f0; border-radius: 10px; background: #000;"></canvas>
                 <div id="detectOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
             </div>
-            
+
             <div id="detectMessage" style="text-align: center; min-height: 40px; font-weight: bold; margin: 15px 0; font-size: 14px;"></div>
-            
+
             <div id="detectResults" style="background: rgba(0, 0, 0, 0.8); border: 2px solid #0f0; border-radius: 5px; padding: 15px; margin: 15px 0; max-height: 150px; overflow-y: auto;">
                 <div style="color: #0f0; font-size: 14px; margin-bottom: 10px; text-align: center;">🔍 DÉTECTIONS :</div>
                 <div id="detectList" style="color: #ffaa00; font-size: 12px; font-family: monospace;"></div>
             </div>
-            
+
             <button onclick="startDetection()" id="detectStartBtn">📷 DÉMARRER LA DÉTECTION</button>
         </div>
     </div>
-    
+
     <script>
         // ==================== TIR AUX CITROUILLES ====================
         let shootingActive = false;
@@ -667,10 +584,10 @@
         let targetInterval;
         let shootCombo = 0;
         let shootMaxCombo = 0;
-        
+
         function startShooting() {
             if (shootingActive) return;
-            
+
             shootingActive = true;
             shootScore = 0;
             shootTimeLeft = 30;
@@ -678,20 +595,20 @@
             shootMaxCombo = 0;
             document.getElementById('shootScore').textContent = shootScore;
             document.getElementById('shootTime').textContent = shootTimeLeft;
-            
+
             const game = document.getElementById('shootingGame');
             game.innerHTML = '';
             game.style.cursor = 'crosshair';
-            
+
             shootInterval = setInterval(() => {
                 shootTimeLeft--;
                 document.getElementById('shootTime').textContent = shootTimeLeft;
-                
+
                 if (shootTimeLeft <= 0) {
                     endShooting();
                 }
             }, 1000);
-            
+
             // Démarrer avec spawn toutes les 600ms
             targetInterval = setInterval(() => {
                 spawnTarget();
@@ -703,16 +620,16 @@
                 }
             }, 600);
         }
-        
+
         function spawnTarget() {
             if (!shootingActive) return;
-            
+
             const game = document.getElementById('shootingGame');
-            
+
             // Types de cibles avec probabilités
             const random = Math.random();
             let targetType;
-            
+
             if (random < 0.6) {
                 // 60% - Citrouille normale (+1 point)
                 targetType = { emoji: '🎃', points: 1, class: 'good', duration: 1500 };
@@ -726,7 +643,7 @@
                 // 10% - Crâne (-5 points)
                 targetType = { emoji: '💀', points: -5, class: 'bad', duration: 2500 };
             }
-            
+
             const target = document.createElement('div');
             target.className = 'shooting-target ' + targetType.class;
             target.textContent = targetType.emoji;
@@ -737,19 +654,19 @@
             target.style.cursor = 'crosshair';
             target.style.transition = 'all 0.1s';
             target.style.userSelect = 'none';
-            
+
             // Animation d'apparition
             target.style.transform = 'scale(0)';
             target.style.opacity = '0';
-            
+
             target.onclick = (e) => {
                 e.stopPropagation();
                 if (!shootingActive) return;
-                
+
                 const points = targetType.points;
                 shootScore += points;
                 document.getElementById('shootScore').textContent = shootScore;
-                
+
                 // Gestion du combo
                 if (points > 0) {
                     shootCombo++;
@@ -759,7 +676,7 @@
                 } else {
                     shootCombo = 0;
                 }
-                
+
                 // Effet visuel selon le type
                 const feedback = document.createElement('div');
                 feedback.style.position = 'absolute';
@@ -770,11 +687,11 @@
                 feedback.style.pointerEvents = 'none';
                 feedback.style.zIndex = '1000';
                 feedback.style.animation = 'fadeUp 1s forwards';
-                
+
                 if (points > 0) {
                     feedback.textContent = '+' + points;
                     feedback.style.color = points === 1 ? '#ff6600' : '#ffaa00';
-                    
+
                     const explosion = document.createElement('div');
                     explosion.textContent = '💥';
                     explosion.style.position = 'absolute';
@@ -787,28 +704,28 @@
                 } else {
                     feedback.textContent = points;
                     feedback.style.color = '#f00';
-                    
+
                     // Flash rouge pour les mauvaises cibles
                     game.style.background = 'rgba(255, 0, 0, 0.3)';
                     setTimeout(() => {
                         game.style.background = '';
                     }, 100);
                 }
-                
+
                 game.appendChild(feedback);
                 setTimeout(() => feedback.remove(), 1000);
-                
+
                 target.remove();
             };
-            
+
             game.appendChild(target);
-            
+
             // Animation d'apparition
             setTimeout(() => {
                 target.style.transform = 'scale(1)';
                 target.style.opacity = '1';
             }, 10);
-            
+
             // Retrait automatique
             setTimeout(() => {
                 if (target.parentElement) {
@@ -818,28 +735,28 @@
                 }
             }, targetType.duration);
         }
-        
+
         function endShooting() {
             shootingActive = false;
             clearInterval(shootInterval);
             clearInterval(targetInterval);
-            
+
             const game = document.getElementById('shootingGame');
             game.style.cursor = 'default';
-            
+
             // Nettoyer toutes les cibles restantes
             const targets = game.querySelectorAll('.shooting-target');
             targets.forEach(t => t.remove());
-            
+
             game.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column; color: #ff6600;">
-                <div style="font-size: 48px; margin-bottom: 20px;">🎯</div>
-                <div style="font-size: 24px;">TERMINÉ !</div>
-                <div style="font-size: 32px; margin-top: 10px; color: ${shootScore >= 0 ? '#0f0' : '#f00'};">Score: ${shootScore}</div>
-                <div style="font-size: 18px; margin-top: 10px; color: #ffaa00;">Combo Max: ${shootMaxCombo}x</div>
-            </div>`;
+                    <div style="font-size: 48px; margin-bottom: 20px;">🎯</div>
+                    <div style="font-size: 24px;">TERMINÉ !</div>
+                    <div style="font-size: 32px; margin-top: 10px; color: ${shootScore >= 0 ? '#0f0' : '#f00'};">Score: ${shootScore}</div>
+                    <div style="font-size: 18px; margin-top: 10px; color: #ffaa00;">Combo Max: ${shootMaxCombo}x</div>
+                </div>`;
         }
-    
-        
+
+
         // ==================== TYPING GAME ====================
         const typingPhrases = [
             "FUYEZ DES CITROUILLES",
@@ -853,7 +770,7 @@
             "CONFINEMENT ROMPU",
             "NIVEAU DE DANGER MAXIMUM"
         ];
-        
+
         let typingActive = false;
         let typingTimeLeft = 60;
         let typingScore = 0;
@@ -861,58 +778,58 @@
         let typingTotal = 0;
         let typingInterval;
         let typingStartTime;
-        
+
         function startTyping() {
             if (typingActive) return;
-            
+
             typingActive = true;
             typingTimeLeft = 60;
             typingScore = 0;
             typingCorrect = 0;
             typingTotal = 0;
             typingStartTime = Date.now();
-            
+
             document.getElementById('typingInput').disabled = false;
             document.getElementById('typingInput').value = '';
             document.getElementById('typingInput').focus();
             document.getElementById('typingMessage').innerHTML = '';
-            
+
             updateTypingStats();
             nextTypingPhrase();
-            
+
             typingInterval = setInterval(() => {
                 typingTimeLeft--;
                 document.getElementById('typingTimer').textContent = typingTimeLeft;
-                
+
                 if (typingTimeLeft <= 0) {
                     endTyping();
                 }
             }, 1000);
         }
-        
+
         function nextTypingPhrase() {
             if (!typingActive) return;
-            
+
             const phrase = typingPhrases[Math.floor(Math.random() * typingPhrases.length)];
             document.getElementById('typingTarget').textContent = phrase;
             document.getElementById('typingInput').value = '';
         }
-        
+
         document.getElementById('typingInput').addEventListener('input', (e) => {
             if (!typingActive) return;
-            
+
             const target = document.getElementById('typingTarget').textContent;
             const input = e.target.value.toUpperCase();
-            
+
             if (input === target) {
                 typingScore++;
                 typingCorrect++;
                 typingTotal++;
-                
+
                 const msg = document.getElementById('typingMessage');
                 msg.innerHTML = '<div class="message success">✓ CORRECT !</div>';
                 setTimeout(() => msg.innerHTML = '', 500);
-                
+
                 nextTypingPhrase();
                 updateTypingStats();
             } else if (input.length > target.length) {
@@ -921,238 +838,34 @@
                 updateTypingStats();
             }
         });
-        
+
         function updateTypingStats() {
             document.getElementById('typingScore').textContent = typingScore;
-            
+
             const accuracy = typingTotal > 0 ? Math.round((typingCorrect / typingTotal) * 100) : 100;
             document.getElementById('typingAccuracy').textContent = accuracy + '%';
-            
+
             const timeElapsed = (Date.now() - typingStartTime) / 1000 / 60;
             const wpm = timeElapsed > 0 ? Math.round(typingScore / timeElapsed) : 0;
             document.getElementById('typingWPM').textContent = wpm;
         }
-        
+
         function endTyping() {
             typingActive = false;
             clearInterval(typingInterval);
             document.getElementById('typingInput').disabled = true;
-            
+
             const msg = document.getElementById('typingMessage');
             msg.innerHTML = `<div class="message success">
-                🎉 TERMINÉ !<br>
-                Score: ${typingScore} phrases<br>
-                Précision: ${document.getElementById('typingAccuracy').textContent}<br>
-                Vitesse: ${document.getElementById('typingWPM').textContent} WPM
-            </div>`;
-            
+                    🎉 TERMINÉ !<br>
+                    Score: ${typingScore} phrases<br>
+                    Précision: ${document.getElementById('typingAccuracy').textContent}<br>
+                    Vitesse: ${document.getElementById('typingWPM').textContent} WPM
+                </div>`;
+
             document.getElementById('typingTarget').textContent = 'Partie terminée !';
         }
-        
-        // ==================== JEU DU PENDU ====================
-        const hangmanWordsEasy = [
-            { word: "CITROUILLE", hint: "🎃 CHARADE : Mon premier est le début de 'citer', mon second est une rouille, mon tout est orange et sourit à Halloween !" },
-            { word: "FANTOME", hint: "👻 ÉNIGME : Je traverse les murs sans les casser, je fais 'Bouuuh' pour effrayer, je suis blanc et transparent. Qui suis-je ?" },
-            { word: "SQUELETTE", hint: "💀 ÉNIGME : Je suis blanc et je cliquette, je n'ai plus de chair ni de peau, je suis fait uniquement d'os. Qui suis-je ?" },
-            { word: "SORCIERE", hint: "🧙 CHARADE : Mon premier est un outil pour scier, mon second est un cri de douleur (AIE!), mon tout vole sur un balai magique !" },
-            { word: "VAMPIRE", hint: "🧛 ÉNIGME : Je dors le jour dans un cercueil, je crains l'ail et les crucifix, je ne me reflète pas dans les miroirs. Qui suis-je ?" },
-            { word: "CHAUVESOURIS", hint: "🦇 ÉNIGME : Je vole mais ne suis pas un oiseau, je dors la tête en bas, j'utilise les ultrasons pour voir dans le noir. Qui suis-je ?" },
-            { word: "ARAIGNEE", hint: "🕷️ ÉNIGME : J'ai 8 pattes mais ne suis pas un meuble, je tisse ma maison, je piège les mouches. Qui suis-je ?" },
-            { word: "LOUPGAROU", hint: "🐺 CHARADE : Mon premier est un animal qui hurle à la lune, mon second est un lieu avec de l'herbe (pré/gazon), mon tout se transforme les nuits de pleine lune !" },
-            { word: "MONSTRE", hint: "👹 CHARADE : Mon premier suit le dimanche, mon second est un animal à longues oreilles, mon tout fait très peur aux enfants !" },
-            { word: "ZOMBI", hint: "🧟 ÉNIGME : Je suis mort mais je marche encore, je mange des cerveaux, je grogne 'Graaaaah'. Qui suis-je ?" },
-            { word: "CERCUEIL", hint: "⚰️ ÉNIGME : Je suis une boîte pour dormir éternellement, souvent en bois, on m'enterre sous terre. Qui suis-je ?" },
-            { word: "CIMETIERE", hint: "🪦 CHARADE : Mon premier se trouve au bout du pied (orteil), mon second est caché dans 'matière', mon tout est le lieu de repos des morts !" },
-            { word: "TOMBE", hint: "💐 ÉNIGME : Je commence comme 'tomber', je rime avec 'bombe', je marque l'endroit où repose un défunt. Qui suis-je ?" },
-            { word: "BALAI", hint: "🧹 ÉNIGME : On me chevauche pour voler la nuit, j'ai des brindilles à mon bout, les sorcières m'adorent pour voyager. Qui suis-je ?" },
-            { word: "CHAUDRON", hint: "🔮 ÉNIGME : Je suis rond et noir, je bouillonne sur le feu, les sorcières y préparent leurs potions magiques. Qui suis-je ?" },
-            { word: "POTION", hint: "🧪 ÉNIGME : Je suis un liquide magique coloré, on me boit pour se transformer, les sorcières me préparent avec des ingrédients bizarres. Qui suis-je ?" },
-            { word: "MALEDICTION", hint: "🪄 CHARADE : Mon premier est un synonyme de 'mauvais', mon second vient après 'neuf', mon tout est un sort qui porte malheur !" },
-            { word: "EPOUVANTAIL", hint: "🌾 CHARADE : Mon premier exprime la peur intense (épouvante), mon second protège un château, mon tout fait fuir les oiseaux dans les champs !" },
-            { word: "BONBONS", hint: "🍬 CHARADE : Mon premier signifie 'bien', mon second est caché dans 'bondir', mon tout est ce qu'on récolte en criant 'Trick or Treat' !" },
-            { word: "TOILE", hint: "🕸️ ÉNIGME : Je suis collante et argentée, une créature à 8 pattes me fabrique, je piège les insectes volants. Qui suis-je ?" }
-        ];
-        
-        const hangmanWordsHard = [
-            { word: "NECROMANCIE", hint: "🔮 CHARADE : Mon premier est une négation, mon second est le cri du corbeau, mon troisième pratique la magie. Mon tout invoque les défunts." },
-            { word: "PUTREFACTION", hint: "💀 ÉNIGME : Processus inexorable qui transforme la chair en poussière. Sans moi, point de renaissance. Les vers sont mes ouvriers. Je suis..." },
-            { word: "EXORCISME", hint: "⛪ CHARADE : Mon premier sort du corps, mon second est un courant philosophique, mon tout chasse les démons." },
-            { word: "MEMENTO-MORI", hint: "☠️ ÉNIGME : Locution latine gravée sur les vanités. Je te rappelle l'inéluctable. Les moines me murmurent. Souviens-toi que tu..." },
-            { word: "LINCEUL", hint: "⚰️ CHARADE : Mon premier est un tissu précieux, mon second est le contraire de 'lent', mon tout enveloppe les morts dans leur dernier voyage." },
-            { word: "CROQUE-MORT", hint: "🎩 ÉNIGME : Mon métier est d'accompagner ceux qui ne reviendront jamais. Je porte le noir avec solennité. On dit que je 'croque' symboliquement pour vérifier le trépas..." },
-            { word: "THANATOLOGIE", hint: "📚 CHARADE : Mon premier est le dieu grec de la mort, mon second est une science. Mon tout étudie la mort sous tous ses aspects." },
-            { word: "CATACOMBES", hint: "🏛️ ÉNIGME : Labyrinthe souterrain tapissé d'ossements. À Paris ou Rome, je garde les secrets des siècles. Les touristes me visitent, les morts m'habitent." },
-            { word: "POLTERGEIST", hint: "👻 ÉNIGME : Mot allemand signifiant 'esprit frappeur'. Je déplace les objets, claque les portes. Les parapsychologues m'étudient, les sceptiques me nient." },
-            { word: "LYCANTHROPIE", hint: "🐺 CHARADE : Mon premier est un canidé, mon second vient du grec 'anthropos' (homme). Mon tout est une transformation maudite sous la pleine lune." },
-            { word: "NOSFERATU", hint: "🧛 ÉNIGME : Nom roumain du vampire, popularisé par Murnau en 1922. Je suis l'ombre qui boit la vie, le non-mort par excellence..." },
-            { word: "APOCALYPSE", hint: "🔥 CHARADE : Mon premier cache quelque chose, mon second est un astre, mon troisième est un fleuve français. Mon tout annonce la fin des temps." },
-            { word: "INCANTATION", hint: "🪄 ÉNIGME : Formule magique prononcée avec solennité. Les sorcières me psalmodient, les druides me chantent. Abracadabra est ma cousine..." },
-            { word: "SEPULTURE", hint: "🪦 CHARADE : Mon premier est un chiffre, mon second est un verbe à l'infinitif, mon tout est l'acte d'inhumer un corps." },
-            { word: "GRIMOIRE", hint: "📖 ÉNIGME : Livre de magie défendu, relié de cuir sombre. Mes pages contiennent sorts et rituels oubliés. Faust me consultait..." },
-            { word: "ECTOPLASME", hint: "👻 CHARADE : Mon premier est un préfixe grec signifiant 'extérieur', mon second est la matière vivante. Mon tout est la substance spectrale des fantômes." },
-            { word: "MAUSOLEE", hint: "🏛️ ÉNIGME : Monument funéraire grandiose tirant mon nom du roi Mausole. Je suis plus qu'une tombe, je suis une œuvre d'art mortuaire." },
-            { word: "FLAGELLATION", hint: "⛓️ CHARADE : Mon premier est un drapeau, mon second termine 'nation'. Mon tout est une punition par le fouet, pratiquée aussi en pénitence." },
-            { word: "SACRIFICE", hint: "🗡️ ÉNIGME : Offrande aux dieux, souvent sanglante. Les Aztèques me pratiquaient au sommet des pyramides. Je rends sacré ce qui est immolé..." },
-            { word: "TOURMENTE", hint: "🌪️ CHARADE : Mon premier fait le tour, mon second vient de 'mentir'. Mon tout est une souffrance psychique intense ou une tempête violente." }
-        ];
-        
-        let hangmanDifficulty = 'hard'; // Difficulté par défaut
-        let hangmanWords = hangmanWordsHard;
-        
-        let hangmanCurrentWord = '';
-        let hangmanGuessedLetters = [];
-        let hangmanErrors = 0;
-        let hangmanScore = 0;
-        let hangmanMaxErrors = 6;
-        
-        const hangmanStages = [
-            '🎃',           // 0 erreurs
-            '😨',           // 1 erreur
-            '😱',           // 2 erreurs
-            '💀',           // 3 erreurs
-            '☠️',           // 4 erreurs
-            '⚰️',           // 5 erreurs
-            '🪦'            // 6 erreurs - Game Over
-        ];
-        
-        function changeDifficulty(level) {
-            hangmanDifficulty = level;
-            hangmanWords = level === 'easy' ? hangmanWordsEasy : hangmanWordsHard;
-            
-            const btnEasy = document.getElementById('btnEasy');
-            const btnHard = document.getElementById('btnHard');
-            
-            if (level === 'easy') {
-                btnEasy.style.background = '#0f0';
-                btnEasy.style.borderColor = '#0f0';
-                btnEasy.style.color = '#000';
-                btnHard.style.background = 'rgba(255, 102, 0, 0.2)';
-                btnHard.style.borderColor = '#ff6600';
-                btnHard.style.color = '#ff6600';
-            } else {
-                btnEasy.style.background = 'rgba(0, 255, 0, 0.2)';
-                btnEasy.style.borderColor = '#0f0';
-                btnEasy.style.color = '#0f0';
-                btnHard.style.background = '#ff6600';
-                btnHard.style.borderColor = '#ff6600';
-                btnHard.style.color = '#000';
-            }
-            startHangman();
-        }
 
-        function startHangman() {
-            // Choisir un mot aléatoire
-            const randomIndex = Math.floor(Math.random() * hangmanWords.length);
-            const selected = hangmanWords[randomIndex];
-            hangmanCurrentWord = selected.word.toUpperCase();
-            
-            // Réinitialiser
-            hangmanGuessedLetters = [];
-            hangmanErrors = 0;
-            
-            // Affichage
-            document.getElementById('hangmanErrors').textContent = '0/' + hangmanMaxErrors;
-            document.getElementById('hangmanScore').textContent = hangmanScore;
-            document.getElementById('hangmanDrawing').textContent = hangmanStages[0];
-            document.getElementById('hangmanHint').textContent = '💡 ' + selected.hint;
-            document.getElementById('hangmanMessage').innerHTML = '';
-            
-            // Créer le clavier
-            createHangmanKeyboard();
-            updateHangmanWord();
-        }
-        
-        function createHangmanKeyboard() {
-            const keyboard = document.getElementById('hangmanKeyboard');
-            keyboard.innerHTML = '';
-            
-            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-            
-            letters.forEach(letter => {
-                const btn = document.createElement('button');
-                btn.textContent = letter;
-                btn.style.width = '38px';
-                btn.style.height = '38px';
-                btn.style.margin = '2px';
-                btn.style.fontSize = '16px';
-                btn.style.padding = '3px';
-                btn.style.minWidth = '38px';
-                btn.style.flexShrink = '0';
-                btn.onclick = () => guessLetter(letter, btn);
-                keyboard.appendChild(btn);
-            });
-        }
-        
-        function guessLetter(letter, btn) {
-            if (hangmanGuessedLetters.includes(letter)) return;
-            
-            hangmanGuessedLetters.push(letter);
-            btn.disabled = true;
-            btn.style.opacity = '0.3';
-            
-            if (hangmanCurrentWord.includes(letter)) {
-                // Bonne lettre
-                btn.style.background = '#0f0';
-                btn.style.color = '#000';
-                updateHangmanWord();
-                
-                // Vérifier si gagné
-                const allGuessed = hangmanCurrentWord.split('').every(l => 
-                    hangmanGuessedLetters.includes(l) || l === ' '
-                );
-                
-                if (allGuessed) {
-                    hangmanScore += 10;
-                    document.getElementById('hangmanScore').textContent = hangmanScore;
-                    document.getElementById('hangmanMessage').innerHTML = 
-                        '<div class="message success">🎉 GAGNÉ ! +10 points</div>';
-                    
-                    // Bloquer le clavier
-                    const buttons = document.querySelectorAll('#hangmanKeyboard button');
-                    buttons.forEach(b => b.disabled = true);
-                    
-                    setTimeout(() => {
-                        startHangman();
-                    }, 2000);
-                }
-            } else {
-                // Mauvaise lettre
-                btn.style.background = '#f00';
-                btn.style.color = '#fff';
-                hangmanErrors++;
-                
-                document.getElementById('hangmanErrors').textContent = hangmanErrors + '/' + hangmanMaxErrors;
-                document.getElementById('hangmanDrawing').textContent = hangmanStages[hangmanErrors];
-                
-                // Vérifier si perdu
-                if (hangmanErrors >= hangmanMaxErrors) {
-                    document.getElementById('hangmanMessage').innerHTML = 
-                        `<div class="message error">💀 PERDU ! Le mot était: ${hangmanCurrentWord}</div>`;
-                    
-                    // Révéler le mot
-                    document.getElementById('hangmanWord').textContent = 
-                        hangmanCurrentWord.split('').join(' ');
-                    
-                    // Bloquer le clavier
-                    const buttons = document.querySelectorAll('#hangmanKeyboard button');
-                    buttons.forEach(b => b.disabled = true);
-                    
-                    // Score remis à 0
-                    hangmanScore = 0;
-                    document.getElementById('hangmanScore').textContent = hangmanScore;
-                }
-            }
-        }
-        
-        function updateHangmanWord() {
-            const display = hangmanCurrentWord.split('').map(letter => {
-                if (letter === ' ') return '  ';
-                return hangmanGuessedLetters.includes(letter) ? letter : '_';
-            }).join(' ');
-            
-            document.getElementById('hangmanWord').textContent = display;
-        }
-        
         // ==================== ENDLESS RUNNER ====================
         let runnerActive = false;
         let runnerDistance = 0;
@@ -1164,14 +877,14 @@
         let runnerObstacles = [];
         let runnerGameLoop;
         let runnerObstacleInterval;
-        
+
         const runnerObstacleTypes = ['🪦', '⚰️', '💀', '🕷️', '🦇', '👻'];
         const runnerJumpHeight = 200; // Augmenté de 150 à 200
         const runnerGravity = 2; // Réduit pour un saut plus doux
-        
+
         function startRunner() {
             if (runnerActive) return;
-            
+
             runnerActive = true;
             runnerDistance = 0;
             runnerSpeed = 5;
@@ -1179,85 +892,85 @@
             runnerPlayerBottom = 80;
             runnerIsJumping = false;
             runnerObstacles = [];
-            
+
             document.getElementById('runnerStartText').style.display = 'none';
             document.getElementById('runnerDistance').textContent = '0m';
             document.getElementById('runnerSpeed').textContent = '1.0x';
             document.getElementById('runnerStartBtn').disabled = true;
-            
+
             // Nettoyer les anciens obstacles
             const game = document.getElementById('runnerGame');
             const oldObstacles = game.querySelectorAll('.runner-obstacle');
             oldObstacles.forEach(obs => obs.remove());
-            
+
             // Démarrer les boucles
             runnerGameLoop = setInterval(updateRunner, 20);
             runnerObstacleInterval = setInterval(spawnObstacle, 1500);
         }
-        
+
         function updateRunner() {
             if (!runnerActive) return;
-            
+
             // Augmenter la distance
             runnerDistance += runnerSpeed / 60;
             document.getElementById('runnerDistance').textContent = Math.floor(runnerDistance) + 'm';
-            
+
             // Augmenter la vitesse progressivement
             if (Math.floor(runnerDistance) % 50 === 0 && runnerDistance > 0) {
                 runnerSpeed += 0.5;
                 runnerSpeedMultiplier = (runnerSpeed / 5).toFixed(1);
                 document.getElementById('runnerSpeed').textContent = runnerSpeedMultiplier + 'x';
             }
-            
+
             // Déplacer les obstacles
             const game = document.getElementById('runnerGame');
             const obstacles = game.querySelectorAll('.runner-obstacle');
-            
+
             obstacles.forEach((obstacle, index) => {
                 let left = parseInt(obstacle.style.left);
                 left -= runnerSpeed;
                 obstacle.style.left = left + 'px';
-                
+
                 // Supprimer si hors écran
                 if (left < -50) {
                     obstacle.remove();
                     runnerObstacles.splice(index, 1);
                 }
-                
+
                 // Vérifier collision - CORRIGÉ
                 const playerLeft = 50;
                 const playerRight = playerLeft + 40; // Largeur de la citrouille
                 const playerBottom = runnerPlayerBottom; // Position bottom du joueur
                 const playerTop = runnerPlayerBottom + 40; // Hauteur de la citrouille
-                
+
                 const obsLeft = left;
                 const obsRight = left + 40; // Largeur de l'obstacle
                 const obsBottom = parseInt(obstacle.style.bottom); // Position bottom de l'obstacle
                 const obsTop = obsBottom + 40; // Hauteur de l'obstacle
-                
+
                 // Collision horizontale ET verticale
                 const horizontalCollision = playerRight > obsLeft + 10 && playerLeft < obsRight - 10; // Marges de 10px
                 const verticalCollision = playerTop > obsBottom + 5 && playerBottom < obsTop - 5; // Marges de 5px
-                
+
                 if (horizontalCollision && verticalCollision) {
                     gameOverRunner();
                 }
             });
         }
-        
+
         function spawnObstacle() {
             if (!runnerActive) return;
-            
+
             const game = document.getElementById('runnerGame');
             const obstacle = document.createElement('div');
             obstacle.className = 'runner-obstacle';
-            
+
             const type = runnerObstacleTypes[Math.floor(Math.random() * runnerObstacleTypes.length)];
             obstacle.textContent = type;
             obstacle.style.position = 'absolute';
             obstacle.style.fontSize = '40px';
             obstacle.style.left = game.offsetWidth + 'px';
-            
+
             // Obstacles au sol ou en l'air
             if (Math.random() > 0.8 && ['🦇', '👻'].includes(type)) {
                 // Obstacles volants - hauteur entre 120 et 180px
@@ -1266,24 +979,24 @@
                 // Obstacles au sol
                 obstacle.style.bottom = '80px';
             }
-            
+
             game.appendChild(obstacle);
             runnerObstacles.push(obstacle);
         }
-        
+
         function runnerJump() {
             if (!runnerActive || runnerIsJumping) return;
-            
+
             runnerIsJumping = true;
             const player = document.getElementById('runnerPlayer');
             let jumpVelocity = 30; // Augmenté de 20 à 30 pour sauter plus haut
-            
+
             const jumpInterval = setInterval(() => {
                 runnerPlayerBottom += jumpVelocity;
                 jumpVelocity -= 2; // Gravité réduite de 5 à 2 pour un saut plus doux
-                
+
                 player.style.bottom = runnerPlayerBottom + 'px';
-                
+
                 // Atterrissage
                 if (runnerPlayerBottom <= 80) {
                     runnerPlayerBottom = 80;
@@ -1293,18 +1006,18 @@
                 }
             }, 20);
         }
-        
+
         function gameOverRunner() {
             runnerActive = false;
             clearInterval(runnerGameLoop);
             clearInterval(runnerObstacleInterval);
-            
+
             // Mise à jour du record
             if (Math.floor(runnerDistance) > runnerBestDistance) {
                 runnerBestDistance = Math.floor(runnerDistance);
                 document.getElementById('runnerBest').textContent = runnerBestDistance + 'm';
             }
-            
+
             // Message de fin
             const game = document.getElementById('runnerGame');
             const gameOverMsg = document.createElement('div');
@@ -1322,33 +1035,33 @@
             gameOverMsg.style.borderRadius = '10px';
             gameOverMsg.style.border = '3px solid #f00';
             gameOverMsg.innerHTML = `
-                💀 GAME OVER 💀<br>
-                <span style="font-size: 20px; color: #ff6600;">Distance: ${Math.floor(runnerDistance)}m</span><br>
-                <span style="font-size: 16px; color: #0f0;">Record: ${runnerBestDistance}m</span>
-            `;
+                    💀 GAME OVER 💀<br>
+                    <span style="font-size: 20px; color: #ff6600;">Distance: ${Math.floor(runnerDistance)}m</span><br>
+                    <span style="font-size: 16px; color: #0f0;">Record: ${runnerBestDistance}m</span>
+                `;
             game.appendChild(gameOverMsg);
-            
+
             document.getElementById('runnerStartBtn').disabled = false;
-            
+
             // Retirer le message après 3 secondes
             setTimeout(() => {
                 gameOverMsg.remove();
                 document.getElementById('runnerStartText').style.display = 'block';
             }, 3000);
         }
-        
+
         // Contrôles du runner
         document.getElementById('runnerGame').addEventListener('click', runnerJump);
-        
+
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space' && runnerActive) {
                 e.preventDefault();
                 runnerJump();
             }
         });
-        
- 
-        
+
+
+
         // ==================== LABYRINTHE DANS LE NOIR ====================
         let mazeActive = false;
         let mazeHP = 3;
@@ -1364,12 +1077,12 @@
         let mazeKeys = {};
         let mazeOptimalPath = null;
         let mazeShowingHint = false;
-        
+
         function startMaze() {
             mazeActive = true;
             mazeHP = 3;
             mazeStartTime = Date.now();
-            
+
             // Initialiser canvas
             mazeCanvas = document.getElementById('mazeCanvas');
             mazeCtx = mazeCanvas.getContext('2d');
@@ -1380,27 +1093,27 @@
                 const btn = document.getElementById(btnId);
                 if (btn) btn.disabled = false;
             });
-            
+
             // Générer labyrinthe
             generateMaze();
-            
+
             // Position de départ
             mazePlayer = { x: 1, y: 1 };
-            
+
             // Position de sortie (coin opposé)
             mazeExit = { x: mazeSize - 2, y: mazeSize - 2 };
-            
+
             // Générer des pièges
             generateTraps();
-            
+
             // Stocker le chemin optimal pour les indices
             mazeOptimalPath = findPath(mazePlayer.x, mazePlayer.y, mazeExit.x, mazeExit.y);
             mazeShowingHint = false;
-            
+
             // Bouton d'indice désactivé au début
             document.getElementById('mazeHintBtn').disabled = true;
             document.getElementById('mazeHintBtn').textContent = '💡 INDICE (après 30s)';
-            
+
             // Activer le bouton d'indice après 30 secondes
             setTimeout(() => {
                 if (mazeActive) {
@@ -1408,7 +1121,7 @@
                     document.getElementById('mazeHintBtn').textContent = '💡 VOIR LE CHEMIN (1 fois)';
                 }
             }, 30000);
-            
+
             // Affichage
             document.getElementById('mazeHP').textContent = '❤️'.repeat(mazeHP);
             document.getElementById('mazeProgress').textContent = '0%';
@@ -1416,7 +1129,7 @@
             document.getElementById('mazeHint').textContent = '🔦 Trouvez la sortie ! Évitez les pièges invisibles...';
             document.getElementById('mazeHint').style.color = '#0f0';
             document.getElementById('mazeMessage').innerHTML = '';
-            
+
             // Timer
             clearInterval(mazeTimerInterval);
             mazeTimerInterval = setInterval(() => {
@@ -1425,11 +1138,11 @@
                     document.getElementById('mazeTime').textContent = elapsed + 's';
                 }
             }, 1000);
-            
+
             // Dessiner
             drawMaze();
         }
-        
+
         function generateMaze() {
             // Créer grille vide (1 = mur, 0 = chemin)
             mazeGrid = [];
@@ -1439,84 +1152,84 @@
                     mazeGrid[y][x] = 1;
                 }
             }
-            
+
             // Algorithme de génération simple (DFS)
             const stack = [];
             const startX = 1, startY = 1;
             mazeGrid[startY][startX] = 0;
             stack.push({ x: startX, y: startY });
-            
+
             const directions = [
                 { dx: 2, dy: 0 },
                 { dx: -2, dy: 0 },
                 { dx: 0, dy: 2 },
                 { dx: 0, dy: -2 }
             ];
-            
+
             while (stack.length > 0) {
                 const current = stack[stack.length - 1];
                 const neighbors = [];
-                
+
                 // Chercher voisins non visités
                 directions.forEach(dir => {
                     const nx = current.x + dir.dx;
                     const ny = current.y + dir.dy;
-                    
+
                     if (nx > 0 && nx < mazeSize - 1 && ny > 0 && ny < mazeSize - 1 && mazeGrid[ny][nx] === 1) {
                         neighbors.push({ x: nx, y: ny, dx: dir.dx, dy: dir.dy });
                     }
                 });
-                
+
                 if (neighbors.length > 0) {
                     // Choisir voisin aléatoire
                     const next = neighbors[Math.floor(Math.random() * neighbors.length)];
-                    
+
                     // Creuser chemin
                     mazeGrid[next.y][next.x] = 0;
                     mazeGrid[current.y + next.dy / 2][current.x + next.dx / 2] = 0;
-                    
+
                     stack.push({ x: next.x, y: next.y });
                 } else {
                     stack.pop();
                 }
             }
         }
-        
+
         function generateTraps() {
             mazeTraps = [];
-            
+
             // Trouver le chemin optimal avec BFS
             const optimalPath = findPath(mazePlayer.x, mazePlayer.y, mazeExit.x, mazeExit.y);
-            
+
             if (!optimalPath) {
                 console.error("Pas de chemin trouvé !");
                 return;
             }
-            
+
             // Créer un Set des positions du chemin optimal pour accès rapide
             const pathSet = new Set(optimalPath.map(p => `${p.x},${p.y}`));
-            
+
             // Calculer combien de pièges on peut mettre sur le chemin (max 2 pour rester jouable avec 3 vies)
             const maxTrapsOnPath = 2;
             let trapsOnPath = 0;
-            
+
             // Placer 10-15 pièges au total
             let trapCount = 10 + Math.floor(Math.random() * 6);
-            
+
             for (let i = 0; i < trapCount; i++) {
                 let x, y;
                 let isOnPath = false;
                 let attempts = 0;
-                
+
                 do {
                     x = Math.floor(Math.random() * mazeSize);
                     y = Math.floor(Math.random() * mazeSize);
                     isOnPath = pathSet.has(`${x},${y}`);
                     attempts++;
-                    
+
                     // Si on a essayé trop de fois, forcer un placement hors chemin
                     if (attempts > 100) break;
-                    
+
                 } while (
                     mazeGrid[y][x] === 1 || // Mur
                     (x === 1 && y === 1) || // Départ
@@ -1524,53 +1237,53 @@
                     mazeTraps.some(t => t.x === x && t.y === y) || // Déjà un piège
                     (isOnPath && trapsOnPath >= maxTrapsOnPath) // Trop de pièges sur le chemin
                 );
-                
+
                 if (attempts > 100) continue; // Skip si impossible
-                
+
                 if (isOnPath) {
                     trapsOnPath++;
                 }
-                
-                mazeTraps.push({ 
-                    x, y, 
+
+                mazeTraps.push({
+                    x, y,
                     triggered: false,
                     type: Math.random() > 0.5 ? 'spike' : 'hole'
                 });
             }
         }
-        
+
         // BFS pour trouver le chemin optimal
         function findPath(startX, startY, endX, endY) {
             const queue = [{ x: startX, y: startY, path: [{ x: startX, y: startY }] }];
             const visited = new Set([`${startX},${startY}`]);
-            
+
             const directions = [
                 { dx: 0, dy: -1 }, // Haut
                 { dx: 0, dy: 1 },  // Bas
                 { dx: -1, dy: 0 }, // Gauche
                 { dx: 1, dy: 0 }   // Droite
             ];
-            
+
             while (queue.length > 0) {
                 const current = queue.shift();
-                
+
                 // Arrivée !
                 if (current.x === endX && current.y === endY) {
                     return current.path;
                 }
-                
+
                 // Explorer voisins
                 for (const dir of directions) {
                     const newX = current.x + dir.dx;
                     const newY = current.y + dir.dy;
                     const key = `${newX},${newY}`;
-                    
+
                     // Vérifier validité
-                    if (newX >= 0 && newX < mazeSize && 
+                    if (newX >= 0 && newX < mazeSize &&
                         newY >= 0 && newY < mazeSize &&
-                        mazeGrid[newY][newX] === 0 && 
+                        mazeGrid[newY][newX] === 0 &&
                         !visited.has(key)) {
-                        
+
                         visited.add(key);
                         queue.push({
                             x: newX,
@@ -1580,30 +1293,30 @@
                     }
                 }
             }
-            
+
             return null; // Pas de chemin trouvé
         }
-        
+
         function drawMaze() {
             if (!mazeActive) return;
-            
+
             // Fond noir
             mazeCtx.fillStyle = '#000';
             mazeCtx.fillRect(0, 0, mazeCanvas.width, mazeCanvas.height);
-            
+
             // Ne dessiner que ce qui est visible dans le rayon de la lampe
             const visionRadius = 2.5; // Cellules visibles autour du joueur
-            
+
             for (let y = 0; y < mazeSize; y++) {
                 for (let x = 0; x < mazeSize; x++) {
                     const distance = Math.sqrt(
-                        Math.pow(x - mazePlayer.x, 2) + 
+                        Math.pow(x - mazePlayer.x, 2) +
                         Math.pow(y - mazePlayer.y, 2)
                     );
-                    
+
                     if (distance <= visionRadius) {
                         const opacity = Math.max(0, 1 - distance / visionRadius);
-                        
+
                         // Dessiner cellule
                         if (mazeGrid[y][x] === 1) {
                             // Mur
@@ -1612,14 +1325,14 @@
                             // Chemin
                             mazeCtx.fillStyle = `rgba(40, 40, 40, ${opacity})`;
                         }
-                        
+
                         mazeCtx.fillRect(
-                            x * mazeCellSize, 
-                            y * mazeCellSize, 
-                            mazeCellSize - 1, 
+                            x * mazeCellSize,
+                            y * mazeCellSize,
+                            mazeCellSize - 1,
                             mazeCellSize - 1
                         );
-                        
+
                         // Dessiner pièges déclenchés
                         const trap = mazeTraps.find(t => t.x === x && t.y === y && t.triggered);
                         if (trap) {
@@ -1634,90 +1347,90 @@
                     }
                 }
             }
-            
+
             // Dessiner le chemin optimal si l'indice est activé
             if (mazeShowingHint && mazeOptimalPath) {
                 mazeOptimalPath.forEach(pathCell => {
                     const distance = Math.sqrt(
-                        Math.pow(pathCell.x - mazePlayer.x, 2) + 
+                        Math.pow(pathCell.x - mazePlayer.x, 2) +
                         Math.pow(pathCell.y - mazePlayer.y, 2)
                     );
-                    
+
                     // Dessiner même hors du rayon de vision pour l'indice
-                    const opacity = distance <= visionRadius ? 
+                    const opacity = distance <= visionRadius ?
                         Math.max(0, 1 - distance / visionRadius) : 0.3;
-                    
+
                     mazeCtx.fillStyle = `rgba(255, 215, 0, ${opacity * 0.6})`;
                     mazeCtx.fillRect(
-                        pathCell.x * mazeCellSize + 10, 
-                        pathCell.y * mazeCellSize + 10, 
-                        mazeCellSize - 20, 
+                        pathCell.x * mazeCellSize + 10,
+                        pathCell.y * mazeCellSize + 10,
+                        mazeCellSize - 20,
                         mazeCellSize - 20
                     );
                 });
             }
-            
+
             // Dessiner sortie si visible
             const exitDistance = Math.sqrt(
-                Math.pow(mazeExit.x - mazePlayer.x, 2) + 
+                Math.pow(mazeExit.x - mazePlayer.x, 2) +
                 Math.pow(mazeExit.y - mazePlayer.y, 2)
             );
-            
+
             if (exitDistance <= visionRadius) {
                 const opacity = Math.max(0, 1 - exitDistance / visionRadius);
                 mazeCtx.fillStyle = `rgba(0, 255, 0, ${opacity * 0.5})`;
                 mazeCtx.fillRect(
-                    mazeExit.x * mazeCellSize, 
-                    mazeExit.y * mazeCellSize, 
-                    mazeCellSize - 1, 
+                    mazeExit.x * mazeCellSize,
+                    mazeExit.y * mazeCellSize,
+                    mazeCellSize - 1,
                     mazeCellSize - 1
                 );
-                
+
                 mazeCtx.font = '24px Arial';
                 mazeCtx.fillStyle = `rgba(0, 255, 0, ${opacity})`;
                 mazeCtx.fillText('🚪', mazeExit.x * mazeCellSize + 4, mazeExit.y * mazeCellSize + 25);
             }
-            
+
             // Dessiner joueur
             mazeCtx.font = '28px Arial';
             mazeCtx.fillStyle = '#FFD700';
             mazeCtx.fillText('🔦', mazePlayer.x * mazeCellSize + 2, mazePlayer.y * mazeCellSize + 26);
-            
+
             // Positionner la lampe torche (responsive et centrée)
             const flashlight = document.getElementById('mazeFlashlight');
             const containerRect = mazeCanvas.getBoundingClientRect();
             const flashlightSize = containerRect.width * 0.3; // 30% de la largeur
-            
+
             // Calculer la position relative du joueur sur le canvas affiché
             const playerScreenX = (mazePlayer.x * mazeCellSize / 500) * containerRect.width;
             const playerScreenY = (mazePlayer.y * mazeCellSize / 500) * containerRect.height;
-            
+
             // Centrer la lampe sur le joueur
             flashlight.style.left = (playerScreenX - flashlightSize / 2) + 'px';
             flashlight.style.top = (playerScreenY - flashlightSize / 2) + 'px';
-            
+
             // Calculer progression
             const totalDistance = Math.sqrt(
-                Math.pow(mazeExit.x - 1, 2) + 
+                Math.pow(mazeExit.x - 1, 2) +
                 Math.pow(mazeExit.y - 1, 2)
             );
             const currentDistance = Math.sqrt(
-                Math.pow(mazeExit.x - mazePlayer.x, 2) + 
+                Math.pow(mazeExit.x - mazePlayer.x, 2) +
                 Math.pow(mazeExit.y - mazePlayer.y, 2)
             );
             const progress = Math.max(0, Math.min(100, Math.floor((1 - currentDistance / totalDistance) * 100)));
             document.getElementById('mazeProgress').textContent = progress + '%';
-            
+
             requestAnimationFrame(drawMaze);
         }
-        
+
         // Fonction pour les boutons tactiles
         function moveMazePlayerButton(direction) {
             if (!mazeActive) return;
-            
+
             let dx = 0, dy = 0;
-            
-            switch(direction) {
+
+            switch (direction) {
                 case 'up':
                     dy = -1;
                     break;
@@ -1731,10 +1444,10 @@
                     dx = 1;
                     break;
             }
-            
+
             // Appeler la fonction de mouvement existante
             moveMazePlayer(dx, dy);
-            
+
             // Animation du bouton
             const buttonIds = {
                 'up': 'mazeBtnUp',
@@ -1742,7 +1455,7 @@
                 'left': 'mazeBtnLeft',
                 'right': 'mazeBtnRight'
             };
-            
+
             const btn = document.getElementById(buttonIds[direction]);
             if (btn) {
                 btn.classList.add('pressed');
@@ -1752,10 +1465,10 @@
 
         function moveMazePlayer(dx, dy) {
             if (!mazeActive) return;
-            
+
             const newX = mazePlayer.x + dx;
             const newY = mazePlayer.y + dy;
-            
+
             // Vérifier limites et murs
             if (newX < 0 || newX >= mazeSize || newY < 0 || newY >= mazeSize) return;
             if (mazeGrid[newY][newX] === 1) {
@@ -1764,49 +1477,49 @@
                 document.getElementById('mazeHint').style.color = '#ff6600';
                 return;
             }
-            
+
             // Déplacer
             mazePlayer.x = newX;
             mazePlayer.y = newY;
-            
+
             // Vérifier piège
             const trap = mazeTraps.find(t => t.x === newX && t.y === newY && !t.triggered);
             if (trap) {
                 trap.triggered = true;
                 mazeHP--;
                 document.getElementById('mazeHP').textContent = '❤️'.repeat(Math.max(0, mazeHP)) + '🖤'.repeat(3 - mazeHP);
-                
+
                 const trapEmoji = trap.type === 'spike' ? '🗡️' : '🕳️';
                 const trapName = trap.type === 'spike' ? 'Piques' : 'Fosse';
-                
+
                 document.getElementById('mazeHint').textContent = `${trapEmoji} ${trapName} ! -1 vie`;
                 document.getElementById('mazeHint').style.color = '#f00';
-                
+
                 // Flash rouge
                 mazeCanvas.style.background = 'rgba(255, 0, 0, 0.3)';
                 setTimeout(() => {
                     mazeCanvas.style.background = '#000';
                 }, 200);
-                
+
                 if (mazeHP <= 0) {
                     loseMaze();
                     return;
                 }
             }
-            
+
             // Vérifier sortie
             if (mazePlayer.x === mazeExit.x && mazePlayer.y === mazeExit.y) {
                 winMaze();
             }
         }
-        
+
         function winMaze() {
             mazeActive = false;
             clearInterval(mazeTimerInterval);
-            
+
             const time = Math.floor((Date.now() - mazeStartTime) / 1000);
             const trapsHit = 3 - mazeHP;
-            
+
             // Désactiver les boutons
             const mazeButtons = ['mazeBtnUp', 'mazeBtnDown', 'mazeBtnLeft', 'mazeBtnRight'];
             mazeButtons.forEach(btnId => {
@@ -1815,20 +1528,20 @@
             });
 
             document.getElementById('mazeMessage').innerHTML = `
-                <div style="color: #0f0; font-size: 18px;">
-                    🎉 SORTIE TROUVÉE !<br>
-                    <span style="font-size: 14px;">Temps: ${time}s | Pièges: ${trapsHit}/3 | Vies: ${mazeHP}❤️</span>
-                </div>
-            `;
-            
+                    <div style="color: #0f0; font-size: 18px;">
+                        🎉 SORTIE TROUVÉE !<br>
+                        <span style="font-size: 14px;">Temps: ${time}s | Pièges: ${trapsHit}/3 | Vies: ${mazeHP}❤️</span>
+                    </div>
+                `;
+
             document.getElementById('mazeHint').textContent = '🚪 Vous avez échappé au labyrinthe !';
             document.getElementById('mazeHint').style.color = '#0f0';
         }
-        
+
         function loseMaze() {
             mazeActive = false;
             clearInterval(mazeTimerInterval);
- 
+
             // Désactiver les boutons
             const mazeButtons = ['mazeBtnUp', 'mazeBtnDown', 'mazeBtnLeft', 'mazeBtnRight'];
             mazeButtons.forEach(btnId => {
@@ -1837,26 +1550,26 @@
             });
 
             document.getElementById('mazeMessage').innerHTML = `
-                <div style="color: #f00; font-size: 18px;">
-                    💀 VOUS ÊTES PERDU...<br>
-                    <span style="font-size: 14px;">Vous avez succombé aux pièges du labyrinthe</span>
-                </div>
-            `;
-            
+                    <div style="color: #f00; font-size: 18px;">
+                        💀 VOUS ÊTES PERDU...<br>
+                        <span style="font-size: 14px;">Vous avez succombé aux pièges du labyrinthe</span>
+                    </div>
+                `;
+
             document.getElementById('mazeHint').textContent = '☠️ Trop de blessures... Réessayez !';
             document.getElementById('mazeHint').style.color = '#f00';
         }
-        
+
         function showMazeHint() {
             if (!mazeActive || mazeShowingHint || !mazeOptimalPath) return;
-            
+
             mazeShowingHint = true;
             document.getElementById('mazeHintBtn').disabled = true;
             document.getElementById('mazeHintBtn').textContent = '💡 INDICE UTILISÉ';
-            
+
             document.getElementById('mazeHint').textContent = '💡 Le chemin s\'illumine pendant 5 secondes...';
             document.getElementById('mazeHint').style.color = '#ffaa00';
-            
+
             // Réactiver après 5 secondes
             setTimeout(() => {
                 mazeShowingHint = false;
@@ -1866,12 +1579,12 @@
                 }
             }, 5000);
         }
-        
+
         // Contrôles clavier du labyrinthe
         document.addEventListener('keydown', (e) => {
             if (!mazeActive) return;
-            
-            switch(e.key) {
+
+            switch (e.key) {
                 case 'ArrowUp':
                 case 'z':
                 case 'Z':
@@ -1898,7 +1611,7 @@
                     break;
             }
         });
-        
+
         // ==================== DÉTECTEUR D'OBJETS ====================
         let detectActive = false;
         let detectVideo, detectCanvas, detectCtx;
@@ -1910,7 +1623,7 @@
         let detectTimeLeft = 90;
         let detectTimerInterval;
         let detectAnimationFrame;
-        
+
         // Liste d'objets à trouver (COCO dataset)
         const detectObjectPool = [
             { name: 'person', emoji: '🧍', fr: 'Une personne' },
@@ -1934,12 +1647,12 @@
             { name: 'apple', emoji: '🍎', fr: 'Une pomme' },
             { name: 'orange', emoji: '🍊', fr: 'Une orange' }
         ];
-        
+
         async function startDetection() {
             document.getElementById('detectStartBtn').disabled = true;
             document.getElementById('detectStartBtn').textContent = '⏳ Chargement du modèle IA...';
             document.getElementById('detectMessage').innerHTML = '<div style="color: #ffaa00;">🤖 Chargement de TensorFlow.js et COCO-SSD...</div>';
-            
+
             try {
                 // Charger TensorFlow.js et COCO-SSD
                 if (!window.cocoSsd) {
@@ -1947,61 +1660,61 @@
                     await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.11.0');
                     await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3');
                 }
-                
+
                 document.getElementById('detectMessage').innerHTML = '<div style="color: #ffaa00;">📷 Activation de la caméra...</div>';
-                
+
                 // Initialiser les éléments
                 detectVideo = document.getElementById('detectVideo');
                 detectCanvas = document.getElementById('detectCanvas');
                 detectCtx = detectCanvas.getContext('2d');
-                
+
                 // Demander accès caméra
-                detectStream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { facingMode: 'environment' } 
+                detectStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'environment' }
                 });
                 detectVideo.srcObject = detectStream;
-                
+
                 await new Promise(resolve => {
                     detectVideo.onloadedmetadata = resolve;
                 });
-                
+
                 // Ajuster taille canvas
                 detectCanvas.width = detectVideo.videoWidth;
                 detectCanvas.height = detectVideo.videoHeight;
-                
+
                 document.getElementById('detectMessage').innerHTML = '<div style="color: #ffaa00;">🧠 Chargement du modèle de détection...</div>';
-                
+
                 // Charger le modèle
                 detectModel = await cocoSsd.load();
-                
+
                 // Initialiser le jeu
                 detectActive = true;
                 detectFound = 0;
                 detectFoundObjects = [];
                 detectTimeLeft = 90;
-                
+
                 // Sélectionner 5 objets aléatoires
                 const shuffled = [...detectObjectPool].sort(() => Math.random() - 0.5);
                 detectTargetObjects = shuffled.slice(0, 5);
-                
+
                 document.getElementById('detectFound').textContent = '0/5';
                 document.getElementById('detectConfidence').textContent = '0%';
                 document.getElementById('detectTime').textContent = detectTimeLeft + 's';
-                
+
                 updateTargetDisplay();
-                
+
                 document.getElementById('detectMessage').innerHTML = '<div style="color: #0f0;">✅ Prêt ! Montrez les objets à la caméra</div>';
                 document.getElementById('detectStartBtn').textContent = '🛑 ARRÊTER';
                 document.getElementById('detectStartBtn').onclick = stopDetection;
                 document.getElementById('detectStartBtn').disabled = false;
-                
+
                 // Timer
                 clearInterval(detectTimerInterval);
                 detectTimerInterval = setInterval(() => {
                     if (detectActive) {
                         detectTimeLeft--;
                         document.getElementById('detectTime').textContent = detectTimeLeft + 's';
-                        
+
                         if (detectTimeLeft <= 0) {
                             loseDetection();
                         } else if (detectTimeLeft <= 15) {
@@ -2009,23 +1722,23 @@
                         }
                     }
                 }, 1000);
-                
+
                 // Lancer la détection
                 detectLoop();
-                
+
             } catch (error) {
                 console.error('Erreur:', error);
                 document.getElementById('detectMessage').innerHTML = `
-                    <div style="color: #f00;">
-                        ❌ Erreur: ${error.message}<br>
-                        <span style="font-size: 12px;">Vérifiez que vous avez autorisé l'accès à la caméra</span>
-                    </div>
-                `;
+                        <div style="color: #f00;">
+                            ❌ Erreur: ${error.message}<br>
+                            <span style="font-size: 12px;">Vérifiez que vous avez autorisé l'accès à la caméra</span>
+                        </div>
+                    `;
                 document.getElementById('detectStartBtn').disabled = false;
                 document.getElementById('detectStartBtn').textContent = '📷 RÉESSAYER';
             }
         }
-        
+
         function loadScript(src) {
             return new Promise((resolve, reject) => {
                 const script = document.createElement('script');
@@ -2035,65 +1748,65 @@
                 document.head.appendChild(script);
             });
         }
-        
+
         async function detectLoop() {
             if (!detectActive) return;
-            
+
             // Dessiner la vidéo sur le canvas
             detectCtx.drawImage(detectVideo, 0, 0, detectCanvas.width, detectCanvas.height);
-            
+
             // Détecter les objets
             const predictions = await detectModel.detect(detectCanvas);
-            
+
             // Traiter les prédictions
             let maxConfidence = 0;
             predictions.forEach(prediction => {
                 const [x, y, width, height] = prediction.bbox;
                 const objectName = prediction.class;
                 const confidence = prediction.score;
-                
+
                 maxConfidence = Math.max(maxConfidence, confidence);
-                
+
                 // Vérifier si c'est un objet recherché
-                const targetIndex = detectTargetObjects.findIndex(obj => 
+                const targetIndex = detectTargetObjects.findIndex(obj =>
                     obj.name === objectName && !detectFoundObjects.includes(obj.name)
                 );
-                
+
                 if (targetIndex !== -1 && confidence > 0.6) {
                     // Objet trouvé !
                     const target = detectTargetObjects[targetIndex];
                     detectFoundObjects.push(target.name);
                     detectFound++;
-                    
+
                     document.getElementById('detectFound').textContent = detectFound + '/5';
-                    
+
                     // Flash vert
                     detectCanvas.style.borderColor = '#0f0';
                     setTimeout(() => {
                         detectCanvas.style.borderColor = '#0f0';
                     }, 500);
-                    
+
                     // Message
                     document.getElementById('detectMessage').innerHTML = `
-                        <div style="color: #0f0; font-size: 16px;">
-                            ✅ ${target.emoji} ${target.fr} trouvé ! (${Math.floor(confidence * 100)}%)
-                        </div>
-                    `;
-                    
+                            <div style="color: #0f0; font-size: 16px;">
+                                ✅ ${target.emoji} ${target.fr} trouvé ! (${Math.floor(confidence * 100)}%)
+                            </div>
+                        `;
+
                     updateTargetDisplay();
-                    
+
                     // Vérifier victoire
                     if (detectFound >= 5) {
                         setTimeout(winDetection, 1000);
                         return;
                     }
                 }
-                
+
                 // Dessiner les boîtes de détection
                 detectCtx.strokeStyle = targetIndex !== -1 && !detectFoundObjects.includes(objectName) ? '#0f0' : '#ff6600';
                 detectCtx.lineWidth = 3;
                 detectCtx.strokeRect(x, y, width, height);
-                
+
                 // Label
                 detectCtx.fillStyle = detectCtx.strokeStyle;
                 detectCtx.font = '16px Arial';
@@ -2102,86 +1815,86 @@
                     x, y > 20 ? y - 5 : y + height + 20
                 );
             });
-            
+
             document.getElementById('detectConfidence').textContent = Math.floor(maxConfidence * 100) + '%';
-            
+
             // Liste des détections
             updateDetectionList(predictions);
-            
+
             detectAnimationFrame = requestAnimationFrame(detectLoop);
         }
-        
+
         function updateTargetDisplay() {
             let html = '';
             detectTargetObjects.forEach(obj => {
                 const found = detectFoundObjects.includes(obj.name);
-                const style = found ? 
-                    'text-decoration: line-through; color: #666; opacity: 0.5;' : 
+                const style = found ?
+                    'text-decoration: line-through; color: #666; opacity: 0.5;' :
                     'color: #ff6600; font-weight: bold;';
                 html += `<div style="${style}">${found ? '✅' : '🎯'} ${obj.emoji} ${obj.fr}</div>`;
             });
             document.getElementById('detectTarget').innerHTML = html;
         }
-        
+
         function updateDetectionList(predictions) {
             if (predictions.length === 0) {
                 document.getElementById('detectList').textContent = '⚠️ Aucun objet détecté';
                 return;
             }
-            
+
             let html = '';
             predictions.forEach(pred => {
                 html += `• ${pred.class}: ${Math.floor(pred.score * 100)}%<br>`;
             });
             document.getElementById('detectList').innerHTML = html;
         }
-        
+
         function stopDetection() {
             detectActive = false;
             clearInterval(detectTimerInterval);
             cancelAnimationFrame(detectAnimationFrame);
-            
+
             if (detectStream) {
                 detectStream.getTracks().forEach(track => track.stop());
             }
-            
+
             detectCtx.clearRect(0, 0, detectCanvas.width, detectCanvas.height);
-            
+
             document.getElementById('detectStartBtn').textContent = '📷 DÉMARRER LA DÉTECTION';
             document.getElementById('detectStartBtn').onclick = startDetection;
             document.getElementById('detectMessage').innerHTML = '<div style="color: #666;">⏹️ Détection arrêtée</div>';
         }
-        
+
         function winDetection() {
             detectActive = false;
             clearInterval(detectTimerInterval);
-            
+
             const timeBonus = detectTimeLeft * 10;
-            
+
             document.getElementById('detectMessage').innerHTML = `
-                <div style="color: #0f0; font-size: 18px;">
-                    🎉 MISSION ACCOMPLIE !<br>
-                    <span style="font-size: 14px;">Tous les objets trouvés ! Bonus: ${timeBonus}pts</span>
-                </div>
-            `;
-            
+                    <div style="color: #0f0; font-size: 18px;">
+                        🎉 MISSION ACCOMPLIE !<br>
+                        <span style="font-size: 14px;">Tous les objets trouvés ! Bonus: ${timeBonus}pts</span>
+                    </div>
+                `;
+
             setTimeout(stopDetection, 3000);
         }
-        
+
         function loseDetection() {
             detectActive = false;
             clearInterval(detectTimerInterval);
-            
+
             document.getElementById('detectMessage').innerHTML = `
-                <div style="color: #f00; font-size: 18px;">
-                    ⏰ TEMPS ÉCOULÉ !<br>
-                    <span style="font-size: 14px;">Objets trouvés: ${detectFound}/5</span>
-                </div>
-            `;
-            
+                    <div style="color: #f00; font-size: 18px;">
+                        ⏰ TEMPS ÉCOULÉ !<br>
+                        <span style="font-size: 14px;">Objets trouvés: ${detectFound}/5</span>
+                    </div>
+                `;
+
             setTimeout(stopDetection, 3000);
         }
-        
+
     </script>
 </body>
 </html>
