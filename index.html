@@ -1456,7 +1456,7 @@
         .rec-indicator {
             position: fixed;
             top: 20px;
-            right: 20px;
+            left: 20px;
             background: rgba(0, 0, 0, 0.9);
             border: 2px solid #f00;
             padding: 10px 20px;
@@ -1466,7 +1466,7 @@
             color: #f00;
             z-index: 9999;
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-            display: flex;
+            display: none; /* Caché par défaut jusqu'à startTests() */
             align-items: center;
             gap: 10px;
         }
@@ -2590,6 +2590,11 @@
         }
 
         async function showDrMessage(text, category = 'general') {
+            // Vérifier si le système est toujours actif
+            if (!drSystemInitialized) {
+                return;
+            }
+            
             if (isTypingMessage) {
                 drMessageQueue.push({ text, category });
                 return;
@@ -2684,6 +2689,14 @@
                     }
                 }, delay);
             });
+        }
+
+        // Fonction pour arrêter le système de messages Dr Halloween
+        function stopDrMessageSystem() {
+            drSystemInitialized = false;
+            drMessageQueue = [];
+            isTypingMessage = false;
+            console.log('🎃 Système de messages Dr. Halloween arrêté !');
         }
 
         // NOUVELLE MÉTHODE : Intercepter showNotification directement
@@ -2986,6 +2999,14 @@
         function startTests() {
             document.getElementById('introScreen').style.display = 'none';
             document.getElementById('terminalScreen').style.display = 'block';
+            
+            // Afficher le REC et réinitialiser le timer à 0
+            const recIndicator = document.getElementById('recIndicator');
+            if (recIndicator) {
+                recIndicator.style.display = 'flex';
+            }
+            recStartTime = Date.now(); // Réinitialiser le timer à 0
+            
             initializeSystem(); // Démarrer le timer REC et les messages Dr. Halloween
         }
         function unlockStep2() {
@@ -3110,6 +3131,7 @@
                             document.getElementById('step4').classList.remove('locked');
                             document.getElementById('step4').classList.add('active');
                             document.getElementById('filesModule').classList.remove('locked');
+                            stopDrMessageSystem(); // Arrêter les messages Dr Halloween
                             showNotification('✓ ÉTAPE 3 COMPLÉTÉE - Dossiers débloqués !', '#0f0');
                             setTimeout(() => {
                                 document.getElementById('finalScreen').classList.add('active');
@@ -4587,9 +4609,9 @@
                 if (!otherFilesViewed) {
                     scanButtonDisabled = 'disabled';
                     buttonStyle = 'background: #666; color: #333; cursor: not-allowed;';
-                    statusMessage = '<p style="color: #f00; font-weight: bold; margin-bottom: 20px;">⚠️ ACCÈS AU SCANNER VERROUILLÉ</p><p style="color: #ff6600; margin-bottom: 20px;">Vous devez consulter les 3 autres documents avant de pouvoir lancer le scan.</p>';
+                    statusMessage = '<p style="color: #f00; font-weight: bold; margin-bottom: 20px;">⚠️ PROTOCOLE DE SÉCURITÉ ACTIVÉ</p><p style="color: #ff6600; margin-bottom: 20px;">Vous devez consulter les 3 autres documents pour découvrir l\'emplacement de <span style="color: #0f0;">l\'outil d\'accès</span> nécessaire.</p>';
                 } else {
-                    statusMessage = '<p style="color: #0f0; font-weight: bold; margin-bottom: 20px;">✅ SCANNER DÉVERROUILLÉ</p><p style="color: #ff6600; margin-bottom: 20px;">Vous pouvez maintenant lancer la détection du SPECIMEN 001 sur le terrain.</p>';
+                    statusMessage = '<p style="color: #0f0; font-weight: bold; margin-bottom: 20px;">✅ DOCUMENTS ANALYSÉS</p><p style="color: #ff6600; margin-bottom: 20px;">Les indices sont en votre possession. Vous pouvez maintenant procéder à la localisation du SPECIMEN 001.</p>';
                 }
 
                 content.innerHTML = `
@@ -4602,12 +4624,15 @@
                             <div style="background: rgba(255, 102, 0, 0.1); border: 2px solid #ff6600; border-radius: 10px; padding: 20px; margin: 20px 0;">
                                 <h3 style="color: #ff6600; margin-bottom: 15px;">BRIEFING MISSION</h3>
                                 <p style="color: #0f0; text-align: left; line-height: 1.6;">
-                                    Le SPECIMEN 001 est la création expérimentale du Dr. Halloween issue du Projet Citrouille.
+                                    Le SPECIMEN 001 est la fameuse création du Dr. Halloween issue du Projet Citrouille.
                                     <br><br>
-                                    Pour activer sa transformation et accéder aux données complètes,
-                                    vous devez localiser et identifier le spécimen sur le terrain.
+                                    <span style="color: #ff6600;">⚠️ PROTOCOLE D'ACCÈS EN 3 PHASES :</span>
                                     <br><br>
-                                    <span style="color: #ff6600;">📡 MISSION :</span> Utilisez le scanner de terrain pour détecter le SPECIMEN 001.
+                                    <span style="color: #667eea;">PHASE 1 :</span> Utilisez les 3 documents pour localiser et déverrouiller <span style="color: #0f0;">l'outil d'accès</span> caché sur le terrain.
+                                    <br>
+                                    <span style="color: #667eea;">PHASE 2 :</span> Identifiez le SPECIMEN 001 grâce au scanner de terrain.
+                                    <br>
+                                    <span style="color: #667eea;">PHASE 3 :</span> L'outil d'accès ne fonctionnera qu'après identification du spécimen.
                                 </p>
                             </div>
 
@@ -4922,6 +4947,7 @@
             // hangmanWins reste à 0 pour permettre au joueur de faire le jeu
 
             console.log('✅ Toutes les étapes débloquées !'); showNotification('✅ Toutes les étapes débloquées !', '#0f0');
+            stopDrMessageSystem(); // Arrêter les messages Dr Halloween quand on débloque via admin
             updateGameStatus();
         }
 
@@ -4983,6 +5009,11 @@
             }
             if (stepName === 'maze') {
                 initMaze();
+            }
+
+            // Arrêter les messages Dr Halloween si on débloque les dossiers finaux
+            if (stepName === 'files') {
+                stopDrMessageSystem();
             }
 
             console.log('✅ Module débloqué !'); showNotification('✅ Module débloqué !', '#0f0');
