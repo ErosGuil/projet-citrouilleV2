@@ -1157,6 +1157,56 @@
             touch-action: auto;
         }
 
+        /* Maze Button Styles */
+        .maze-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 102, 0, 0.3);
+            color: #ff6600;
+            border: 2px solid #ff6600;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .maze-btn:hover:not(:disabled) {
+            background: rgba(255, 102, 0, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.6);
+        }
+
+        .maze-btn:active:not(:disabled) {
+            transform: scale(0.95);
+            background: rgba(255, 102, 0, 0.7);
+        }
+
+        .maze-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .maze-btn.pressed {
+            background: rgba(255, 102, 0, 0.8);
+            transform: scale(0.9);
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.8);
+        }
+
+        @media (max-width: 600px) {
+            .maze-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+
+
         /* Memory Game */
         .memory-grid {
             display: grid;
@@ -1518,11 +1568,11 @@
             <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px;">
                 <h3 style="color: #ff6600; margin-bottom: 15px; font-size: 18px;">🔑 CODES ET RÉPONSES</h3>
                 <div style="color: #0f0; font-size: 13px; line-height: 2;">
-                    <div>🔒 Cadenas: <span style="color: #ff6600; font-weight: bold;">3-2-1-7</span></div>
+                    <div>🔒 Cadenas: <span style="color: #ff6600; font-weight: bold;">3-7-8-8 (3 Rires à son anniversaire, 78 Chauves-souris, 8 Vehicules)</span></div>
                     <div>🧮 Code additif: <span style="color: #ff6600; font-weight: bold;">124</span></div>
-                    <div>📝 Quiz citrouilles: <span style="color: #ff6600; font-weight: bold;">C) 96 citrouilles</span></div>
-                    <div>🔐 César: <span style="color: #ff6600; font-weight: bold;">Décalage 3</span></div>
-                    <div>💬 Message décrypté: <span style="color: #ff6600; font-weight: bold;">FUYEZ DES CITROUILLES</span></div>
+                    <div>📝 Quiz N°1 citrouilles: <span style="color: #ff6600; font-weight: bold;">C) 96 citrouilles</span></div>
+                    <div>📝 Quiz N°2 citrouilles: <span style="color: #ff6600; font-weight: bold;">C) 96 citrouilles</span></div>
+                    <div>🔐 Code cadenas final: <span style="color: #ff6600; font-weight: bold;">2-6-1-4</span></div>
                 </div>
             </div>
 
@@ -1579,7 +1629,7 @@
             </div>
 
             <div class="warning-box">
-                ⚠️ 7 TESTS À RÉUSSIR ⚠️
+                ⚠️ 8 TESTS À RÉUSSIR ⚠️
             </div>
 
             <button onclick="startTests()" style="font-size: 18px; padding: 15px;">
@@ -1741,21 +1791,23 @@
                     <div class="enigma-box" style="border: 2px solid #ff6600; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
                         <h3 style="color: #ff6600;">📊 Question 1 - Calcul :</h3>
                         <p style="color: #ff6600; font-size: 16px; margin: 20px 0;">
-                            Un fermier a planté des citrouilles dans son champ.<br>
-                            Il y a 8 rangées de citrouilles.<br>
-                            Chaque rangée contient 12 citrouilles.<br><br>
-                            Combien de citrouilles y a-t-il en tout ?
+                        Le Docteur Halloween travaillait sur une création mystérieuse.<br>
+                        Pour l’alimenter, il a produit 12 rangées de 10 batterie-citrouilles, chacune capable de stocker une énergie vitale inconnue.
+
+                        Mais d’après son carnet, 3 par rangée ont été jugées défectueuses et mises hors service.
+
+                        Combien de citrouilles encore actives alimentent la création ?
                         </p>
 
                         <div style="margin: 20px 0;">
                             <button onclick="checkQuizAnswer('A')" class="quiz-btn quiz1-btn" style="width: 100%; margin: 5px 0; padding: 12px; background: rgba(255, 102, 0, 0.3); border: 2px solid #ff6600; color: #ff6600; cursor: pointer; border-radius: 5px; font-size: 16px;">
-                                A) 88 citrouilles
+                                A) 78 citrouilles
                             </button>
                             <button onclick="checkQuizAnswer('B')" class="quiz1-btn" style="width: 100%; margin: 5px 0; padding: 12px; background: rgba(255, 102, 0, 0.3); border: 2px solid #ff6600; color: #ff6600; cursor: pointer; border-radius: 5px; font-size: 16px;">
-                                B) 92 citrouilles
+                                B) 84 citrouilles
                             </button>
                             <button onclick="checkQuizAnswer('C')" class="quiz1-btn" style="width: 100%; margin: 5px 0; padding: 12px; background: rgba(255, 102, 0, 0.3); border: 2px solid #ff6600; color: #ff6600; cursor: pointer; border-radius: 5px; font-size: 16px;">
-                                C) 96 citrouilles
+                                C) 92 citrouilles
                             </button>
                             <button onclick="checkQuizAnswer('D')" class="quiz1-btn" style="width: 100%; margin: 5px 0; padding: 12px; background: rgba(255, 102, 0, 0.3); border: 2px solid #ff6600; color: #ff6600; cursor: pointer; border-radius: 5px; font-size: 16px;">
                                 D) 100 citrouilles
@@ -1769,9 +1821,15 @@
                     <div class="enigma-box" style="border: 2px solid #ff6600; padding: 15px; border-radius: 5px;">
                         <h3 style="color: #ff6600;">🧪 Question 2 - Énigme du Dr. Halloween :</h3>
                         <p style="color: #ff6600; font-size: 16px; margin: 20px 0;">
-                            "Dans mon laboratoire, au matin du jour 1, j'ai créé 3 citrouilles.<br>
-                            Chaque nuit, chaque citrouille se duplique.<br><br>
-                            Après 5 nuits, combien de citrouilles ai-je ?"
+                            Jour 1 — Note du Docteur Halloween <br>
+                            Activation réussie de 3 batteries-citrouilles.<br>
+                            Elles tirent leur énergie de… ce qu’il reste de ceux qui n’ont pas supporté l’expérience.<br>
+                            Chaque nuit, une fois chargée,<br>
+                            chaque batterie en fait naître une nouvelle.<br>
+
+                            Après 5 nuits de croissance contrôlée :<br>
+
+                            Combien de batteries-citrouilles sont désormais actives ?<br>
                         </p>
 
                         <div style="margin: 20px 0;">
@@ -1808,7 +1866,6 @@
                             <h3 style="color: #ff6600;">PROTOCOLE DE DÉVERROUILLAGE</h3>
                             <p style="color: #0f0; font-size: 14px; margin: 10px 0;">
                                 ⚠️ 6 énigmes à résoudre pour débloquer l'étape suivante<br>
-                                Mode DIFFICILE activé - Énigmes complexes
                             </p>
                             <div style="background: rgba(0, 255, 0, 0.1); border: 2px solid #0f0; padding: 10px; border-radius: 5px; margin: 10px 0;">
                                 <span style="color: #0f0; font-size: 16px; font-weight: bold;">Progression: </span>
@@ -1940,63 +1997,68 @@
             <div class="terminal-module locked" id="mazeModule">
                 <div class="module-header">
                     <span class="module-icon">🗺️</span>
-                    <span class="module-title">LABYRINTHE D'ÉVACUATION</span>
+                    <span class="module-title">LABYRINTHE DANS LE NOIR</span>
                 </div>
                 <div class="module-content">
                     <div class="enigma-box">
-                        <h3>Trouvez la sortie</h3>
+                        <h3>🔦 Trouvez la sortie dans l'obscurité</h3>
                         <p>Utilisez les flèches du clavier ou les boutons ci-dessous</p>
+                        
+                        <div class="stats">
+                            <div class="stat-box">
+                                <div class="stat-label">Vies</div>
+                                <div class="stat-value" id="mazeHP" style="color: #f00;">❤️❤️❤️</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Sortie</div>
+                                <div class="stat-value" id="mazeProgress">0%</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label">Temps</div>
+                                <div class="stat-value" id="mazeTime">0s</div>
+                            </div>
+                        </div>
 
-                        <canvas id="mazeCanvas" width="300" height="300" style="border: 2px solid #0f0; background: #000; display: block; margin: 15px auto;"></canvas>
+                        <div style="text-align: center; color: #0f0; margin: 15px 0; font-size: 14px;" id="mazeHint">
+                            Utilisez les flèches du clavier ou les boutons ci-dessous
+                        </div>
 
-                        <!-- NOUVEAUX CONTRÔLES TACTILES -->
+                        <div id="mazeContainer" style="position: relative; width: 100%; max-width: 500px; aspect-ratio: 1; margin: 20px auto; background: #000; border: 3px solid #0f0; border-radius: 5px; overflow: hidden;">
+                            <canvas id="mazeCanvas" width="500" height="500" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+                            <div id="mazeFlashlight" style="position: absolute; width: 30%; height: 30%; border-radius: 50%; pointer-events: none; background: radial-gradient(circle, rgba(255, 255, 200, 0.8) 0%, rgba(255, 255, 200, 0.4) 40%, transparent 70%); box-shadow: 0 0 60px rgba(255, 255, 200, 0.6); z-index: 10;"></div>
+                        </div>
+
+                        <!-- CONTRÔLES TACTILES -->
                         <div style="display: flex; flex-direction: column; align-items: center; margin: 20px 0; gap: 5px;">
                             <!-- Bouton Haut -->
-                            <button onclick="moveMazePlayer('up')" class="maze-btn" style="width: 60px; height: 60px;">
+                            <button onclick="moveMazePlayerButton('up')" class="maze-btn" id="mazeBtnUp">
                                 ▲
                             </button>
 
                             <!-- Boutons Gauche, Centre, Droite -->
                             <div style="display: flex; gap: 5px;">
-                                <button onclick="moveMazePlayer('left')" class="maze-btn" style="width: 60px; height: 60px;">
+                                <button onclick="moveMazePlayerButton('left')" class="maze-btn" id="mazeBtnLeft">
                                     ◀
                                 </button>
 
                                 <div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border: 2px solid #666; border-radius: 5px; font-size: 20px;">
-                                    🎃
+                                    🔦
                                 </div>
 
-                                <button onclick="moveMazePlayer('right')" class="maze-btn" style="width: 60px; height: 60px;">
+                                <button onclick="moveMazePlayerButton('right')" class="maze-btn" id="mazeBtnRight">
                                     ▶
                                 </button>
                             </div>
 
                             <!-- Bouton Bas -->
-                            <button onclick="moveMazePlayer('down')" class="maze-btn" style="width: 60px; height: 60px;">
+                            <button onclick="moveMazePlayerButton('down')" class="maze-btn" id="mazeBtnDown">
                                 ▼
                             </button>
                         </div>
 
-                        <div style="text-align: center; margin-top: 10px; color: #ff6600;">
-                            Position: <span id="mazePos">Début</span>
-                        </div>
-                        <div id="mazeResult" style="text-align: center; margin-top: 10px;"></div>
+                        <div id="mazeMessage" style="text-align: center; min-height: 30px; font-weight: bold; margin: 10px 0;"></div>
 
-                        <!-- Bouton Reset -->
-                        <button onclick="resetMaze()" style="
-							width: 100%;
-							padding: 10px;
-							background: rgba(255, 102, 0, 0.3);
-							color: #ff6600;
-							border: 2px solid #ff6600;
-							font-weight: bold;
-							cursor: pointer;
-							border-radius: 5px;
-							margin-top: 15px;
-							transition: all 0.3s;
-						" onmouseover="this.style.background='rgba(255,102,0,0.5)'" onmouseout="this.style.background='rgba(255,102,0,0.3)'">
-                            🔄 RECOMMENCER LE LABYRINTHE
-                        </button>
+                        <button onclick="startMaze()" style="width: 100%; margin-top: 10px;">NOUVELLE PARTIE</button>
                     </div>
                 </div>
             </div>
@@ -2082,9 +2144,21 @@
                     <p style="color: #ff6600;">JOURNAL DU DR. HALLOWEEN</p>
                     <p style="margin: 10px 0; line-height: 1.6;">
                         Jour 31 : L'expérience a dépassé toutes nos attentes...
-                        ou nos pires cauchemars. Les citrouilles ont développé
-                        une conscience. Elles grandissent. Elles observent.
-                        <span class="glitch" style="color: #f00;">ELLES ATTENDENT.</span>
+                        ou nos pires cauchemars...<br>
+                        Les citrouilles-batteries absorbent les âmes perdues et se greffent au métal.<br>
+                        La structure gonfle, se courbe, se muscle.<br>
+                        Chaque nuit, elle se soulève un peu plus du sol…
+                        comme si elle testait sa capacité à bouger.
+
+                        La machine n’a presque plus son ancienne forme.<br>
+                        Elle répond désormais à des pulsations que je ne contrôle pas.<br>
+                        Parfois… elle reprend sa forme d’origine. Elle se dissimule. Elle attend.<Br>
+
+                        Vous qui lirez cette note…
+                        faites attention.
+
+                        Parce qu’elle est déjà parmi vous.<br>
+                        <span class="glitch" style="color: #f00;">Bientôt, elle avancera seule.</span>
                     </p>
                     <p style="color: #f00; font-size: 12px;">
                         ⚠️ DERNIER CONTACT: 31/10/2025 - 23:59
@@ -2107,8 +2181,8 @@
                             <div style="font-size: 12px; color: #0f0;">Tir aux citrouilles</div>
                         </div>
                         <div style="background: rgba(255, 102, 0, 0.2); padding: 10px; border: 1px solid #ff6600; border-radius: 5px;">
-                            <div style="font-size: 24px;">🪦</div>
-                            <div style="font-size: 12px; color: #0f0;">Pendu</div>
+                            <div style="font-size: 24px;">🏃</div>
+                            <div style="font-size: 12px; color: #0f0;">Runner</div>
                         </div>
                         <div style="background: rgba(255, 102, 0, 0.2); padding: 10px; border: 1px solid #ff6600; border-radius: 5px;">
                             <div style="font-size: 24px;">⌨️</div>
@@ -2159,7 +2233,7 @@
         window.errorCount = 0;
 
         let wheelValues = [0, 0, 0, 0];
-        const CORRECT_CODE = [3, 2, 1, 7];
+        const CORRECT_CODE = [3, 7, 8, 8];
 
         let simonSequence = [];
         let simonPlayerSequence = [];
@@ -2565,9 +2639,9 @@
             const buttons = document.querySelectorAll('.quiz1-btn');
             buttons.forEach(btn => btn.disabled = true);
 
-            if (answer === 'C') {
+            if (answer === 'B') {
                 quizAnswered = true;
-                document.getElementById('quizResult').innerHTML = '<div style="color: #0f0;">✅ CORRECT ! 8 × 12 = 96 citrouilles</div>';
+                document.getElementById('quizResult').innerHTML = '<div style="color: #0f0;">✅ CORRECT ! 10 - 3 = 7; 7 x 12 = 84 citrouilles</div>';
                 updateQuizProgress();
             } else {
                 document.getElementById('quizResult').innerHTML = '<div style="color: #f00;">❌ INCORRECT ! Réessayez...</div>';
@@ -3270,170 +3344,513 @@
                 container.classList.remove('show-numbers');
             }
         }
+        // ========== LABYRINTHE DANS LE NOIR ==========
+        let mazeActive = false;
         let mazeCompleted = false;
-        let touchStartX = 0;
-        let touchStartY = 0;
+        let mazeHP = 3;
+        let mazePlayer = { x: 1, y: 1 };
+        let mazeExit = { x: 0, y: 0 };
+        let mazeGrid = [];
+        let mazeSize = 15;
+        let mazeCellSize = 33;
+        let mazeCanvas, mazeCtx;
+        let mazeTraps = [];
+        let mazeStartTime = 0;
+        let mazeTimerInterval;
+        let mazeKeys = {};
 
-        let mazePlayer = { x: 0, y: 0 };
-        const mazeSize = 10;
-        const cellSize = 30;
-        let maze = [];
-
-        function initMaze() {
+        function startMaze() {
+            mazeActive = true;
             mazeCompleted = false;
-            maze = [];
-            for (let y = 0; y < mazeSize; y++) {
-                maze[y] = [];
-                for (let x = 0; x < mazeSize; x++) {
-                    maze[y][x] = Math.random() > 0.3 ? 0 : 1;
+            mazeHP = 3;
+            mazeStartTime = Date.now();
+
+            // Initialiser canvas
+            mazeCanvas = document.getElementById('mazeCanvas');
+            mazeCtx = mazeCanvas.getContext('2d');
+
+            // Activer les boutons de déplacement
+            const mazeButtons = ['mazeBtnUp', 'mazeBtnDown', 'mazeBtnLeft', 'mazeBtnRight'];
+            mazeButtons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) btn.disabled = false;
+            });
+
+            // Générer labyrinthe
+            generateMaze();
+
+            // Position de départ
+            mazePlayer = { x: 1, y: 1 };
+
+            // Position de sortie (coin opposé)
+            mazeExit = { x: mazeSize - 2, y: mazeSize - 2 };
+
+            // Générer des pièges
+            generateTraps();
+
+            // Affichage
+            document.getElementById('mazeHP').textContent = '❤️'.repeat(mazeHP);
+            document.getElementById('mazeProgress').textContent = '0%';
+            document.getElementById('mazeTime').textContent = '0s';
+            document.getElementById('mazeHint').textContent = '🔦 Trouvez la sortie ! Évitez les pièges invisibles...';
+            document.getElementById('mazeHint').style.color = '#0f0';
+            document.getElementById('mazeMessage').innerHTML = '';
+
+            // Timer
+            clearInterval(mazeTimerInterval);
+            mazeTimerInterval = setInterval(() => {
+                if (mazeActive) {
+                    const elapsed = Math.floor((Date.now() - mazeStartTime) / 1000);
+                    document.getElementById('mazeTime').textContent = elapsed + 's';
                 }
-            }
-            maze[0][0] = 0;
-            maze[mazeSize - 1][mazeSize - 1] = 2;
-            mazePlayer = { x: 0, y: 0 };
+            }, 1000);
+
+            // Dessiner
             drawMaze();
-
-            // Activer les boutons
-            document.querySelectorAll('.maze-btn').forEach(btn => btn.disabled = false);
-
-            document.addEventListener('keydown', handleMazeMove);
         }
 
-        // Fonction pour déplacer le joueur avec les boutons
-        function moveMazePlayer(direction) {
-            if (mazeCompleted) return;
+        function generateMaze() {
+            // Créer grille vide (1 = mur, 0 = chemin)
+            mazeGrid = [];
+            for (let y = 0; y < mazeSize; y++) {
+                mazeGrid[y] = [];
+                for (let x = 0; x < mazeSize; x++) {
+                    mazeGrid[y][x] = 1;
+                }
+            }
 
-            let newX = mazePlayer.x;
-            let newY = mazePlayer.y;
+            // Algorithme de génération simple (DFS)
+            const stack = [];
+            const startX = 1, startY = 1;
+            mazeGrid[startY][startX] = 0;
+            stack.push({ x: startX, y: startY });
+
+            const directions = [
+                { dx: 2, dy: 0 },
+                { dx: -2, dy: 0 },
+                { dx: 0, dy: 2 },
+                { dx: 0, dy: -2 }
+            ];
+
+            while (stack.length > 0) {
+                const current = stack[stack.length - 1];
+                const neighbors = [];
+
+                // Chercher voisins non visités
+                directions.forEach(dir => {
+                    const nx = current.x + dir.dx;
+                    const ny = current.y + dir.dy;
+
+                    if (nx > 0 && nx < mazeSize - 1 && ny > 0 && ny < mazeSize - 1 && mazeGrid[ny][nx] === 1) {
+                        neighbors.push({ x: nx, y: ny, dx: dir.dx, dy: dir.dy });
+                    }
+                });
+
+                if (neighbors.length > 0) {
+                    // Choisir voisin aléatoire
+                    const next = neighbors[Math.floor(Math.random() * neighbors.length)];
+
+                    // Creuser chemin
+                    mazeGrid[next.y][next.x] = 0;
+                    mazeGrid[current.y + next.dy / 2][current.x + next.dx / 2] = 0;
+
+                    stack.push({ x: next.x, y: next.y });
+                } else {
+                    stack.pop();
+                }
+            }
+        }
+
+        function generateTraps() {
+            mazeTraps = [];
+
+            // Trouver le chemin optimal avec BFS
+            const optimalPath = findPath(mazePlayer.x, mazePlayer.y, mazeExit.x, mazeExit.y);
+
+            if (!optimalPath) {
+                console.error("Pas de chemin trouvé !");
+                return;
+            }
+
+            // Créer un Set des positions du chemin optimal pour accès rapide
+            const pathSet = new Set(optimalPath.map(p => `${p.x},${p.y}`));
+
+            // Calculer combien de pièges on peut mettre sur le chemin (max 2 pour rester jouable avec 3 vies)
+            const maxTrapsOnPath = 2;
+            let trapsOnPath = 0;
+
+            // Placer 10-15 pièges au total
+            let trapCount = 10 + Math.floor(Math.random() * 6);
+
+            for (let i = 0; i < trapCount; i++) {
+                let x, y;
+                let isOnPath = false;
+                let attempts = 0;
+
+                do {
+                    x = Math.floor(Math.random() * mazeSize);
+                    y = Math.floor(Math.random() * mazeSize);
+                    isOnPath = pathSet.has(`${x},${y}`);
+                    attempts++;
+
+                    // Si on a essayé trop de fois, forcer un placement hors chemin
+                    if (attempts > 100) break;
+
+                } while (
+                    mazeGrid[y][x] === 1 || // Mur
+                    (x === 1 && y === 1) || // Départ
+                    (x === mazeExit.x && y === mazeExit.y) || // Sortie
+                    mazeTraps.some(t => t.x === x && t.y === y) || // Déjà un piège
+                    (isOnPath && trapsOnPath >= maxTrapsOnPath) // Trop de pièges sur le chemin
+                );
+
+                if (attempts > 100) continue; // Skip si impossible
+
+                if (isOnPath) {
+                    trapsOnPath++;
+                }
+
+                mazeTraps.push({
+                    x, y,
+                    triggered: false,
+                    type: Math.random() > 0.5 ? 'spike' : 'hole'
+                });
+            }
+        }
+
+        // BFS pour trouver le chemin optimal
+        function findPath(startX, startY, endX, endY) {
+            const queue = [{ x: startX, y: startY, path: [{ x: startX, y: startY }] }];
+            const visited = new Set([`${startX},${startY}`]);
+
+            const directions = [
+                { dx: 0, dy: -1 }, // Haut
+                { dx: 0, dy: 1 },  // Bas
+                { dx: -1, dy: 0 }, // Gauche
+                { dx: 1, dy: 0 }   // Droite
+            ];
+
+            while (queue.length > 0) {
+                const current = queue.shift();
+
+                // Arrivée !
+                if (current.x === endX && current.y === endY) {
+                    return current.path;
+                }
+
+                // Explorer voisins
+                for (const dir of directions) {
+                    const newX = current.x + dir.dx;
+                    const newY = current.y + dir.dy;
+                    const key = `${newX},${newY}`;
+
+                    // Vérifier validité
+                    if (newX >= 0 && newX < mazeSize &&
+                        newY >= 0 && newY < mazeSize &&
+                        mazeGrid[newY][newX] === 0 &&
+                        !visited.has(key)) {
+
+                        visited.add(key);
+                        queue.push({
+                            x: newX,
+                            y: newY,
+                            path: [...current.path, { x: newX, y: newY }]
+                        });
+                    }
+                }
+            }
+
+            return null; // Pas de chemin trouvé
+        }
+
+        function drawMaze() {
+            if (!mazeActive) return;
+
+            // Fond noir
+            mazeCtx.fillStyle = '#000';
+            mazeCtx.fillRect(0, 0, mazeCanvas.width, mazeCanvas.height);
+
+            // Ne dessiner que ce qui est visible dans le rayon de la lampe
+            const visionRadius = 2.5; // Cellules visibles autour du joueur
+
+            for (let y = 0; y < mazeSize; y++) {
+                for (let x = 0; x < mazeSize; x++) {
+                    const distance = Math.sqrt(
+                        Math.pow(x - mazePlayer.x, 2) +
+                        Math.pow(y - mazePlayer.y, 2)
+                    );
+
+                    if (distance <= visionRadius) {
+                        const opacity = Math.max(0, 1 - distance / visionRadius);
+
+                        // Dessiner cellule
+                        if (mazeGrid[y][x] === 1) {
+                            // Mur
+                            mazeCtx.fillStyle = `rgba(139, 69, 19, ${opacity})`;
+                        } else {
+                            // Chemin
+                            mazeCtx.fillStyle = `rgba(40, 40, 40, ${opacity})`;
+                        }
+
+                        mazeCtx.fillRect(
+                            x * mazeCellSize,
+                            y * mazeCellSize,
+                            mazeCellSize - 1,
+                            mazeCellSize - 1
+                        );
+
+                        // Dessiner pièges déclenchés
+                        const trap = mazeTraps.find(t => t.x === x && t.y === y && t.triggered);
+                        if (trap) {
+                            mazeCtx.fillStyle = `rgba(139, 0, 0, ${opacity})`;
+                            mazeCtx.font = '20px Arial';
+                            mazeCtx.fillText(
+                                trap.type === 'spike' ? '🗡️' : '🕳️',
+                                x * mazeCellSize + 6,
+                                y * mazeCellSize + 24
+                            );
+                        }
+                    }
+                }
+            }
+
+            // Dessiner sortie si visible
+            const exitDistance = Math.sqrt(
+                Math.pow(mazeExit.x - mazePlayer.x, 2) +
+                Math.pow(mazeExit.y - mazePlayer.y, 2)
+            );
+
+            if (exitDistance <= visionRadius) {
+                const opacity = Math.max(0, 1 - exitDistance / visionRadius);
+                mazeCtx.fillStyle = `rgba(0, 255, 0, ${opacity * 0.5})`;
+                mazeCtx.fillRect(
+                    mazeExit.x * mazeCellSize,
+                    mazeExit.y * mazeCellSize,
+                    mazeCellSize - 1,
+                    mazeCellSize - 1
+                );
+
+                mazeCtx.font = '24px Arial';
+                mazeCtx.fillStyle = `rgba(0, 255, 0, ${opacity})`;
+                mazeCtx.fillText('🚪', mazeExit.x * mazeCellSize + 4, mazeExit.y * mazeCellSize + 25);
+            }
+
+            // Dessiner joueur
+            mazeCtx.font = '28px Arial';
+            mazeCtx.fillStyle = '#FFD700';
+            mazeCtx.fillText('🔦', mazePlayer.x * mazeCellSize + 2, mazePlayer.y * mazeCellSize + 26);
+
+            // Positionner la lampe torche (responsive et centrée)
+            const flashlight = document.getElementById('mazeFlashlight');
+            const containerRect = mazeCanvas.getBoundingClientRect();
+            const flashlightSize = containerRect.width * 0.3; // 30% de la largeur
+
+            // Calculer la position relative du joueur sur le canvas affiché
+            const playerScreenX = (mazePlayer.x * mazeCellSize / 500) * containerRect.width;
+            const playerScreenY = (mazePlayer.y * mazeCellSize / 500) * containerRect.height;
+
+            // Centrer la lampe sur le joueur
+            flashlight.style.left = (playerScreenX - flashlightSize / 2) + 'px';
+            flashlight.style.top = (playerScreenY - flashlightSize / 2) + 'px';
+
+            // Calculer progression
+            const totalDistance = Math.sqrt(
+                Math.pow(mazeExit.x - 1, 2) +
+                Math.pow(mazeExit.y - 1, 2)
+            );
+            const currentDistance = Math.sqrt(
+                Math.pow(mazeExit.x - mazePlayer.x, 2) +
+                Math.pow(mazeExit.y - mazePlayer.y, 2)
+            );
+            const progress = Math.max(0, Math.min(100, Math.floor((1 - currentDistance / totalDistance) * 100)));
+            document.getElementById('mazeProgress').textContent = progress + '%';
+
+            requestAnimationFrame(drawMaze);
+        }
+
+        // Fonction pour les boutons tactiles
+        function moveMazePlayerButton(direction) {
+            if (!mazeActive || mazeCompleted) return;
+
+            let dx = 0, dy = 0;
 
             switch (direction) {
                 case 'up':
-                    newY--;
+                    dy = -1;
                     break;
                 case 'down':
-                    newY++;
+                    dy = 1;
                     break;
                 case 'left':
-                    newX--;
+                    dx = -1;
                     break;
                 case 'right':
-                    newX++;
+                    dx = 1;
                     break;
             }
 
-            // Vérifier si le mouvement est valide
-            if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && maze[newY][newX] !== 1) {
-                mazePlayer.x = newX;
-                mazePlayer.y = newY;
-                drawMaze();
+            // Appeler la fonction de mouvement existante
+            moveMazePlayer(dx, dy);
 
-                // Animation du bouton
-                const buttonDirections = {
-                    'up': 0,
-                    'left': 1,
-                    'right': 2,
-                    'down': 3
-                };
-                const buttons = document.querySelectorAll('.maze-btn');
-                const btn = buttons[buttonDirections[direction]];
-                if (btn) {
-                    btn.classList.add('pressed');
-                    setTimeout(() => btn.classList.remove('pressed'), 300);
-                }
-
-                // Vérifier si on a atteint la sortie
-                if (maze[newY][newX] === 2) {
-                    mazeCompleted = true;
-                    document.getElementById('mazeResult').innerHTML = '<p style="color: #0f0; font-weight: bold;">✓ SORTIE TROUVÉE !</p>';
-                    document.getElementById('mazeModule').style.borderColor = '#0f0';
-                    document.getElementById('memoryModule').classList.remove('locked');
-                    showNotification('✓ Labyrinthe terminé - Message crypté débloqué !', '#0f0');
-
-                    // Désactiver les boutons
-                    document.querySelectorAll('.maze-btn').forEach(btn => btn.disabled = true);
-
-                    // Retirer l'event listener du clavier
-                    document.removeEventListener('keydown', handleMazeMove);
-                }
-            } else {
-                // Feedback visuel quand on tape un mur
-                const canvas = document.getElementById('mazeCanvas');
-                canvas.style.animation = 'shake 0.3s';
-                setTimeout(() => canvas.style.animation = '', 300);
-            }
-        }
-
-        // Fonction pour recommencer le labyrinthe
-        function resetMaze() {
-            mazeCompleted = false;
-
-            // Régénérer le labyrinthe
-            maze = [];
-            for (let y = 0; y < mazeSize; y++) {
-                maze[y] = [];
-                for (let x = 0; x < mazeSize; x++) {
-                    maze[y][x] = Math.random() > 0.3 ? 0 : 1;
-                }
-            }
-            maze[0][0] = 0;
-            maze[mazeSize - 1][mazeSize - 1] = 2;
-            mazePlayer = { x: 0, y: 0 };
-
-            // Réactiver les boutons
-            document.querySelectorAll('.maze-btn').forEach(btn => btn.disabled = false);
-
-            // Effacer le résultat
-            document.getElementById('mazeResult').innerHTML = '';
-
-            // Redessiner
-            drawMaze();
-
-            showNotification('🔄 Labyrinthe régénéré !', '#ff6600');
-        }
-
-
-        function drawMaze() {
-            const canvas = document.getElementById('mazeCanvas');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            for (let y = 0; y < mazeSize; y++) {
-                for (let x = 0; x < mazeSize; x++) {
-                    if (maze[y][x] === 1) {
-                        ctx.fillStyle = '#333';
-                        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-                    } else if (maze[y][x] === 2) {
-                        ctx.fillStyle = '#0f0';
-                        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-                    }
-                    ctx.strokeStyle = '#0f0';
-                    ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
-                }
-            }
-
-            ctx.fillStyle = '#ff6600';
-            ctx.beginPath();
-            ctx.arc(mazePlayer.x * cellSize + cellSize / 2, mazePlayer.y * cellSize + cellSize / 2, cellSize / 3, 0, Math.PI * 2);
-            ctx.fill();
-
-            document.getElementById('mazePos').textContent = `(${mazePlayer.x}, ${mazePlayer.y})`;
-        }
-
-        function handleMazeMove(e) {
-            if (mazeCompleted) return;
-
-            const keyMap = {
-                'ArrowUp': 'up',
-                'ArrowDown': 'down',
-                'ArrowLeft': 'left',
-                'ArrowRight': 'right'
+            // Animation du bouton
+            const buttonIds = {
+                'up': 'mazeBtnUp',
+                'down': 'mazeBtnDown',
+                'left': 'mazeBtnLeft',
+                'right': 'mazeBtnRight'
             };
 
-            if (keyMap[e.key]) {
-                e.preventDefault();
-                moveMazePlayer(keyMap[e.key]);
+            const btn = document.getElementById(buttonIds[direction]);
+            if (btn) {
+                btn.classList.add('pressed');
+                setTimeout(() => btn.classList.remove('pressed'), 200);
             }
         }
+
+        function moveMazePlayer(dx, dy) {
+            if (!mazeActive || mazeCompleted) return;
+
+            const newX = mazePlayer.x + dx;
+            const newY = mazePlayer.y + dy;
+
+            // Vérifier limites et murs
+            if (newX < 0 || newX >= mazeSize || newY < 0 || newY >= mazeSize) return;
+            if (mazeGrid[newY][newX] === 1) {
+                // Collision avec mur
+                document.getElementById('mazeHint').textContent = '🧱 Vous heurtez un mur !';
+                document.getElementById('mazeHint').style.color = '#ff6600';
+                return;
+            }
+
+            // Déplacer
+            mazePlayer.x = newX;
+            mazePlayer.y = newY;
+
+            // Vérifier piège
+            const trap = mazeTraps.find(t => t.x === newX && t.y === newY && !t.triggered);
+            if (trap) {
+                trap.triggered = true;
+                mazeHP--;
+                document.getElementById('mazeHP').textContent = '❤️'.repeat(Math.max(0, mazeHP)) + '🖤'.repeat(3 - mazeHP);
+
+                const trapEmoji = trap.type === 'spike' ? '🗡️' : '🕳️';
+                const trapName = trap.type === 'spike' ? 'Piques' : 'Fosse';
+
+                document.getElementById('mazeHint').textContent = `${trapEmoji} ${trapName} ! -1 vie`;
+                document.getElementById('mazeHint').style.color = '#f00';
+
+                // Flash rouge
+                mazeCanvas.style.background = 'rgba(255, 0, 0, 0.3)';
+                setTimeout(() => {
+                    mazeCanvas.style.background = '#000';
+                }, 200);
+
+                if (mazeHP <= 0) {
+                    loseMaze();
+                    return;
+                }
+            }
+
+            // Vérifier sortie
+            if (mazePlayer.x === mazeExit.x && mazePlayer.y === mazeExit.y) {
+                winMaze();
+            }
+        }
+
+        function winMaze() {
+            mazeActive = false;
+            mazeCompleted = true;
+            clearInterval(mazeTimerInterval);
+
+            const time = Math.floor((Date.now() - mazeStartTime) / 1000);
+            const trapsHit = 3 - mazeHP;
+
+            // Désactiver les boutons
+            const mazeButtons = ['mazeBtnUp', 'mazeBtnDown', 'mazeBtnLeft', 'mazeBtnRight'];
+            mazeButtons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) btn.disabled = true;
+            });
+
+            document.getElementById('mazeMessage').innerHTML = `
+                    <div style="color: #0f0; font-size: 18px;">
+                        🎉 SORTIE TROUVÉE !<br>
+                        <span style="font-size: 14px;">Temps: ${time}s | Pièges: ${trapsHit}/3 | Vies: ${mazeHP}❤️</span>
+                    </div>
+                `;
+
+            document.getElementById('mazeHint').textContent = '🚪 Vous avez échappé au labyrinthe !';
+            document.getElementById('mazeHint').style.color = '#0f0';
+            
+            // INTEGRATION AVEC LES MECANIQUES EXISTANTES
+            document.getElementById('mazeModule').style.borderColor = '#0f0';
+            document.getElementById('memoryModule').classList.remove('locked');
+            showNotification('✓ Labyrinthe terminé - Memory débloqué !', '#0f0');
+        }
+
+        function loseMaze() {
+            mazeActive = false;
+            mazeCompleted = false;
+            clearInterval(mazeTimerInterval);
+
+            // Désactiver les boutons
+            const mazeButtons = ['mazeBtnUp', 'mazeBtnDown', 'mazeBtnLeft', 'mazeBtnRight'];
+            mazeButtons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) btn.disabled = true;
+            });
+
+            document.getElementById('mazeMessage').innerHTML = `
+                    <div style="color: #f00; font-size: 18px;">
+                        💀 VOUS ÊTES PERDU...<br>
+                        <span style="font-size: 14px;">Vous avez succombé aux pièges du labyrinthe</span>
+                    </div>
+                `;
+
+            document.getElementById('mazeHint').textContent = '☠️ Trop de blessures... Réessayez !';
+            document.getElementById('mazeHint').style.color = '#f00';
+        }
+
+
+        // MODIFICATION : Utiliser le système de gestion d'événement existant pour le labyrinthe
+        // Ajouter cette fonction qui sera appelée quand le module est débloqué
+        function initMaze() {
+            // Cette fonction est appelée quand le puzzle est complété
+            // On ne démarre pas automatiquement, le joueur doit cliquer sur "NOUVELLE PARTIE"
+            mazeCompleted = false;
+        }
+        
+        // Contrôles clavier du labyrinthe
+        document.addEventListener('keydown', (e) => {
+            if (!mazeActive || mazeCompleted) return;
+
+            switch (e.key) {
+                case 'ArrowUp':
+                case 'z':
+                case 'Z':
+                    e.preventDefault();
+                    moveMazePlayer(0, -1);
+                    break;
+                case 'ArrowDown':
+                case 's':
+                case 'S':
+                    e.preventDefault();
+                    moveMazePlayer(0, 1);
+                    break;
+                case 'ArrowLeft':
+                case 'q':
+                case 'Q':
+                    e.preventDefault();
+                    moveMazePlayer(-1, 0);
+                    break;
+                case 'ArrowRight':
+                case 'd':
+                case 'D':
+                    e.preventDefault();
+                    moveMazePlayer(1, 0);
+                    break;
+            }
+        });
 
 
         function closeFinalScreen() {
@@ -3541,7 +3958,7 @@
                             <div style="background: rgba(255, 102, 0, 0.1); border: 2px solid #ff6600; border-radius: 10px; padding: 20px; margin: 20px 0;">
                                 <h3 style="color: #ff6600; margin-bottom: 15px;">BRIEFING MISSION</h3>
                                 <p style="color: #0f0; text-align: left; line-height: 1.6;">
-                                    Le SPECIMEN 001 est une création expérimentale issue du Projet Citrouille.
+                                    Le SPECIMEN 001 est la création expérimentale du Dr. Halloween issue du Projet Citrouille.
                                     <br><br>
                                     Pour activer sa transformation et accéder aux données complètes,
                                     vous devez localiser et identifier le spécimen sur le terrain.
@@ -3709,7 +4126,10 @@
             // Verrouiller tous les modules
             ['quizModule', 'hangmanModule', 'codeModule', 'simonModule', 'puzzleModule', 'mazeModule', 'memoryModule', 'filesModule'].forEach(id => {
                 const elem = document.getElementById(id);
-                if (elem) elem.classList.add('locked');
+                if (elem) {
+                    elem.classList.add('locked');
+                    elem.style.borderColor = ''; // Réinitialiser la couleur de bordure
+                }
             });
 
             // Reset des variables
@@ -3722,6 +4142,48 @@
             simonRound = 0;
             puzzleSolved = false;
             memorySolved = false;
+            mazeCompleted = false;
+            mazeActive = false;
+
+            // Reset du Puzzle
+            if (document.getElementById('puzzleContainer')) {
+                document.getElementById('puzzleContainer').innerHTML = '';
+            }
+            if (document.getElementById('puzzleResult')) {
+                document.getElementById('puzzleResult').innerHTML = '';
+            }
+
+            // Reset du Labyrinthe
+            clearInterval(mazeTimerInterval);
+            if (document.getElementById('mazeHP')) {
+                document.getElementById('mazeHP').textContent = '❤️❤️❤️';
+            }
+            if (document.getElementById('mazeProgress')) {
+                document.getElementById('mazeProgress').textContent = '0%';
+            }
+            if (document.getElementById('mazeTime')) {
+                document.getElementById('mazeTime').textContent = '0s';
+            }
+            if (document.getElementById('mazeMessage')) {
+                document.getElementById('mazeMessage').innerHTML = '';
+            }
+            if (document.getElementById('mazeHint')) {
+                document.getElementById('mazeHint').textContent = 'Utilisez les flèches du clavier ou les boutons ci-dessous';
+                document.getElementById('mazeHint').style.color = '#0f0';
+            }
+            // Désactiver les boutons du labyrinthe
+            ['mazeBtnUp', 'mazeBtnDown', 'mazeBtnLeft', 'mazeBtnRight'].forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) btn.disabled = true;
+            });
+            // Nettoyer le canvas
+            const mazeCanvas = document.getElementById('mazeCanvas');
+            if (mazeCanvas) {
+                const mazeCtx = mazeCanvas.getContext('2d');
+                mazeCtx.clearRect(0, 0, mazeCanvas.width, mazeCanvas.height);
+                mazeCtx.fillStyle = '#000';
+                mazeCtx.fillRect(0, 0, mazeCanvas.width, mazeCanvas.height);
+            }
 
             // Reset du Pendu
             hangmanWins = 0;
@@ -3745,6 +4207,34 @@
             document.getElementById('enigmaResult').innerHTML = '';
             document.getElementById('quizProgress').textContent = '0/2 ✓';
             document.querySelectorAll('.quiz1-btn, .quiz2-btn').forEach(btn => btn.disabled = false);
+
+            // Reset du Memory
+            if (document.getElementById('memoryGrid')) {
+                document.getElementById('memoryGrid').innerHTML = '';
+            }
+            if (document.getElementById('memoryMoves')) {
+                document.getElementById('memoryMoves').textContent = '0';
+            }
+            if (document.getElementById('memoryPairs')) {
+                document.getElementById('memoryPairs').textContent = '0/8';
+            }
+            if (document.getElementById('memoryLives')) {
+                document.getElementById('memoryLives').textContent = '❤️❤️❤️❤️❤️❤️❤️❤️❤️';
+            }
+            if (document.getElementById('memoryTime')) {
+                document.getElementById('memoryTime').textContent = '0s';
+            }
+            if (document.getElementById('memoryResult')) {
+                document.getElementById('memoryResult').innerHTML = '';
+            }
+
+            // Reset du Simon
+            if (document.getElementById('simonResult')) {
+                document.getElementById('simonResult').innerHTML = '';
+            }
+            if (document.getElementById('simonStartBtn')) {
+                document.getElementById('simonStartBtn').textContent = 'DÉMARRER NIVEAU 1';
+            }
 
             // Fermer l'écran final si ouvert
             document.getElementById('finalScreen').classList.remove('active');
@@ -3914,7 +4404,7 @@
 
                 <p style="margin-bottom: 20px; color: #ff6600; font-weight: bold;">
                     Découvrez la <span class="glitch">VÉRITÉ</span>.
-                    Découvrez ma <span class="glitch">CRÉATION</span>.
+                    Découvrez, Trouvez et Domptez ma <span class="glitch">CRÉATION</span>.
                 </p>
             </div>
 
