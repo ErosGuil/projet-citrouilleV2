@@ -1345,9 +1345,264 @@
                 opacity: 0;
             }
         }
+
+        /* Faux Crash Screen */
+        .crash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 99999;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .crash-screen.active {
+            display: flex;
+        }
+
+        .crash-text {
+            color: #f00;
+            font-family: 'Courier New', monospace;
+            font-size: clamp(16px, 4vw, 32px);
+            text-align: center;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px #f00, 0 0 40px #f00;
+            margin: 20px 0;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .crash-glitch {
+            animation: glitch 0.3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                transform: translate(0);
+                text-shadow: 0 0 20px #f00, 0 0 40px #f00;
+            }
+            25% {
+                transform: translate(-2px, 2px);
+                text-shadow: 2px 0 #0ff, -2px 0 #f0f;
+            }
+            50% {
+                transform: translate(2px, -2px);
+                text-shadow: -2px 0 #0ff, 2px 0 #f0f;
+            }
+            75% {
+                transform: translate(-2px, -2px);
+                text-shadow: 2px 2px #0ff, -2px -2px #f0f;
+            }
+        }
+
+        .crash-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1em;
+            background: #f00;
+            margin-left: 5px;
+            animation: blink 0.7s infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        .crash-static {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255, 255, 255, 0.03) 2px,
+                rgba(255, 255, 255, 0.03) 4px
+            );
+            pointer-events: none;
+            opacity: 0.5;
+            animation: static-noise 0.2s infinite;
+        }
+
+        @keyframes static-noise {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        .crash-error {
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin-top: 30px;
+            opacity: 0.5;
+            text-align: center;
+        }
+
+        /* === INDICATEUR REC === */
+        .rec-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #f00;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            color: #f00;
+            z-index: 9999;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rec-dot {
+            width: 12px;
+            height: 12px;
+            background: #f00;
+            border-radius: 50%;
+            animation: rec-blink 1s infinite;
+            box-shadow: 0 0 10px #f00;
+        }
+
+        @keyframes rec-blink {
+            0%, 50% {
+                opacity: 1;
+            }
+            51%, 100% {
+                opacity: 0.3;
+            }
+        }
+
+        /* === MESSAGES DU DR. HALLOWEEN === */
+        .dr-message-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 700px;
+            z-index: 9998;
+            pointer-events: none;
+        }
+
+        .dr-message {
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid #ff6600;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 30px rgba(255, 102, 0, 0.6);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .dr-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dr-message.hide {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .dr-message-header {
+            color: #ff6600;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dr-typing-indicator {
+            display: inline-flex;
+            gap: 4px;
+        }
+
+        .dr-typing-dot {
+            width: 6px;
+            height: 6px;
+            background: #ff6600;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .dr-typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dr-typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(-5px);
+            }
+        }
+
+        .dr-message-text {
+            color: #0f0;
+            font-size: 16px;
+            line-height: 1.6;
+            min-height: 20px;
+        }
+
+        .dr-message-text::after {
+            content: '|';
+            animation: cursor-blink 0.7s infinite;
+            margin-left: 2px;
+        }
+
+        .dr-message-text.typing-done::after {
+            content: '';
+        }
+
+        @keyframes cursor-blink {
+            0%, 50% {
+                opacity: 1;
+            }
+            51%, 100% {
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- === INDICATEUR REC === -->
+    <div class="rec-indicator" id="recIndicator">
+        <div class="rec-dot"></div>
+        <span>REC <span id="recTimer">00:00:00</span></span>
+    </div>
+
+    <!-- === MESSAGES DU DR. HALLOWEEN === -->
+    <div class="dr-message-container" id="drMessageContainer"></div>
+
     <!-- 1. BOUTON FLOTTANT ADMIN (à ajouter après la balise <body>) -->
     <div id="adminFloatingBtn" style="
     position: fixed;
@@ -1572,7 +1827,7 @@
                     <div>🧮 Code additif: <span style="color: #ff6600; font-weight: bold;">124</span></div>
                     <div>📝 Quiz N°1 citrouilles: <span style="color: #ff6600; font-weight: bold;">C) 96 citrouilles</span></div>
                     <div>📝 Quiz N°2 citrouilles: <span style="color: #ff6600; font-weight: bold;">C) 96 citrouilles</span></div>
-                    <div>🔐 Code cadenas final: <span style="color: #ff6600; font-weight: bold;">2-6-1-4</span></div>
+                    <div>🔐 Code cadenas final: <span style="color: #ff6600; font-weight: bold;">?-?-?-?</span></div>
                 </div>
             </div>
 
@@ -2225,6 +2480,306 @@
     </div>
 
     <script>
+
+        // ======================================
+        // === SYSTÈME DE MESSAGES DR. HALLOWEEN ===
+        // ======================================
+
+        let recStartTime = Date.now();
+        let recTimerInterval;
+        let drMessageQueue = [];
+        let isTypingMessage = false;
+        let messageHistory = [];
+        let drSystemInitialized = false;
+        let stepTimers = {};
+        let storyMessagesShown = [];
+
+        const drMessages = {
+            initial: [
+                "Je vous observe depuis le début...",
+                "Bienvenue dans mon laboratoire. Faites comme chez vous... pendant qu'il est encore temps.",
+                "Cette session est maintenant sous surveillance active.",
+            ],
+            story: [
+                "Vous savez... les précédents candidats pensaient aussi pouvoir réussir.",
+                "13 avant vous ont tenté ces tests. Aucun n'a terminé... vivant.",
+                "Chaque test révèle quelque chose sur vous. Je prends des notes détaillées.",
+                "Vous approchez du point de non-retour. Êtes-vous certain de vouloir continuer ?",
+                "Les dossiers que vous cherchez... ils contiennent ma plus grande création.",
+                "Quelque chose a pris vie dans ce laboratoire. Quelque chose d'affamé.",
+                "Le temps presse. Après minuit, les règles changent...",
+            ],
+            success: [
+                "Impressionnant. Vous dépassez mes attentes.",
+                "Excellent. Continuez sur cette voie.",
+                "Bravo. Peu de candidats arrivent aussi loin.",
+                "Vous auriez fait un excellent assistant...",
+                "Fascinant. Absolument fascinant.",
+                "Remarquable performance.",
+                "Je note cette réussite dans votre dossier.",
+            ],
+            struggle: [
+                "Des difficultés ? C'est... prévisible.",
+                "Hmm, vous hésitez. La peur, peut-être ?",
+                "Les autres aussi ont eu du mal à cette étape.",
+                "Intéressant... Votre stress augmente.",
+                "Je sens votre frustration d'ici.",
+                "Encore une erreur... Instructif.",
+                "Le temps presse. Concentrez-vous.",
+            ],
+            takingTooLong: [
+                "Vous prenez beaucoup de temps sur cette étape...",
+                "Toujours bloqué ? Intéressant.",
+                "Le temps s'écoule. Tick tock...",
+                "Vous semblez en difficulté. C'est normal.",
+                "Cette étape pose problème ? Les autres aussi ont bloqué ici.",
+                "Hmm... Vous réfléchissez trop peut-être.",
+            ],
+            pressure: [
+                "Dépêchez-vous. Quelque chose se réveille.",
+                "Vous sentez cette présence ? Elle vous observe aussi...",
+                "Le laboratoire devient... agité. Continuez vite.",
+                "Tick tock... Le compte à rebours a commencé.",
+            ],
+            final: [
+                "Vous y êtes presque. Les dossiers révèlent TOUT.",
+                "Presque là... Mais à quel prix ?",
+                "La vérité est à portée de main. Êtes-vous prêt ?",
+            ],
+        };
+
+        const storyTimeline = [
+            { delay: 3000, category: 'initial', label: 'initial' },
+            { delay: 60000, category: 'story', label: 'story1' },
+            { delay: 150000, category: 'story', label: 'story2' },
+            { delay: 240000, category: 'pressure', label: 'pressure1' },
+            { delay: 360000, category: 'story', label: 'story3' },
+            { delay: 480000, category: 'pressure', label: 'pressure2' },
+        ];
+
+        function startRecTimer() {
+            recTimerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - recStartTime) / 1000);
+                const hours = Math.floor(elapsed / 3600).toString().padStart(2, '0');
+                const minutes = Math.floor((elapsed % 3600) / 60).toString().padStart(2, '0');
+                const seconds = (elapsed % 60).toString().padStart(2, '0');
+                const timerEl = document.getElementById('recTimer');
+                if (timerEl) {
+                    timerEl.textContent = `${hours}:${minutes}:${seconds}`;
+                }
+            }, 1000);
+        }
+
+        function typeMessage(element, text, speed = 50) {
+            return new Promise((resolve) => {
+                let index = 0;
+                element.textContent = '';
+                element.classList.remove('typing-done');
+                
+                const typeInterval = setInterval(() => {
+                    if (index < text.length) {
+                        element.textContent += text[index];
+                        index++;
+                    } else {
+                        element.classList.add('typing-done');
+                        clearInterval(typeInterval);
+                        resolve();
+                    }
+                }, speed);
+            });
+        }
+
+        async function showDrMessage(text, category = 'general') {
+            if (isTypingMessage) {
+                drMessageQueue.push({ text, category });
+                return;
+            }
+
+            isTypingMessage = true;
+            const container = document.getElementById('drMessageContainer');
+            if (!container) {
+                isTypingMessage = false;
+                return;
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'dr-message';
+            messageDiv.innerHTML = `
+                <div class="dr-message-header">
+                    🎃 Dr. Halloween
+                    <div class="dr-typing-indicator">
+                        <div class="dr-typing-dot"></div>
+                        <div class="dr-typing-dot"></div>
+                        <div class="dr-typing-dot"></div>
+                    </div>
+                </div>
+                <div class="dr-message-text"></div>
+            `;
+
+            container.appendChild(messageDiv);
+            setTimeout(() => messageDiv.classList.add('show'), 100);
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            const typingIndicator = messageDiv.querySelector('.dr-typing-indicator');
+            if (typingIndicator) typingIndicator.style.display = 'none';
+            
+            const textElement = messageDiv.querySelector('.dr-message-text');
+            if (textElement) await typeMessage(textElement, text);
+
+            messageHistory.push({ text, category, timestamp: Date.now() });
+
+            setTimeout(() => {
+                messageDiv.classList.add('hide');
+                setTimeout(() => {
+                    messageDiv.remove();
+                    isTypingMessage = false;
+                    
+                    if (drMessageQueue.length > 0) {
+                        const next = drMessageQueue.shift();
+                        showDrMessage(next.text, next.category);
+                    }
+                }, 500);
+            }, 8000);
+        }
+
+        function getRandomMessage(category) {
+            const messages = drMessages[category] || drMessages.story;
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+
+        function trackStepTime(stepId) {
+            if (!stepTimers[stepId]) {
+                stepTimers[stepId] = Date.now();
+                
+                setTimeout(() => {
+                    if (stepTimers[stepId]) {
+                        showDrMessage(getRandomMessage('takingTooLong'), 'takingTooLong');
+                    }
+                }, 45000);
+                
+                setTimeout(() => {
+                    if (stepTimers[stepId]) {
+                        showDrMessage(getRandomMessage('takingTooLong'), 'takingTooLong');
+                    }
+                }, 90000);
+            }
+        }
+
+        function completeStep(stepId) {
+            if (stepTimers[stepId]) {
+                delete stepTimers[stepId];
+            }
+        }
+
+        function initDrMessageSystem() {
+            if (drSystemInitialized) return;
+            drSystemInitialized = true;
+            console.log('🎃 Système de messages Dr. Halloween initialisé !');
+
+            storyTimeline.forEach(({ delay, category, label }) => {
+                setTimeout(() => {
+                    if (!storyMessagesShown.includes(label)) {
+                        showDrMessage(getRandomMessage(category), category);
+                        storyMessagesShown.push(label);
+                    }
+                }, delay);
+            });
+        }
+
+        // NOUVELLE MÉTHODE : Intercepter showNotification directement
+        function setupNotificationInterceptor() {
+            // Sauvegarder la fonction originale
+            const originalShowNotification = window.showNotification;
+            
+            if (originalShowNotification) {
+                // Remplacer par notre version
+                window.showNotification = function(message, color) {
+                    // Appeler la fonction originale
+                    originalShowNotification(message, color);
+                    
+                    if (!drSystemInitialized) return;
+                    
+                    console.log('🎃 Notification détectée:', message, color);
+                    
+                    // Détection des succès (couleur verte #0f0)
+                    if (color === '#0f0' || message.includes('✓') || message.includes('✅')) {
+                        if (Math.random() < 0.85) {
+                            setTimeout(() => {
+                                console.log('🎃 Déclenchement message de succès');
+                                showDrMessage(getRandomMessage('success'), 'success');
+                            }, 1500);
+                        }
+                    }
+                    
+                    // Détection des échecs (couleur rouge #f00)
+                    if (color === '#f00' || message.includes('✗') || message.includes('❌')) {
+                        if (Math.random() < 0.80) {
+                            setTimeout(() => {
+                                console.log('🎃 Déclenchement message d\'échec');
+                                showDrMessage(getRandomMessage('struggle'), 'struggle');
+                            }, 1500);
+                        }
+                    }
+                };
+                console.log('🎃 Interception de showNotification activée !');
+            }
+        }
+
+        function monitorSteps() {
+            setInterval(() => {
+                const modules = document.querySelectorAll('.module:not(.locked)');
+                modules.forEach(module => {
+                    if (module.offsetParent !== null) {
+                        const moduleId = module.id;
+                        trackStepTime(moduleId);
+                    }
+                });
+            }, 5000);
+        }
+
+        function initializeSystem() {
+            startRecTimer();
+            
+            function tryInitMessages() {
+                const loginScreen = document.querySelector('.login-screen');
+                const gameContainer = document.querySelector('.game-container');
+                
+                if ((loginScreen && loginScreen.style.display === 'none') || 
+                    (gameContainer && gameContainer.style.display !== 'none')) {
+                    console.log('🎃 Jeu détecté, initialisation des messages...');
+                    initDrMessageSystem();
+                    setupNotificationInterceptor();
+                    monitorSteps();
+                    return true;
+                }
+                return false;
+            }
+            
+            if (!tryInitMessages()) {
+                const checkInterval = setInterval(() => {
+                    if (tryInitMessages()) {
+                        clearInterval(checkInterval);
+                    }
+                }, 1000);
+                
+                setTimeout(() => {
+                    if (!drSystemInitialized) {
+                        console.log('🎃 Initialisation forcée des messages...');
+                        initDrMessageSystem();
+                        setupNotificationInterceptor();
+                        monitorSteps();
+                    }
+                    clearInterval(checkInterval);
+                }, 10000);
+            }
+        }
+
+        //         if (document.readyState === 'loading') {
+        //             document.addEventListener('DOMContentLoaded', initializeSystem);
+        //         } else {
+        //             initializeSystem();
+        //         }
+
         const PASSWORD = "CYLINDRE";
         let quizAnswered = false;
         let enigmaAnswered = false;
@@ -2425,11 +2980,13 @@
                 document.getElementById('introScreen').style.display = 'flex';
                 createParticles();
                 createBloodDrips();
+                // Timer et REC seront démarrés dans startTests()
             }, 3000);
         }
         function startTests() {
             document.getElementById('introScreen').style.display = 'none';
             document.getElementById('terminalScreen').style.display = 'block';
+            initializeSystem(); // Démarrer le timer REC et les messages Dr. Halloween
         }
         function unlockStep2() {
             document.getElementById('step1').classList.remove('active');
@@ -2539,7 +3096,7 @@
 
                     setTimeout(() => {
                         document.getElementById('memoryResult').innerHTML = `
-                        <div style="color: #0f0; font-size: 20px; animation: pulse 1s infinite;">
+                        <div style="color: #0f0; font-size: 20px; animation: pulse 1s infinite; text-align: center; width: 100%;">
                             🎉 VICTOIRE ! 🎉<br>
                             <span style="font-size: 16px;">Temps: ${timeElapsed} | Coups: ${memoryMoves}</span>
                         </div>
@@ -2900,7 +3457,7 @@
             if (hangmanWins >= 6) {
                 setTimeout(() => {
                     document.getElementById('hangmanMessage').innerHTML = `
-                            <div style="color: #0f0; font-size: 20px; animation: pulse 1s infinite;">
+                            <div style="color: #0f0; font-size: 20px; animation: pulse 1s infinite; text-align: center; width: 100%;">
                                 🎉 PROTOCOLE COMPLÉTÉ !<br>
                                 <span style="font-size: 14px;">Déverrouillage de l'étape 3...</span>
                             </div>
@@ -3314,11 +3871,6 @@
                 document.getElementById('puzzleResult').innerHTML =
                     '<p style="color: #0f0; font-weight: bold; font-size: 18px;">✓ PUZZLE RÉSOLU !</p>';
 
-                document.getElementById('puzzleModule').style.borderColor = '#0f0';
-                document.getElementById('mazeModule').classList.remove('locked');
-
-                showNotification('✓ Puzzle complété - Labyrinthe débloqué !', '#0f0');
-
                 const pieces = document.querySelectorAll('.puzzle-piece');
                 pieces.forEach((piece, i) => {
                     setTimeout(() => {
@@ -3328,10 +3880,102 @@
                     }, i * 50);
                 });
 
+                // Déclencher le faux crash après 1 seconde
                 setTimeout(() => {
-                    initMaze();
-                }, 500);
+                    triggerFakeCrash();
+                }, 1000);
             }
+        }
+
+        // ========== FAUX CRASH TERRIFIANT ==========
+        function triggerFakeCrash() {
+            const crashScreen = document.getElementById('crashScreen');
+            const text1 = document.getElementById('crashText1');
+            const text2 = document.getElementById('crashText2');
+            const text3 = document.getElementById('crashText3');
+            const errorMsg = document.getElementById('crashError');
+
+            // Afficher l'écran noir
+            crashScreen.classList.add('active');
+
+            // Messages à écrire
+            const messages = [
+                'ERREUR SYSTÈME...',
+                'VOUS N\'AURIEZ PAS DÛ',
+                'VENIR ICI...'
+            ];
+
+            // Fonction pour écrire le texte lettre par lettre
+            function typeWriter(element, text, speed, callback) {
+                let i = 0;
+                element.textContent = '';
+                
+                function type() {
+                    if (i < text.length) {
+                        element.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(type, speed);
+                    } else if (callback) {
+                        setTimeout(callback, 500);
+                    }
+                }
+                type();
+            }
+
+            // Effet sonore de glitch (facultatif, simulé visuellement)
+            function glitchEffect() {
+                crashScreen.style.animation = 'glitch 0.3s';
+                setTimeout(() => {
+                    crashScreen.style.animation = '';
+                }, 300);
+            }
+
+            // Séquence du crash
+            setTimeout(() => {
+                // Message 1
+                typeWriter(text1, messages[0], 80, () => {
+                    glitchEffect();
+                    // Message 2
+                    setTimeout(() => {
+                        typeWriter(text2, messages[1], 100, () => {
+                            // Message 3
+                            setTimeout(() => {
+                                typeWriter(text3, messages[2], 120, () => {
+                                    // Afficher le message d'erreur
+                                    setTimeout(() => {
+                                        errorMsg.style.opacity = '1';
+                                        
+                                        // Après 3 secondes, tout revient à la normale
+                                        setTimeout(() => {
+                                            // Effet de fondu
+                                            crashScreen.style.transition = 'opacity 1s';
+                                            crashScreen.style.opacity = '0';
+                                            
+                                            setTimeout(() => {
+                                                crashScreen.classList.remove('active');
+                                                crashScreen.style.opacity = '1';
+                                                crashScreen.style.transition = '';
+                                                
+                                                // Réinitialiser les textes
+                                                text1.textContent = '';
+                                                text2.textContent = '';
+                                                text3.textContent = '';
+                                                errorMsg.style.opacity = '0.5';
+                                                
+                                                // Débloquer le labyrinthe normalement
+                                                document.getElementById('puzzleModule').style.borderColor = '#0f0';
+                                                document.getElementById('mazeModule').classList.remove('locked');
+                                                showNotification('✓ Puzzle complété - Labyrinthe débloqué !', '#0f0');
+                                                initMaze();
+                                            }, 1000);
+                                        }, 3000);
+                                    }, 500);
+                                });
+                            }, 300);
+                        });
+                    }, 500);
+                });
+            }, 300);
         }
 
         function togglePuzzleNumbers() {
@@ -4239,6 +4883,14 @@
             // Fermer l'écran final si ouvert
             document.getElementById('finalScreen').classList.remove('active');
 
+            // Fermer le crash screen si ouvert
+            const crashScreen = document.getElementById('crashScreen');
+            if (crashScreen) {
+                crashScreen.classList.remove('active');
+                crashScreen.style.opacity = '1';
+                crashScreen.style.transition = '';
+            }
+
             console.log('✅ Jeu réinitialisé !'); showNotification('✅ Jeu réinitialisé !', '#0f0');
             updateGameStatus();
         }
@@ -4415,6 +5067,19 @@
             <button onclick="closeFinalScreen()" style="background: #0f0; font-size: 18px; padding: 15px;">
                 ACCÉDER AUX DOCUMENTS FINAUX
             </button>
+        </div>
+    </div>
+
+    <!-- Faux Crash Screen -->
+    <div class="crash-screen" id="crashScreen">
+        <div class="crash-static"></div>
+        <div class="crash-text crash-glitch" id="crashText1" style="animation-delay: 0s;"></div>
+        <div class="crash-text" id="crashText2" style="animation-delay: 0.2s;"></div>
+        <div class="crash-text" id="crashText3" style="animation-delay: 0.4s;"></div>
+        <div class="crash-error" id="crashError">
+            ERROR 0x8B000666 - UNAUTHORIZED_ACCESS<br>
+            System memory compromised...<br>
+            Terminating connection...
         </div>
     </div>
 </body>
