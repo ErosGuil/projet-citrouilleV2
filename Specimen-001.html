@@ -599,33 +599,80 @@
         }
 
         function analyzeColor(imageData) {
-            // Analyser les pixels pour détecter du orange
+            // Paramètres optimisés pour Peugeot 2008 Orange Fusion avec toit noir
+            const ORANGE_MIN_PCT = 8;    // Seuil abaissé pour véhicules bicolores
+            const H_MIN = 10;             // Teinte orange minimum (degrés)
+            const H_MAX = 40;             // Teinte orange maximum (degrés)
+            const S_MIN = 0.35;           // Saturation minimum (évite gris/blanc)
+            const V_MIN = 0.15;           // Luminosité minimum (évite noir)
+            const V_MAX = 0.95;           // Luminosité maximum (évite reflets blancs)
+            
             const data = imageData.data;
+            const width = imageData.width;
+            const height = imageData.height;
+            
             let orangePixels = 0;
-            let totalPixels = data.length / 4;
+            let totalAnalyzed = 0;
+
+            // Recadrage intelligent : ignorer toit (25% haut) et côtés (15% gauche/droite)
+            // Cela permet d'exclure le toit noir et les pneus/zones sombres
+            const cropTop = Math.floor(height * 0.25);
+            const cropLeft = Math.floor(width * 0.15);
+            const cropRight = Math.floor(width * 0.85);
+            const cropBottom = height;
 
             // Sous-échantillonner pour les performances
             const step = 4;
 
-            for (let i = 0; i < data.length; i += 4 * step) {
-                const r = data[i];
-                const g = data[i + 1];
-                const b = data[i + 2];
+            for (let y = cropTop; y < cropBottom; y += step) {
+                for (let x = cropLeft; x < cropRight; x += step) {
+                    const i = (y * width + x) * 4;
+                    const r = data[i] / 255;
+                    const g = data[i + 1] / 255;
+                    const b = data[i + 2] / 255;
 
-                // Détection du orange (teinte entre rouge et jaune)
-                // Orange typique: R > 200, G entre 100-180, B < 100
-                if (r > 180 && g > 80 && g < 200 && b < 120) {
-                    // Vérifier que c'est bien orange et pas rouge/jaune
-                    if (r > g && g > b * 1.5) {
+                    // Conversion RGB vers HSV (plus robuste pour la détection de couleur)
+                    const max = Math.max(r, g, b);
+                    const min = Math.min(r, g, b);
+                    const delta = max - min;
+
+                    // Valeur (V) - luminosité
+                    const v = max;
+                    
+                    // Saturation (S) - pureté de la couleur
+                    const s = max === 0 ? 0 : delta / max;
+
+                    // Teinte (H) - angle de couleur (0-360°)
+                    let h = 0;
+                    if (delta !== 0) {
+                        if (max === r) {
+                            h = 60 * (((g - b) / delta) % 6);
+                        } else if (max === g) {
+                            h = 60 * (((b - r) / delta) + 2);
+                        } else {
+                            h = 60 * (((r - g) / delta) + 4);
+                        }
+                    }
+                    if (h < 0) h += 360;
+
+                    totalAnalyzed++;
+
+                    // Détection orange métallisé avec HSV
+                    // Cette méthode est insensible aux variations de luminosité
+                    if (h >= H_MIN && h <= H_MAX &&
+                        s >= S_MIN &&
+                        v >= V_MIN && v <= V_MAX) {
                         orangePixels++;
                     }
                 }
             }
 
-            const orangePercentage = (orangePixels / (totalPixels / step)) * 100;
+            const orangePercentage = totalAnalyzed > 0 ? (orangePixels / totalAnalyzed) * 100 : 0;
+            
+            // Debug : décommenter pour voir les pourcentages en console
+            // console.log(`Orange détecté: ${orangePercentage.toFixed(1)}% (${orangePixels}/${totalAnalyzed} pixels analysés)`);
 
-            // Au moins 15% de pixels orange
-            return orangePercentage > 15;
+            return orangePercentage >= ORANGE_MIN_PCT;
         }
 
         function successMission(confidence) {
