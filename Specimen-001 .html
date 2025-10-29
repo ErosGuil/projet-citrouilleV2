@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPECIMEN 001 - SCANNER DE TERRAIN</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1a0a00 0%, #0a0a0a 100%);
+            color: #0f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.95);
+            border: 3px solid #ff6600;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(255, 102, 0, 0.6), inset 0 0 20px rgba(255, 102, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 102, 0, 0.2), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .header h1 {
+            color: #ff6600;
+            font-size: 32px;
+            text-shadow: 0 0 20px #ff6600, 0 0 40px #ff6600;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            position: relative;
+        }
+
+        .header-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .classified {
+            color: #f00;
+            font-size: 12px;
+            letter-spacing: 5px;
+            margin: 10px 0;
+            animation: blink 1.5s infinite;
+            text-shadow: 0 0 10px #f00;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.3; }
+        }
+
+        .description {
+            color: #0f0;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 255, 0, 0.05);
+            border-left: 3px solid #0f0;
+            text-align: left;
+        }
+
+        .dr-signature {
+            color: #ff6600;
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 13px;
+            text-align: right;
+        }
+
+        .main-container {
+            background: rgba(0, 0, 0, 0.95);
+            border: 3px solid #0f0;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-box {
+            background: rgba(255, 102, 0, 0.15);
+            border: 2px solid #ff6600;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-box:hover {
+            background: rgba(255, 102, 0, 0.25);
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
+        }
+
+        .stat-label {
+            color: #0f0;
+            font-size: 11px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            color: #ff6600;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 0 10px #ff6600;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #detectVideo {
+            width: 100%;
+            border: 3px solid #0f0;
+            border-radius: 10px;
+            background: #000;
+            display: none;
+        }
+
+        #detectCanvas {
+            width: 100%;
+            border: 3px solid #0f0;
+            border-radius: 10px;
+            background: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        #scanOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #loadingOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border-radius: 10px;
+        }
+
+        #loadingOverlay.hidden {
+            display: none;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 102, 0, 0.3);
+            border-top: 4px solid #ff6600;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #ff6600;
+            font-size: 16px;
+            text-align: center;
+            text-shadow: 0 0 10px #ff6600;
+            animation: pulse 2s infinite;
+        }
+
+        .scan-line {
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #0f0, transparent);
+            position: absolute;
+            animation: scan 2s linear infinite;
+            box-shadow: 0 0 10px #0f0;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        .target-reticle {
+            width: 200px;
+            height: 200px;
+            border: 3px solid #ff6600;
+            border-radius: 50%;
+            position: relative;
+            opacity: 0.7;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .target-reticle::before,
+        .target-reticle::after {
+            content: '';
+            position: absolute;
+            background: #ff6600;
+        }
+
+        .target-reticle::before {
+            width: 100%;
+            height: 3px;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+        .target-reticle::after {
+            width: 3px;
+            height: 100%;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+        }
+
+        .message {
+            text-align: center;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            min-height: 60px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .message.success {
+            background: rgba(0, 255, 0, 0.15);
+            border-color: #0f0;
+            color: #0f0;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .message.error {
+            background: rgba(255, 0, 0, 0.15);
+            border-color: #f00;
+            color: #f00;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+        }
+
+        .message.warning {
+            background: rgba(255, 102, 0, 0.15);
+            border-color: #ff6600;
+            color: #ff6600;
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
+        }
+
+        .info-box {
+            background: rgba(0, 255, 0, 0.08);
+            border: 2px solid #0f0;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .info-box h3 {
+            color: #ff6600;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-shadow: 0 0 10px #ff6600;
+        }
+
+        .info-box ul {
+            color: #0f0;
+            font-size: 14px;
+            line-height: 1.8;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-box li::before {
+            content: "▸ ";
+            color: #ff6600;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ff6600 0%, #ff8800 100%);
+            color: #000;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px 0;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.4);
+            letter-spacing: 1px;
+        }
+
+        button:hover:not(:disabled) {
+            background: linear-gradient(135deg, #ff8800 0%, #ffaa00 100%);
+            box-shadow: 0 0 30px rgba(255, 102, 0, 0.8);
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-container {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .progress-label {
+            color: #0f0;
+            font-size: 12px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .progress-bar-bg {
+            background: rgba(0, 255, 0, 0.1);
+            height: 30px;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 2px solid #0f0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #0f0, #00ff00);
+            width: 0%;
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            font-size: 14px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+        }
+
+        .log-container {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .log-header {
+            color: #ff6600;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .log-entry {
+            color: #0f0;
+            font-size: 12px;
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 2px solid #0f0;
+            padding-left: 10px;
+        }
+
+        .success-box {
+            background: rgba(0, 255, 0, 0.1);
+            border: 3px solid #0f0;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            animation: successPulse 2s infinite;
+        }
+
+        @keyframes successPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(0, 255, 0, 0.8); }
+        }
+
+        .success-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .key-message {
+            background: rgba(255, 102, 0, 0.15);
+            border: 2px solid #ff6600;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 12px 0;
+            color: #ff6600;
+            font-size: 13px;
+            line-height: 1.5;
+            box-shadow: 0 0 25px rgba(255, 102, 0, 0.4);
+        }
+
+        .key-icon {
+            font-size: 24px;
+            margin-bottom: 6px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-icon">🧪</div>
+        <h1>🎃 PROJET CITROUILLE 🎃</h1>
+        <div class="classified">⚠️ CLASSIFICATION: TOP SECRET ⚠️</div>
+        <div class="description">
+            📡 SCANNER DE TERRAIN ACTIVÉ<br>
+            Mission: Localiser et identifier le SPECIMEN 001<br>
+            Statut: La création du Dr. Halloween est en liberté
+        </div>
+        <div class="dr-signature">- Dr. Halloween, Projet Citrouille</div>
+    </div>
+
+    <div class="main-container">
+        <div class="stats">
+            <div class="stat-box" style="grid-column: span 1;">
+                <div class="stat-label">STATUT MISSION</div>
+                <div class="stat-value" id="status">EN ATTENTE</div>
+            </div>
+            <div class="stat-box" style="grid-column: span 2;">
+                <div class="stat-label">CONFIANCE IA</div>
+                <div class="stat-value" id="confidence">0%</div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h3>📋 PROTOCOLE D'IDENTIFICATION</h3>
+            <ul>
+                <li>Localiser le SPECIMEN 001 dans votre environnement</li>
+                <li>Maintenir la cible dans le viseur pendant 3 secondes</li>
+                <li>La confiance IA doit atteindre minimum 60%</li>
+                <li>Une fois identifié, l'accès sera déverrouillé</li>
+            </ul>
+        </div>
+
+        <div class="video-container">
+            <video id="detectVideo" autoplay playsinline></video>
+            <canvas id="detectCanvas"></canvas>
+            <div id="loadingOverlay">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">
+                    ⚙️ CHARGEMENT DU MODÈLE IA...<br>
+                    <span style="font-size: 12px;">Veuillez patienter</span>
+                </div>
+            </div>
+            <div id="scanOverlay">
+                <div class="scan-line"></div>
+                <div class="target-reticle"></div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-label">🎯 VERROUILLAGE CIBLE</div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar" id="progressBar">0%</div>
+            </div>
+        </div>
+
+        <div class="message" id="message">
+            🔍 Système prêt. Appuyez sur "DÉMARRER" pour lancer le scan...
+        </div>
+
+        <button id="scanBtn" onclick="startScan()" disabled>📡 DÉMARRER LE SCAN</button>
+
+        <div class="log-container">
+            <div class="log-header">📊 JOURNAL SYSTÈME</div>
+            <div id="logEntries"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3"></script>
+    <script>
+        let model;
+        let stream;
+        let scanActive = false;
+        let holdTimer = 0;
+        let detectionTimer;
+        let animationFrame;
+        let scanStartTime = 0;
+
+        const REQUIRED_HOLD_TIME = 3.0;
+        const MIN_CONFIDENCE = 0.60;
+
+        const video = document.getElementById('detectVideo');
+        const canvas = document.getElementById('detectCanvas');
+        const ctx = canvas.getContext('2d');
+
+        async function loadModel() {
+            document.getElementById('scanBtn').disabled = true;
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+            
+            addLog('SYSTÈME: Initialisation du modèle IA...');
+            updateMessage('⏳ Chargement du modèle de détection...', 'warning');
+
+            try {
+                model = await cocoSsd.load();
+                addLog('✅ SYSTÈME: Modèle IA chargé avec succès');
+                updateMessage('✅ Système prêt. Appuyez sur "DÉMARRER" pour lancer le scan', 'success');
+                
+                document.getElementById('loadingOverlay').classList.add('hidden');
+                document.getElementById('scanBtn').disabled = false;
+            } catch (error) {
+                addLog('❌ ERREUR: Échec du chargement du modèle');
+                updateMessage('❌ Erreur de chargement du modèle IA', 'error');
+                document.getElementById('loadingOverlay').innerHTML = '<div class="loading-text" style="color: #f00;">❌ ERREUR DE CHARGEMENT</div>';
+            }
+        }
+
+        async function startScan() {
+            if (!model) {
+                updateMessage('❌ Le modèle IA n\'est pas encore chargé', 'error');
+                return;
+            }
+
+            scanActive = true;
+            holdTimer = 0;
+            scanStartTime = Date.now();
+
+            document.getElementById('scanBtn').textContent = '⏹️ ARRÊTER LE SCAN';
+            document.getElementById('scanBtn').onclick = stopScan;
+            document.getElementById('scanBtn').disabled = true;
+            document.getElementById('status').textContent = 'ACTIF';
+            document.getElementById('status').style.color = '#ff6600';
+
+            addLog('SYSTÈME: Démarrage du scan de terrain');
+            addLog('SYSTÈME: Activation de la caméra...');
+
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: 'environment',
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    }
+                });
+
+                video.srcObject = stream;
+                
+                // Attendre que les métadonnées soient chargées avant de continuer
+                await new Promise((resolve) => {
+                    video.onloadedmetadata = () => {
+                        video.play().then(resolve);
+                    };
+                });
+
+                // Attendre un petit moment supplémentaire pour s'assurer que le flux est stable
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+
+                addLog('✅ SYSTÈME: Caméra activée');
+                updateMessage('🔍 Scan en cours... Recherche du SPECIMEN 001', 'warning');
+
+                document.getElementById('scanBtn').disabled = false;
+                
+                detectLoop();
+            } catch (error) {
+                addLog('❌ ERREUR: Impossible d\'accéder à la caméra');
+                updateMessage('❌ Erreur d\'accès à la caméra', 'error');
+                document.getElementById('scanBtn').textContent = '📡 DÉMARRER LE SCAN';
+                document.getElementById('scanBtn').onclick = startScan;
+                document.getElementById('scanBtn').disabled = false;
+            }
+        }
+
+        async function detectLoop() {
+            if (!scanActive) return;
+
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const predictions = await model.detect(canvas);
+
+            let carDetected = false;
+
+            for (const prediction of predictions) {
+                const [x, y, width, height] = prediction.bbox;
+                const label = prediction.class;
+                const confidence = (prediction.score * 100).toFixed(0);
+
+                document.getElementById('confidence').textContent = confidence + '%';
+
+                if (label === 'car') {
+                    carDetected = true;
+
+                    const imageData = ctx.getImageData(x, y, width, height);
+                    const isOrange = analyzeColor(imageData);
+
+                    if (isOrange) {
+                        holdTimer += 0.1;
+
+                        ctx.strokeStyle = '#0f0';
+                        ctx.lineWidth = 6;
+                        ctx.strokeRect(x - 5, y - 5, width + 10, height + 10);
+
+                        if (confidence >= MIN_CONFIDENCE * 100) {
+                            if (holdTimer >= REQUIRED_HOLD_TIME) {
+                                successMission(confidence);
+                                return;
+                            } else {
+                                const remainingTime = (REQUIRED_HOLD_TIME - holdTimer).toFixed(1);
+                                updateMessage(`🎯 SPECIMEN 001 VERROUILLÉ ! Maintenir ${remainingTime}s...`, 'success');
+
+                                if (holdTimer > 1 && Math.floor(holdTimer) !== Math.floor(holdTimer - 0.1)) {
+                                    addLog(`SCAN: Verrouillage en cours... ${Math.ceil(remainingTime)}s restantes`);
+                                }
+                            }
+                        } else {
+                            updateMessage(`⚠️ SPECIMEN détecté mais confiance insuffisante (${confidence}% < ${MIN_CONFIDENCE * 100}%)`, 'warning');
+                            holdTimer = Math.max(0, holdTimer - 0.2);
+                        }
+                    } else {
+                        updateMessage('🚗 Véhicule détecté mais couleur incorrecte. Continuez la recherche...', 'warning');
+                        holdTimer = Math.max(0, holdTimer - 0.1);
+                    }
+                }
+            }
+
+            if (!carDetected) {
+                holdTimer = Math.max(0, holdTimer - 0.1);
+                if (predictions.length === 0) {
+                    updateMessage('🔍 Balayage de la zone... Aucun spécimen détecté', 'warning');
+                } else {
+                    updateMessage('🔍 Objets détectés mais aucun spécimen correspondant', 'warning');
+                }
+            }
+
+            const holdProgress = Math.min((holdTimer / REQUIRED_HOLD_TIME) * 100, 100);
+            document.getElementById('progressBar').style.width = holdProgress + '%';
+            document.getElementById('progressBar').textContent = Math.floor(holdProgress) + '%';
+
+            animationFrame = requestAnimationFrame(detectLoop);
+        }
+
+        function analyzeColor(imageData) {
+            const ORANGE_MIN_PCT = 8;
+            const H_MIN = 10;
+            const H_MAX = 40;
+            const S_MIN = 0.35;
+            const V_MIN = 0.15;
+            const V_MAX = 0.95;
+            
+            const data = imageData.data;
+            const width = imageData.width;
+            const height = imageData.height;
+            
+            let orangePixels = 0;
+            let totalAnalyzed = 0;
+
+            const cropTop = Math.floor(height * 0.25);
+            const cropLeft = Math.floor(width * 0.15);
+            const cropRight = Math.floor(width * 0.85);
+            const cropBottom = height;
+
+            const step = 4;
+
+            for (let y = cropTop; y < cropBottom; y += step) {
+                for (let x = cropLeft; x < cropRight; x += step) {
+                    const i = (y * width + x) * 4;
+                    const r = data[i] / 255;
+                    const g = data[i + 1] / 255;
+                    const b = data[i + 2] / 255;
+
+                    const max = Math.max(r, g, b);
+                    const min = Math.min(r, g, b);
+                    const delta = max - min;
+
+                    const v = max;
+                    const s = max === 0 ? 0 : delta / max;
+
+                    let h = 0;
+                    if (delta !== 0) {
+                        if (max === r) {
+                            h = 60 * (((g - b) / delta) % 6);
+                        } else if (max === g) {
+                            h = 60 * (((b - r) / delta) + 2);
+                        } else {
+                            h = 60 * (((r - g) / delta) + 4);
+                        }
+                    }
+                    if (h < 0) h += 360;
+
+                    totalAnalyzed++;
+
+                    if (h >= H_MIN && h <= H_MAX &&
+                        s >= S_MIN &&
+                        v >= V_MIN && v <= V_MAX) {
+                        orangePixels++;
+                    }
+                }
+            }
+
+            const orangePercentage = totalAnalyzed > 0 ? (orangePixels / totalAnalyzed) * 100 : 0;
+            return orangePercentage >= ORANGE_MIN_PCT;
+        }
+
+        function successMission(confidence) {
+            scanActive = false;
+            cancelAnimationFrame(animationFrame);
+
+            localStorage.setItem('orangeCarScanned', 'true');
+
+            const scanDuration = Math.floor((Date.now() - scanStartTime) / 1000);
+
+            addLog(`✅ SUCCÈS: SPECIMEN 001 identifié avec ${confidence}% de confiance`);
+            addLog(`SYSTÈME: Coordonnées GPS enregistrées`);
+            addLog(`SYSTÈME: Données transmises au Projet Citrouille`);
+            addLog(`🔓 ACCÈS DÉBLOQUÉ: Vous pouvez maintenant utiliser la clef`);
+
+            document.getElementById('status').textContent = 'RÉUSSI';
+            document.getElementById('status').style.color = '#0f0';
+
+            updateMessage(`
+                <div class="success-box">
+                    <div class="success-icon">🎉</div>
+                    <strong style="font-size: 16px; color: #0f0;">MISSION ACCOMPLIE !</strong><br>
+                    <span style="font-size: 12px; color: #0f0;">
+                        SPECIMEN 001 localisé et identifié<br>
+                        Confiance: ${confidence}% | Durée: ${scanDuration}s
+                    </span>
+                    
+                    <div class="key-message">
+                        <span class="key-icon">🔑</span>
+                        <strong>PHASE 3 ACTIVÉE</strong><br>
+                        L'outil d'accès est maintenant fonctionnel !<br>
+                        Vous pouvez déverrouiller l'accès et <strong>dompter la création</strong> du Dr. Halloween.<br>
+                        <span style="color: #0f0; font-size: 12px;">📡 Retournez au Dossier SPECIMEN 001 pour accéder aux données complètes</span>
+                    </div>
+                </div>
+            `, 'success');
+
+            document.getElementById('progressBar').style.width = '100%';
+            document.getElementById('progressBar').textContent = 'VALIDÉ ✓';
+
+            const btn = document.getElementById('scanBtn');
+            btn.textContent = '✅ MISSION TERMINÉE - RETOUR AU QG';
+            btn.onclick = () => window.close();
+            btn.disabled = false;
+
+            canvas.style.borderColor = '#0f0';
+            document.querySelector('.main-container').style.borderColor = '#0f0';
+
+            // Scroll automatique vers le message de succès après un court délai
+            setTimeout(() => {
+                const messageElement = document.getElementById('message');
+                messageElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+
+        function stopScan() {
+            scanActive = false;
+            cancelAnimationFrame(animationFrame);
+
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            addLog('SYSTÈME: Scan arrêté par l\'opérateur');
+            updateMessage('⏹️ Scan interrompu - Mission en pause', 'warning');
+
+            document.getElementById('status').textContent = 'ARRÊTÉ';
+
+            const btn = document.getElementById('scanBtn');
+            btn.textContent = '📡 REPRENDRE LE SCAN';
+            btn.onclick = startScan;
+        }
+
+        function updateMessage(text, type = '') {
+            const msg = document.getElementById('message');
+            msg.innerHTML = text;
+            msg.className = 'message ' + type;
+        }
+
+        function addLog(text) {
+            const logEntries = document.getElementById('logEntries');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            const timestamp = new Date().toLocaleTimeString();
+            entry.textContent = `[${timestamp}] ${text}`;
+            logEntries.appendChild(entry);
+            logEntries.scrollTop = logEntries.scrollHeight;
+        }
+
+        window.onload = () => {
+            loadModel();
+            addLog('🎃 PROJET CITROUILLE: Scanner de terrain initialisé');
+            addLog('📡 Mission: Localiser la création du Dr. Halloween');
+        };
+    </script>
+</body>
+</html>
