@@ -440,8 +440,8 @@
             background: rgba(0, 255, 0, 0.1);
             border: 3px solid #0f0;
             border-radius: 10px;
-            padding: 30px;
-            margin: 20px 0;
+            padding: 15px;
+            margin: 15px 0;
             text-align: center;
             animation: successPulse 2s infinite;
         }
@@ -452,31 +452,31 @@
         }
 
         .success-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
+            font-size: 40px;
+            margin-bottom: 10px;
             animation: bounce 1s infinite;
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
         }
 
         .key-message {
             background: rgba(255, 102, 0, 0.15);
             border: 2px solid #ff6600;
             border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
+            padding: 12px;
+            margin: 12px 0;
             color: #ff6600;
-            font-size: 16px;
-            line-height: 1.8;
+            font-size: 13px;
+            line-height: 1.5;
             box-shadow: 0 0 25px rgba(255, 102, 0, 0.4);
         }
 
         .key-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            margin-bottom: 6px;
             display: block;
         }
     </style>
@@ -796,19 +796,23 @@
             updateMessage(`
                 <div class="success-box">
                     <div class="success-icon">🎉</div>
-                    <strong style="font-size: 20px; color: #0f0;">MISSION ACCOMPLIE !</strong><br><br>
-                    <span style="font-size: 14px; color: #0f0;">
+                    <strong style="font-size: 16px; color: #0f0;">MISSION ACCOMPLIE !</strong><br>
+                    <span style="font-size: 12px; color: #0f0;">
                         SPECIMEN 001 localisé et identifié<br>
                         Confiance: ${confidence}% | Durée: ${scanDuration}s
                     </span>
-                    
-                    <div class="key-message">
-                        <span class="key-icon">🔑</span>
-                        <strong>PHASE 3 ACTIVÉE</strong><br><br>
+                    <br><br>
+                    <span class="key-icon">🔑</span>
+                    <strong style="color: #ff6600;">PHASE 3 ACTIVÉE</strong><br>
+                    <span style="font-size: 13px; color: #ff6600;">
                         L'outil d'accès est maintenant fonctionnel !<br>
-                        Vous pouvez déverrouiller l'accès et <strong>dompter la création</strong> du Dr. Halloween.<br><br>
-                        <span style="color: #0f0;">📡 Retournez au Dossier SPECIMEN 001 pour accéder aux données complètes</span>
-                    </div>
+                        Vous pouvez déverrouiller l'accès et <strong>dompter la création</strong> du Dr. Halloween.
+                    </span>
+                    <br><br>
+                    <span style="color: #0f0; font-size: 12px;">
+                        📡 Retournez au Dossier SPECIMEN 001 pour accéder aux données complètes<br>
+                        et voir le SPECIMEN-001 <strong>sous sa vraie forme</strong> (lorsqu'elle ne se dissimule pas).
+                    </span>
                 </div>
             `, 'success');
 
