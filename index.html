@@ -3117,7 +3117,7 @@
 
                     setTimeout(() => {
                         document.getElementById('memoryResult').innerHTML = `
-                        <div style="color: #0f0; font-size: 20px; animation: pulse 1s infinite; text-align: center; width: 100%;">
+                        <div style="color: #0f0; font-size: 20px; animation: pulse 1s infinite; text-align: center; width: 100%;margin: 0 auto;">
                             🎉 VICTOIRE ! 🎉<br>
                             <span style="font-size: 16px;">Temps: ${timeElapsed} | Coups: ${memoryMoves}</span>
                         </div>
@@ -3178,7 +3178,7 @@
                     grid.style.opacity = '0.5';
                     triggerJumpscare();
                     document.getElementById('memoryResult').innerHTML = `
-                    <div style="color: #f00; font-size: 18px;">
+                    <div style="color: #f00; font-size: 18px; text-align: center; width: 100%; margin: 0 auto;">
                         💀 GAME OVER !<br>
                         <span style="font-size: 14px;">Paires trouvées: ${matchedPairs}/8</span>
                     </div>
@@ -3467,7 +3467,7 @@
 
             document.getElementById('hangmanProgress').textContent = hangmanWins + '/6';
             document.getElementById('hangmanMessage').innerHTML = `
-                    <div style="color: #0f0; font-size: 18px; animation: pulse 1s infinite;">
+                    <div style="color: #0f0; font-size: 18px; animation: pulse 1s infinite; text-align: center; width: 100%; margin: 0 auto;">
                         ✅ CORRECT ! (${hangmanWins}/6)
                     </div>
                 `;
@@ -3479,7 +3479,7 @@
             if (hangmanWins >= 6) {
                 setTimeout(() => {
                     document.getElementById('hangmanMessage').innerHTML = `
-                            <div style="color: #0f0; font-size: 20px; animation: pulse 1s infinite; text-align: center; width: 100%;">
+                            <div style="color: #0f0; font-size: 20px; animation: pulse 1s infinite; text-align: center; width: 100%; margin: 0 auto;">
                                 🎉 PROTOCOLE COMPLÉTÉ !<br>
                                 <span style="font-size: 14px;">Déverrouillage de l'étape 3...</span>
                             </div>
@@ -3506,7 +3506,7 @@
             const word = hangmanCurrentWord;
             document.getElementById('hangmanWord').textContent = word;
             document.getElementById('hangmanMessage').innerHTML = `
-                    <div style="color: #f00; font-size: 16px;">
+                    <div style="color: #f00; font-size: 16px; text-align: center; width: 100%; margin: 0 auto;">
                         💀 PERDU ! Le mot était : ${word}<br>
                         <span style="font-size: 14px;">Progression conservée (${hangmanWins}/6)</span>
                     </div>
@@ -5114,4 +5114,5 @@
         </div>
     </div>
 </body>
+
 </html>
